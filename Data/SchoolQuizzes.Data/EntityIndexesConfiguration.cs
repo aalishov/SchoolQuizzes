@@ -2,9 +2,8 @@
 {
     using System.Linq;
 
-    using SchoolQuizzes.Data.Common.Models;
-
     using Microsoft.EntityFrameworkCore;
+    using SchoolQuizzes.Data.Common.Models;
 
     internal static class EntityIndexesConfiguration
     {

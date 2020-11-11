@@ -1,8 +1,8 @@
 ﻿namespace SchoolQuizzes.Data.Configurations
 {
-    using SchoolQuizzes.Data.Models;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore.Metadata.Builders;
+    using SchoolQuizzes.Data.Models;
 
     public class ApplicationUserConfiguration : IEntityTypeConfiguration<ApplicationUser>
     {

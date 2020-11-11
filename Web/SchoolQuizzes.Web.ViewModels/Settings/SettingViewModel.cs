@@ -1,9 +1,8 @@
 ﻿namespace SchoolQuizzes.Web.ViewModels.Settings
 {
+    using AutoMapper;
     using SchoolQuizzes.Data.Models;
     using SchoolQuizzes.Services.Mapping;
-
-    using AutoMapper;
 
     public class SettingViewModel : IMapFrom<Setting>, IHaveCustomMappings
     {

@@ -5,6 +5,11 @@
     using System.IO;
     using System.Threading.Tasks;
 
+    using CommandLine;
+    using Microsoft.EntityFrameworkCore;
+    using Microsoft.Extensions.Configuration;
+    using Microsoft.Extensions.DependencyInjection;
+    using Microsoft.Extensions.Logging;
     using SchoolQuizzes.Data;
     using SchoolQuizzes.Data.Common;
     using SchoolQuizzes.Data.Common.Repositories;
@@ -13,13 +18,6 @@
     using SchoolQuizzes.Data.Seeding;
     using SchoolQuizzes.Services.Data;
     using SchoolQuizzes.Services.Messaging;
-
-    using CommandLine;
-
-    using Microsoft.EntityFrameworkCore;
-    using Microsoft.Extensions.Configuration;
-    using Microsoft.Extensions.DependencyInjection;
-    using Microsoft.Extensions.Logging;
 
     public static class Program
     {

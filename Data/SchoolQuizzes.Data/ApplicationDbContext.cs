@@ -1,16 +1,16 @@
 ﻿namespace SchoolQuizzes.Data
 {
     using System;
+    using System.ComponentModel.DataAnnotations.Schema;
     using System.Linq;
     using System.Reflection;
     using System.Threading;
     using System.Threading.Tasks;
 
-    using SchoolQuizzes.Data.Common.Models;
-    using SchoolQuizzes.Data.Models;
-
     using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore;
+    using SchoolQuizzes.Data.Common.Models;
+    using SchoolQuizzes.Data.Models;
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, string>
     {
@@ -23,6 +23,17 @@
             : base(options)
         {
         }
+
+
+        public virtual DbSet<Answer> Answers { get; set; }
+
+        public virtual DbSet<Category> Categories { get; set; }
+
+        public virtual DbSet<Difficult> DifficultLevels { get; set; }
+
+        public virtual DbSet<Question> Questions { get; set; }
+
+        public virtual DbSet<QuestionAnswer> QuestionsAnswers { get; set; }
 
         public DbSet<Setting> Settings { get; set; }
 

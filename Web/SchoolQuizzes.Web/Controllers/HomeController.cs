@@ -1,16 +1,31 @@
 ﻿namespace SchoolQuizzes.Web.Controllers
 {
     using System.Diagnostics;
-
-    using SchoolQuizzes.Web.ViewModels;
-
+    using System.Linq;
     using Microsoft.AspNetCore.Mvc;
+    using SchoolQuizzes.Data;
+    using SchoolQuizzes.Web.ViewModels;
+    using SchoolQuizzes.Web.ViewModels.Home;
 
     public class HomeController : BaseController
     {
+        private readonly ApplicationDbContext db;
+
+        public HomeController(ApplicationDbContext context)
+        {
+            this.db = context;
+        }
+
         public IActionResult Index()
         {
-            return this.View();
+            IndexViewModel viewModel = new IndexViewModel()
+            {
+                UsersCount = this.db.Users.Count(),
+                QuestionsCount = this.db.Questions.Count(),
+                AnswersCount = this.db.Answers.Count(),
+                CategoriesCount = this.db.Categories.Count(),
+            };
+            return this.View(viewModel);
         }
 
         public IActionResult Privacy()

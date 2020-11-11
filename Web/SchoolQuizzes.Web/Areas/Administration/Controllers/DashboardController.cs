@@ -1,9 +1,8 @@
 ﻿namespace SchoolQuizzes.Web.Areas.Administration.Controllers
 {
+    using Microsoft.AspNetCore.Mvc;
     using SchoolQuizzes.Services.Data;
     using SchoolQuizzes.Web.ViewModels.Administration.Dashboard;
-
-    using Microsoft.AspNetCore.Mvc;
 
     public class DashboardController : AdministrationController
     {
