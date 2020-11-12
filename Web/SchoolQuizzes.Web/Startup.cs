@@ -17,6 +17,7 @@
     using SchoolQuizzes.Data.Repositories;
     using SchoolQuizzes.Data.Seeding;
     using SchoolQuizzes.Services.Data;
+    using SchoolQuizzes.Services.Data.Contracts;
     using SchoolQuizzes.Services.Mapping;
     using SchoolQuizzes.Services.Messaging;
     using SchoolQuizzes.Web.ViewModels;
@@ -63,6 +64,9 @@
             // Application services
             services.AddTransient<IEmailSender, NullMessageSender>();
             services.AddTransient<ISettingsService, SettingsService>();
+            services.AddTransient<IGetCountService, GetCountService>();
+            services.AddTransient<ICategoriesService, CategoriesService>();
+            services.AddTransient<IQuestionsService, QuestionsService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

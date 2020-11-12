@@ -38,6 +38,6 @@
 
         public virtual Difficult Difficult { get; set; }
 
-        public virtual IEnumerable<QuestionAnswer> Answers { get; set; }
+        public virtual ICollection<QuestionAnswer> Answers { get; set; }
     }
 }

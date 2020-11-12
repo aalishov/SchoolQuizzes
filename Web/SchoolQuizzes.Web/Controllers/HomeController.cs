@@ -2,29 +2,33 @@
 {
     using System.Diagnostics;
     using System.Linq;
+
     using Microsoft.AspNetCore.Mvc;
-    using SchoolQuizzes.Data;
+    using SchoolQuizzes.Services.Data.Contracts;
     using SchoolQuizzes.Web.ViewModels;
     using SchoolQuizzes.Web.ViewModels.Home;
 
     public class HomeController : BaseController
     {
-        private readonly ApplicationDbContext db;
+        private readonly IGetCountService getCount;
 
-        public HomeController(ApplicationDbContext context)
+        public HomeController(IGetCountService getCount)
         {
-            this.db = context;
+            this.getCount = getCount;
         }
 
         public IActionResult Index()
         {
-            IndexViewModel viewModel = new IndexViewModel()
+            var countDto = this.getCount.GetCounts();
+
+            var viewModel = new IndexViewModel()
             {
-                UsersCount = this.db.Users.Count(),
-                QuestionsCount = this.db.Questions.Count(),
-                AnswersCount = this.db.Answers.Count(),
-                CategoriesCount = this.db.Categories.Count(),
+                UsersCount = countDto.UsersCount,
+                AnswersCount = countDto.AnswersCount,
+                CategoriesCount = countDto.CategoriesCount,
+                QuestionsCount = countDto.QuestionsCount,
             };
+
             return this.View(viewModel);
         }
 

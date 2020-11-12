@@ -1,4 +1,4 @@
-﻿namespace SchoolQuizzes.Services.Data
+﻿namespace SchoolQuizzes.Services.Data.Contracts
 {
     using System.Collections.Generic;
 

@@ -17,6 +17,7 @@
     using SchoolQuizzes.Data.Repositories;
     using SchoolQuizzes.Data.Seeding;
     using SchoolQuizzes.Services.Data;
+    using SchoolQuizzes.Services.Data.Contracts;
     using SchoolQuizzes.Services.Messaging;
 
     public static class Program

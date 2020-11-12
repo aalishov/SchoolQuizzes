@@ -7,6 +7,7 @@
     using SchoolQuizzes.Data.Common.Repositories;
     using SchoolQuizzes.Data.Models;
     using SchoolQuizzes.Services.Data;
+    using SchoolQuizzes.Services.Data.Contracts;
     using SchoolQuizzes.Web.ViewModels.Settings;
 
     public class SettingsController : BaseController

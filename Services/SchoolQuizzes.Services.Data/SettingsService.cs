@@ -5,6 +5,7 @@
 
     using SchoolQuizzes.Data.Common.Repositories;
     using SchoolQuizzes.Data.Models;
+    using SchoolQuizzes.Services.Data.Contracts;
     using SchoolQuizzes.Services.Mapping;
 
     public class SettingsService : ISettingsService
