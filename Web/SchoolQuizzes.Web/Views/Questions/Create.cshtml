@@ -3,6 +3,7 @@
 @{
     this.ViewData["Title"] = "Добавяне на въпрос";
     var categoriesItems = this.Model.CategoriesItems.Select(x => new SelectListItem(x.Value, x.Key));
+    var dificultsItems = this.Model.DifficultsItems.Select(x => new SelectListItem(x.Value, x.Key));
 }
 
 
@@ -26,21 +27,22 @@
     </div>
     <div class=" form-group">
         <label asp-for="DifficultId"></label>
-        <input asp-for="DifficultId" class="form-control" />
+        <select asp-for="DifficultId" asp-items="dificultsItems" class="form-control"></select>
         <span asp-validation-for="DifficultId" class="text-danger"></span>
     </div>
-    <div id="AnswersContainer">
+    <div id="AnswersContainer" class="form-group">
         <label asp-for="Answers"></label>
-        <a class="btn btn-success" onclick="AddAnswer()">+</a>
+        <a class="btn btn-outline-secondary btn-sm" onclick="AddAnswer()">+</a>
     </div>
-    <input type="submit" class="btn btn-primary" />
+    <input type="submit" class="btn btn-primary" value="Добави" />
+
 </form>
 @section Scripts{
     <script>
         var answerIndex = 0;
        
         function AddAnswer() {
-            $("#AnswersContainer").append("<div class='form-control'>Answer: <input type='text' name='Answers[" + answerIndex + "].AnswerValue' id='' />Correct: <input type='checkbox' name='Answers[" + answerIndex + "].IsTrue' /> </div>")
+            $("#AnswersContainer").append("<div class='form-control' >Отговор["+(answerIndex+1)+"]: <input type='text' name='Answers[" + answerIndex + "].AnswerValue' id='' /> - <input type='checkbox' name='Answers[" + answerIndex + "].IsTrue' /> </div>")
             answerIndex++;
         }
     </script>

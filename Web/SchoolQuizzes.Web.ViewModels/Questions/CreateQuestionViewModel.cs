@@ -27,8 +27,11 @@
         [Display(Name = "Трудност")]
         public int DifficultId { get; set; }
 
+        [Display(Name = "Отговори:")]
         public ICollection<CreateAnswerViewModel> Answers { get; set; }
 
         public ICollection<KeyValuePair<string, string>> CategoriesItems { get; set; }
+
+        public ICollection<KeyValuePair<string, string>> DifficultsItems { get; set; }
     }
 }

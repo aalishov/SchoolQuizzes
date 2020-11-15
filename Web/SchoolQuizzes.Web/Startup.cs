@@ -66,6 +66,7 @@
             services.AddTransient<ISettingsService, SettingsService>();
             services.AddTransient<IGetCountService, GetCountService>();
             services.AddTransient<ICategoriesService, CategoriesService>();
+            services.AddTransient<IDifficultsService, DifficultsService>();
             services.AddTransient<IQuestionsService, QuestionsService>();
         }
 

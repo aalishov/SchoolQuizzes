@@ -14,27 +14,30 @@
     {
         private readonly ICategoriesService categoriesService;
         private readonly IQuestionsService questionsService;
+        private readonly IDifficultsService difficultsService;
 
-        public QuestionsController(ICategoriesService categoriesService, IQuestionsService questionsService)
+        public QuestionsController(ICategoriesService categoriesService, IQuestionsService questionsService,IDifficultsService difficultsService)
         {
             this.categoriesService = categoriesService;
             this.questionsService = questionsService;
+            this.difficultsService = difficultsService;
         }
 
         public IActionResult Create()
         {
             var model = new CreateQuestionViewModel();
             model.CategoriesItems = this.categoriesService.GetAllAsKeyValuePairs();
+            model.DifficultsItems = this.difficultsService.GetAllAsKeyValuePairs();
             return this.View(model);
         }
 
         [HttpPost]
         public async Task<IActionResult> Create(CreateQuestionViewModel model)
         {
-
             if (!this.ModelState.IsValid)
             {
                 model.CategoriesItems = this.categoriesService.GetAllAsKeyValuePairs();
+                model.DifficultsItems = this.difficultsService.GetAllAsKeyValuePairs();
                 return this.View(model);
             }
 
