@@ -12,6 +12,7 @@
         public Difficult()
         {
             this.Questions = new HashSet<Question>();
+            this.Quizzes = new HashSet<Quiz>();
         }
 
         // easy, medium, or difficult
@@ -23,5 +24,7 @@
         public string Description { get; set; }
 
         public virtual ICollection<Question> Questions { get; set; }
+
+        public virtual ICollection<Quiz> Quizzes { get; set; }
     }
 }

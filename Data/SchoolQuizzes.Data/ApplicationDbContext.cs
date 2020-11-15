@@ -24,7 +24,6 @@
         {
         }
 
-
         public virtual DbSet<Answer> Answers { get; set; }
 
         public virtual DbSet<Category> Categories { get; set; }
@@ -34,6 +33,10 @@
         public virtual DbSet<Question> Questions { get; set; }
 
         public virtual DbSet<QuestionAnswer> QuestionsAnswers { get; set; }
+
+        public virtual DbSet<Quiz> Quizzes { get; set; }
+
+        public virtual DbSet<QuizisQuestions> QuizisQuestions { get; set; }
 
         public DbSet<Setting> Settings { get; set; }
 

@@ -12,6 +12,7 @@
         public Category()
         {
             this.Questions = new HashSet<Question>();
+            this.Quizzes = new HashSet<Quiz>();
         }
 
         [Required]
@@ -22,5 +23,7 @@
         public string Description { get; set; }
 
         public ICollection<Question> Questions { get; set; }
+
+        public ICollection<Quiz> Quizzes { get; set; }
     }
 }
