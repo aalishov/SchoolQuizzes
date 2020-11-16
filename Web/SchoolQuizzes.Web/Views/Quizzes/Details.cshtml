@@ -7,10 +7,14 @@
     <label asp-for="Category"></label>
     <span>@Model.Category</span>
 </div>
+<div class=" form-group">
+    <label asp-for="Difficult"></label>
+    <span>@Model.Difficult</span>
+</div>
+<h2>Въпроси в теста: </h2>
 @foreach (var item in Model.Questions)
 {
     <div class=" form-group">
-        <label>Въпрос: </label>
-        <span>@item.QuestionValue</span>
+        <p class="lead">@item.QuestionValue</p>
     </div>
 }

@@ -27,6 +27,8 @@
             {
                 new CategoriesSeeder(),
                 new DifficultLevelsSeeder(),
+                new UserSeeder(),
+                new QuestionsSeeder(),
                 new RolesSeeder(),
                 new SettingsSeeder(),
             };
