@@ -12,7 +12,7 @@
     {
         public Quiz()
         {
-            this.Questions = new HashSet<QuizisQuestions>();
+            this.Questions = new HashSet<QuizzesQuestions>();
         }
 
         [Required]
@@ -31,6 +31,6 @@
 
         public virtual Difficult Difficult { get; set; }
 
-        public virtual ICollection<QuizisQuestions> Questions { get; set; }
+        public virtual ICollection<QuizzesQuestions> Questions { get; set; }
     }
 }

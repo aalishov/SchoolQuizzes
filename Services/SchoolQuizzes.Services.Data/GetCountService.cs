@@ -11,13 +11,15 @@
     {
         private readonly IDeletableEntityRepository<Question> questions;
         private readonly IDeletableEntityRepository<ApplicationUser> users;
+        private readonly IDeletableEntityRepository<Quiz> quizes;
         private readonly IDeletableEntityRepository<Answer> answers;
         private readonly IDeletableEntityRepository<Category> categories;
 
-        public GetCountService(IDeletableEntityRepository<Question> questions, IDeletableEntityRepository<Answer> answers, IDeletableEntityRepository<Category> categories, IDeletableEntityRepository<ApplicationUser> users)
+        public GetCountService(IDeletableEntityRepository<Question> questions, IDeletableEntityRepository<Answer> answers, IDeletableEntityRepository<Category> categories, IDeletableEntityRepository<ApplicationUser> users, IDeletableEntityRepository<Quiz> quizes)
         {
             this.questions = questions;
             this.users = users;
+            this.quizes = quizes;
             this.answers = answers;
             this.categories = categories;
         }
@@ -30,6 +32,7 @@
                 QuestionsCount = this.questions.All().Count(),
                 AnswersCount = this.answers.All().Count(),
                 CategoriesCount = this.categories.All().Count(),
+                QuizzesCount = this.quizes.All().Count(),
             };
 
             return data;

@@ -10,6 +10,9 @@
         {
             this.Answers = new HashSet<CreateAnswerDto>();
         }
+
+        public string AddedByUserId { get; set; }
+
         public string QuestionValue { get; set; }
 
         public string Description { get; set; }

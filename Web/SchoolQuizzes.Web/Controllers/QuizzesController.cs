@@ -4,38 +4,38 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
-    using Microsoft.AspNetCore.Identity;
+
     using Microsoft.AspNetCore.Mvc;
-    using SchoolQuizzes.Data.Models;
+    using SchoolQuizzes.Data;
     using SchoolQuizzes.Services.Data.Contracts;
     using SchoolQuizzes.Services.Data.ModelsDto;
-    using SchoolQuizzes.Web.ViewModels.Questions;
+    using SchoolQuizzes.Web.ViewModels.Quizis;
 
-    public class QuestionsController : Controller
+    public class QuizzesController : Controller
     {
         private readonly ICategoriesService categoriesService;
         private readonly IDifficultsService difficultsService;
         private readonly IQuestionsService questionsService;
-        private readonly UserManager<ApplicationUser> userManager;
+        private readonly IQuizzesService quizisService;
 
-        public QuestionsController(ICategoriesService categoriesService, IDifficultsService difficultsService, IQuestionsService questionsService, UserManager<ApplicationUser> userManager)
+        public QuizzesController(ICategoriesService categoriesService, IDifficultsService difficultsService, IQuestionsService questionsService, IQuizzesService quizisService)
         {
             this.categoriesService = categoriesService;
             this.questionsService = questionsService;
-            this.userManager = userManager;
+            this.quizisService = quizisService;
             this.difficultsService = difficultsService;
         }
 
-        public IActionResult Create()
+        public IActionResult Generate()
         {
-            var model = new CreateQuestionViewModel();
+            var model = new GenerateQuizViewModel();
             model.CategoriesItems = this.categoriesService.GetAllAsKeyValuePairs();
             model.DifficultsItems = this.difficultsService.GetAllAsKeyValuePairs();
             return this.View(model);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(CreateQuestionViewModel inputModel)
+        public async Task<IActionResult> Generate(GenerateQuizViewModel inputModel)
         {
             if (!this.ModelState.IsValid)
             {
@@ -44,28 +44,23 @@
                 return this.View(inputModel);
             }
 
-            CreateQuestionDto questionDto = new CreateQuestionDto()
+            GenerateQuizDto quizDto = new GenerateQuizDto
             {
-                QuestionValue = inputModel.QuestionValue,
-                CategoryId = inputModel.CategoryId,
+                Title = inputModel.Title,
                 DifficultId = inputModel.DifficultId,
-                Description = inputModel.Description,
-                AddedByUserId = this.userManager.GetUserId(this.User),
+                CategoryId = inputModel.CategoryId,
+                Questions = this.questionsService.GetQuestionsForQuiz(inputModel.CategoryId, inputModel.DifficultId, inputModel.Count),
             };
 
-            foreach (var answer in inputModel.Answers)
-            {
-                questionDto.Answers.Add(new CreateAnswerDto
-                {
-                    AnswerValue = answer.AnswerValue,
-                    Description = answer.Description,
-                    IsTrue = answer.IsTrue,
-                });
-            }
-
-            await this.questionsService.CreateAsync(questionDto);
-
+            await this.quizisService.CreateAsync(quizDto);
             return this.Redirect("/");
+        }
+
+        public IActionResult Index()
+        {
+            IndexQuizViewModel model = new IndexQuizViewModel();
+            model.Quizzes = this.quizisService.GetQuizzes();
+            return this.View(model);
         }
     }
 }

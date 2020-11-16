@@ -22,6 +22,7 @@
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
+            
         }
 
         public virtual DbSet<Answer> Answers { get; set; }
@@ -36,7 +37,7 @@
 
         public virtual DbSet<Quiz> Quizzes { get; set; }
 
-        public virtual DbSet<QuizisQuestions> QuizisQuestions { get; set; }
+        public virtual DbSet<QuizzesQuestions> QuizisQuestions { get; set; }
 
         public DbSet<Setting> Settings { get; set; }
 
@@ -87,7 +88,7 @@
                 foreignKey.DeleteBehavior = DeleteBehavior.Restrict;
             }
         }
-
+        
         private static void SetIsDeletedQueryFilter<T>(ModelBuilder builder)
             where T : class, IDeletableEntity
         {
@@ -96,6 +97,7 @@
 
         // Applies configurations
         private void ConfigureUserIdentityRelations(ModelBuilder builder)
+
              => builder.ApplyConfigurationsFromAssembly(this.GetType().Assembly);
 
         private void ApplyAuditInfoRules()

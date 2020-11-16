@@ -11,7 +11,7 @@
         public Question()
         {
             this.Answers = new HashSet<QuestionAnswer>();
-            this.Quizzes = new HashSet<QuizisQuestions>();
+            this.Quizzes = new HashSet<QuizzesQuestions>();
         }
 
         [Required]
@@ -41,6 +41,6 @@
 
         public virtual ICollection<QuestionAnswer> Answers { get; set; }
 
-        public virtual ICollection<QuizisQuestions> Quizzes { get; set; }
+        public virtual ICollection<QuizzesQuestions> Quizzes { get; set; }
     }
 }

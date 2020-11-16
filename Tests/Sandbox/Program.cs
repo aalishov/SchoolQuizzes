@@ -29,6 +29,8 @@
             ConfigureServices(serviceCollection);
             IServiceProvider serviceProvider = serviceCollection.BuildServiceProvider(true);
 
+            
+
             // Seed data on application startup
             using (var serviceScope = serviceProvider.CreateScope())
             {
@@ -36,6 +38,7 @@
                 dbContext.Database.Migrate();
                 new ApplicationDbContextSeeder().SeedAsync(dbContext, serviceScope.ServiceProvider).GetAwaiter().GetResult();
             }
+            
 
             using (var serviceScope = serviceProvider.CreateScope())
             {
@@ -45,6 +48,8 @@
                     opts => SandboxCode(opts, serviceProvider).GetAwaiter().GetResult(),
                     _ => 255);
             }
+
+           
         }
 
         private static async Task<int> SandboxCode(SandboxOptions options, IServiceProvider serviceProvider)

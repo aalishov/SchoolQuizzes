@@ -26,6 +26,6 @@
         [MaxLength(254)]
         public string Description { get; set; }
 
-        public virtual IEnumerable<QuestionAnswer> Questions { get; set; }
+        public virtual ICollection<QuestionAnswer> Questions { get; set; }
     }
 }

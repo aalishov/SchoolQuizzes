@@ -7,18 +7,16 @@
 
     using SchoolQuizzes.Data.Common.Models;
 
-    public class QuizisQuestions : BaseDeletableModel<int>
+    public class QuizzesQuestions : BaseDeletableModel<int>
     {
         [ForeignKey(nameof(Quiz))]
         public int QuizId { get; set; }
 
-        public virtual Quiz Answer { get; set; }
+        public virtual Quiz Quiz { get; set; }
 
         [ForeignKey(nameof(Question))]
         public int QuestionId { get; set; }
 
         public virtual Question Question { get; set; }
-
-
     }
 }

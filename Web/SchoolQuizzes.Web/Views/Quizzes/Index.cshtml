@@ -1,0 +1,14 @@
+﻿@model SchoolQuizzes.Web.ViewModels.Quizis.IndexQuizViewModel;
+@{
+    this.ViewData["Title"] = "Списък с тестове";
+}
+@foreach (var quiz in Model.Quizzes)
+{
+    <div>
+        <p>@quiz.Title</p>
+        @foreach (var question in quiz.Questions)
+        {
+            <p>@question.Question.QuestionValue</p>
+        }
+    </div>
+}

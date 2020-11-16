@@ -485,7 +485,7 @@ namespace SchoolQuizzes.Data.Migrations
                     b.ToTable("Quizzes");
                 });
 
-            modelBuilder.Entity("SchoolQuizzes.Data.Models.QuizisQuestions", b =>
+            modelBuilder.Entity("SchoolQuizzes.Data.Models.QuizzesQuestions", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -664,7 +664,7 @@ namespace SchoolQuizzes.Data.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("SchoolQuizzes.Data.Models.QuizisQuestions", b =>
+            modelBuilder.Entity("SchoolQuizzes.Data.Models.QuizzesQuestions", b =>
                 {
                     b.HasOne("SchoolQuizzes.Data.Models.Question", "Question")
                         .WithMany("Quizzes")
@@ -672,7 +672,7 @@ namespace SchoolQuizzes.Data.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("SchoolQuizzes.Data.Models.Quiz", "Answer")
+                    b.HasOne("SchoolQuizzes.Data.Models.Quiz", "Quiz")
                         .WithMany("Questions")
                         .HasForeignKey("QuizId")
                         .OnDelete(DeleteBehavior.Restrict)

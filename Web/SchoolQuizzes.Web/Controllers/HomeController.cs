@@ -27,6 +27,7 @@
                 AnswersCount = countDto.AnswersCount,
                 CategoriesCount = countDto.CategoriesCount,
                 QuestionsCount = countDto.QuestionsCount,
+                QuzziesCount = countDto.QuizzesCount,
             };
 
             return this.View(viewModel);

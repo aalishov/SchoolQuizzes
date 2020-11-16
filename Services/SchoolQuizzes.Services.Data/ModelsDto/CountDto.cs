@@ -9,5 +9,7 @@
         public int AnswersCount { get; set; }
 
         public int CategoriesCount { get; set; }
+
+        public int QuizzesCount { get; set; }
     }
 }

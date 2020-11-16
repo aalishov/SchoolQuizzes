@@ -1,0 +1,34 @@
+﻿@model SchoolQuizzes.Web.ViewModels.Quizis.GenerateQuizViewModel;
+
+@{
+    this.ViewData["Title"] = "Генериране на тест";
+    var categoriesItems = this.Model.CategoriesItems.Select(x => new SelectListItem(x.Value, x.Key));
+    var dificultsItems = this.Model.DifficultsItems.Select(x => new SelectListItem(x.Value, x.Key));
+}
+
+<form method="post" class=" col-md-6 offset-md-3">
+    <h1>@this.ViewData["Title"]</h1>
+    <div asp-validation-summary="All" class="text-danger"></div>
+    <div class=" form-group">
+        <label asp-for="Title"></label>
+        <input asp-for="Title" class="form-control" />
+        <span asp-validation-for="Title" class="text-danger"></span>
+    </div>
+    <div class=" form-group">
+        <label asp-for="CategoryId"></label>
+        <select asp-for="CategoryId" asp-items="categoriesItems" class="form-control"></select>
+        <span asp-validation-for="CategoryId" class="text-danger"></span>
+    </div>
+    <div class=" form-group">
+        <label asp-for="DifficultId"></label>
+        <select asp-for="DifficultId" asp-items="dificultsItems" class="form-control"></select>
+        <span asp-validation-for="DifficultId" class="text-danger"></span>
+    </div>
+    <div class=" form-group">
+        <label asp-for="Count"></label>
+        <input asp-for="Count" class="form-control" />
+        <span asp-validation-for="Count" class="text-danger"></span>
+    </div>
+    <input type="submit" class="btn btn-primary" value="Генерирай" />
+
+</form>
