@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
     using SchoolQuizzes.Data.Models;
@@ -11,6 +12,7 @@
     using SchoolQuizzes.Services.Data.ModelsDto;
     using SchoolQuizzes.Web.ViewModels.Questions;
 
+    [Authorize]
     public class QuestionsController : Controller
     {
         private readonly ICategoriesService categoriesService;

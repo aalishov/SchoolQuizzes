@@ -13,8 +13,10 @@
     using SchoolQuizzes.Services.Data.Contracts;
     using SchoolQuizzes.Services.Data.ModelsDto;
 
+  
     public class QuestionsService : IQuestionsService
     {
+        
         private readonly IDeletableEntityRepository<Question> questionsRepository;
         private readonly IDeletableEntityRepository<Answer> answerRepository;
 
@@ -52,6 +54,14 @@
 
             await this.questionsRepository.AddAsync(question);
             await this.questionsRepository.SaveChangesAsync();
+        }
+
+        public ICollection<Question> GetQuestionsByQuizId(int quizId)
+        {
+            return this.questionsRepository
+                .AllAsNoTracking()
+                .Where(x => x.Quizzes.Any(q => q.QuizId == quizId))
+                .ToList();
         }
 
         public ICollection<Question> GetQuestionsForQuiz(int categoryId, int difficultId, int count)

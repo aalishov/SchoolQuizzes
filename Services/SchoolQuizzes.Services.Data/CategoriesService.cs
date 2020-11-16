@@ -24,5 +24,10 @@
                   .Select(x => new KeyValuePair<string, string>(x.Id.ToString(), x.Name))
                   .ToList();
         }
+
+        public string GetCategoryNameById(int id)
+        {
+            return this.categories.AllAsNoTracking().FirstOrDefault(x => x.Id == id).Name;
+        }
     }
 }

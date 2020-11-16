@@ -10,5 +10,7 @@
         Task CreateAsync(GenerateQuizDto questionDto);
 
         ICollection<Quiz> GetQuizzes();
+
+        Quiz GetQuizById(int id);
     }
 }

@@ -4,6 +4,8 @@
 
     public interface IDifficultsService
     {
+        string GetDifficultNameById(int id);
+
         ICollection<KeyValuePair<string, string>> GetAllAsKeyValuePairs();
     }
 }

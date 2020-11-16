@@ -1,14 +1,25 @@
-﻿@model SchoolQuizzes.Web.ViewModels.Quizis.IndexQuizViewModel;
+﻿@model SchoolQuizzes.Web.ViewModels.Quizzes.IndexQuizViewModel;
 @{
     this.ViewData["Title"] = "Списък с тестове";
 }
-@foreach (var quiz in Model.Quizzes)
-{
-    <div>
-        <p>@quiz.Title</p>
-        @foreach (var question in quiz.Questions)
+<table class="table table-hover table-bordered table-striped ">
+    <thead class="thead-light">
+        <tr>
+            <th>Въпрос</th>
+            <th>Категория</th>
+            <th>Трудност</th>
+            <th>Операции</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var q in Model.Quizzes)
         {
-            <p>@question.Question.QuestionValue</p>
+            <tr>
+                <td>@q.Title</td>
+                <td>@q.Category</td>
+                <td>@q.Difficult</td>
+                <td><a asp-action="Details" asp-route-id="@q.Id">Детайли</a></td>
+            </tr>
         }
-    </div>
-}
+    </tbody>
+</table>

@@ -24,5 +24,10 @@
                   .Select(x => new KeyValuePair<string, string>(x.Id.ToString(), x.DifficultLevel))
                   .ToList();
         }
+
+        public string GetDifficultNameById(int id)
+        {
+            return this.difficultRepository.AllAsNoTracking().FirstOrDefault(x => x.Id == id).DifficultLevel;
+        }
     }
 }

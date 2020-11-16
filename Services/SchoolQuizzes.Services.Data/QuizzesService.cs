@@ -9,6 +9,7 @@
     using SchoolQuizzes.Services.Data.Contracts;
     using SchoolQuizzes.Services.Data.ModelsDto;
 
+    
     public class QuizzesService : IQuizzesService
     {
         private readonly IDeletableEntityRepository<Quiz> quizisRepository;
@@ -32,6 +33,11 @@
 
             await this.quizisRepository.AddAsync(quiz);
             await this.quizisRepository.SaveChangesAsync();
+        }
+
+        public Quiz GetQuizById(int id)
+        {
+            return this.quizisRepository.AllAsNoTracking().FirstOrDefault(x => x.Id == id);
         }
 
         public ICollection<Quiz> GetQuizzes()

@@ -1,0 +1,16 @@
+﻿@model SchoolQuizzes.Web.ViewModels.Quizzes.DetailsQuizViewModel;
+@{
+    this.ViewData["Title"] = "Детайли";
+}
+<h1>@Model.Title</h1>
+<div class=" form-group">
+    <label asp-for="Category"></label>
+    <span>@Model.Category</span>
+</div>
+@foreach (var item in Model.Questions)
+{
+    <div class=" form-group">
+        <label>Въпрос: </label>
+        <span>@item.QuestionValue</span>
+    </div>
+}

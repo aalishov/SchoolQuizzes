@@ -13,5 +13,7 @@
         Task CreateAsync(CreateQuestionDto questionDto);
 
         ICollection<Question> GetQuestionsForQuiz(int categoryId, int difficultId, int count);
+
+        ICollection<Question> GetQuestionsByQuizId(int quizId);
     }
 }
