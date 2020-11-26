@@ -21,7 +21,7 @@
 
         [Required]
         [MaxLength(254)]
-        public string AnswerValue { get; set; }
+        public string Value { get; set; }
 
         [MaxLength(254)]
         public string Description { get; set; }

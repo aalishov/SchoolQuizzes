@@ -1,17 +1,14 @@
 ﻿namespace SchoolQuizzes.Services.Data.Contracts
 {
-    using System;
     using System.Collections.Generic;
-    using System.Text;
     using System.Threading.Tasks;
 
     using SchoolQuizzes.Data.Models;
-    using SchoolQuizzes.Services.Data.ModelsDto;
+    using SchoolQuizzes.Web.ViewModels.Questions;
 
     public interface IQuestionsService
     {
-        Task CreateAsync(CreateQuestionDto questionDto);
-
+        Task CreateAsync(CreateQuestionViewModel questionDto);
         ICollection<Question> GetQuestionsForQuiz(int categoryId, int difficultId, int count);
 
         ICollection<Question> GetQuestionsByQuizId(int quizId);

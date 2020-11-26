@@ -18,9 +18,9 @@
                 return;
             }
 
-            await dbContext.DifficultLevels.AddAsync(new Difficult { DifficultLevel = "Лесно", });
-            await dbContext.DifficultLevels.AddAsync(new Difficult { DifficultLevel = "Средно", });
-            await dbContext.DifficultLevels.AddAsync(new Difficult { DifficultLevel = "Трудно", });
+            await dbContext.DifficultLevels.AddAsync(new Difficult { Name = "Лесно", });
+            await dbContext.DifficultLevels.AddAsync(new Difficult { Name = "Средно", });
+            await dbContext.DifficultLevels.AddAsync(new Difficult { Name = "Трудно", });
         }
     }
 }

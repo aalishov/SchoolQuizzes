@@ -19,15 +19,15 @@
         public ICollection<KeyValuePair<string, string>> GetAllAsKeyValuePairs()
         {
             return this.difficultRepository.AllAsNoTracking()
-                  .Select(x => new { x.Id, x.DifficultLevel })
+                  .Select(x => new { x.Id, x.Name })
                   .ToList()
-                  .Select(x => new KeyValuePair<string, string>(x.Id.ToString(), x.DifficultLevel))
+                  .Select(x => new KeyValuePair<string, string>(x.Id.ToString(), x.Name))
                   .ToList();
         }
 
         public string GetDifficultNameById(int id)
         {
-            return this.difficultRepository.AllAsNoTracking().FirstOrDefault(x => x.Id == id).DifficultLevel;
+            return this.difficultRepository.AllAsNoTracking().FirstOrDefault(x => x.Id == id).Name;
         }
     }
 }

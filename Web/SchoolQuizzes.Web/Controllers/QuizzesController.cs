@@ -1,31 +1,29 @@
 ﻿namespace SchoolQuizzes.Web.Controllers
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
     using System.Threading.Tasks;
+
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
-    using SchoolQuizzes.Data;
     using SchoolQuizzes.Services.Data.Contracts;
     using SchoolQuizzes.Services.Data.ModelsDto;
-    using SchoolQuizzes.Web.ViewModels.Questions;
     using SchoolQuizzes.Web.ViewModels.Quizzes;
 
     [Authorize]
     public class QuizzesController : Controller
     {
+        private readonly IAnswersService answersService;
         private readonly ICategoriesService categoriesService;
         private readonly IDifficultsService difficultsService;
         private readonly IQuestionsService questionsService;
         private readonly IQuizzesService quizzesService;
 
-        public QuizzesController(ICategoriesService categoriesService, IDifficultsService difficultsService, IQuestionsService questionsService, IQuizzesService quizzesService)
+        public QuizzesController(IAnswersService answersService, ICategoriesService categoriesService, IDifficultsService difficultsService, IQuestionsService questionsService, IQuizzesService quizzesService)
         {
+            this.answersService = answersService;
+            this.difficultsService = difficultsService;
             this.categoriesService = categoriesService;
             this.questionsService = questionsService;
             this.quizzesService = quizzesService;
-            this.difficultsService = difficultsService;
         }
 
         public IActionResult Generate()
@@ -55,7 +53,7 @@
             };
 
             await this.quizzesService.CreateAsync(quizDto);
-            return this.Redirect("/");
+            return this.Redirect("/Quizzes/Index");
         }
 
         public IActionResult Index()
@@ -79,18 +77,7 @@
 
         public IActionResult Details(int id)
         {
-            var quiz = this.quizzesService.GetQuizById(id);
-            var questions = this.questionsService.GetQuestionsByQuizId(id);
-
-            DetailsQuizViewModel model = new DetailsQuizViewModel();
-
-            model.Title = quiz.Title;
-            model.Difficult = this.difficultsService.GetDifficultNameById(quiz.DifficultId);
-            model.Category = this.categoriesService.GetCategoryNameById(quiz.CategoryId);
-            foreach (var q in questions)
-            {
-                model.Questions.Add(new QuestionQuizViewModel { QuestionValue = q.QuestionValue });
-            }
+            DetailsQuizViewModel model = this.quizzesService.GetQuizWithQuestionsAndAnswersById(id);
 
             return this.View(model);
         }

@@ -1,13 +1,14 @@
-﻿using Microsoft.AspNetCore.Identity;
-using SchoolQuizzes.Data.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace SchoolQuizzes.Data.Seeding
+﻿namespace SchoolQuizzes.Data.Seeding
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
+    using System.Threading.Tasks;
+
+    using Microsoft.AspNetCore.Identity;
+    using SchoolQuizzes.Data.Models;
+
     public class UserSeeder : ISeeder
     {
         public async Task SeedAsync(ApplicationDbContext dbContext, IServiceProvider serviceProvider)
@@ -16,12 +17,14 @@ namespace SchoolQuizzes.Data.Seeding
             {
                 return;
             }
+
             await dbContext.Users.AddAsync(new ApplicationUser()
             {
                 UserName = "alishov",
                 Email = "aalishov@live.com",
-                //passwprdHash = passowrd - 123456
-                PasswordHash = "123456"
+
+                // passwprdHash = passowrd - 123456
+                PasswordHash = "123456",
             });
         }
     }

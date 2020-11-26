@@ -13,7 +13,9 @@
             this.Answers = new HashSet<AnswerQuizViewModel>();
         }
 
-        public string QuestionValue { get; set; }
+        public int Id { get; set; }
+
+        public string Value { get; set; }
 
         public ICollection<AnswerQuizViewModel> Answers { get; set; }
     }

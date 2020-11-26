@@ -82,7 +82,7 @@ namespace SchoolQuizzes.Data.Migrations
                     ModifiedOn = table.Column<DateTime>(nullable: true),
                     IsDeleted = table.Column<bool>(nullable: false),
                     DeletedOn = table.Column<DateTime>(nullable: true),
-                    DifficultLevel = table.Column<string>(maxLength: 30, nullable: false),
+                    Name = table.Column<string>(maxLength: 30, nullable: false),
                     Description = table.Column<string>(maxLength: 127, nullable: true)
                 },
                 constraints: table =>
@@ -140,7 +140,7 @@ namespace SchoolQuizzes.Data.Migrations
                     IsDeleted = table.Column<bool>(nullable: false),
                     DeletedOn = table.Column<DateTime>(nullable: true),
                     AddedByUserId = table.Column<string>(nullable: false),
-                    AnswerValue = table.Column<string>(maxLength: 254, nullable: false),
+                    Value = table.Column<string>(maxLength: 254, nullable: false),
                     Description = table.Column<string>(maxLength: 254, nullable: true)
                 },
                 constraints: table =>
@@ -250,7 +250,7 @@ namespace SchoolQuizzes.Data.Migrations
                     IsDeleted = table.Column<bool>(nullable: false),
                     DeletedOn = table.Column<DateTime>(nullable: true),
                     AddedByUserId = table.Column<string>(nullable: false),
-                    QuestionValue = table.Column<string>(maxLength: 254, nullable: false),
+                    Value = table.Column<string>(maxLength: 254, nullable: false),
                     Description = table.Column<string>(maxLength: 254, nullable: true),
                     CategoryId = table.Column<int>(nullable: false),
                     DifficultId = table.Column<int>(nullable: false)

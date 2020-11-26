@@ -1,9 +1,7 @@
 ﻿namespace SchoolQuizzes.Web.Controllers
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
     using System.Threading.Tasks;
+
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
@@ -28,6 +26,7 @@
             this.difficultsService = difficultsService;
         }
 
+        [HttpGet]
         public IActionResult Create()
         {
             var model = new CreateQuestionViewModel();
@@ -46,28 +45,12 @@
                 return this.View(inputModel);
             }
 
-            CreateQuestionDto questionDto = new CreateQuestionDto()
-            {
-                QuestionValue = inputModel.QuestionValue,
-                CategoryId = inputModel.CategoryId,
-                DifficultId = inputModel.DifficultId,
-                Description = inputModel.Description,
-                AddedByUserId = this.userManager.GetUserId(this.User),
-            };
+            inputModel.UserId = this.userManager.GetUserId(this.User);
 
-            foreach (var answer in inputModel.Answers)
-            {
-                questionDto.Answers.Add(new CreateAnswerDto
-                {
-                    AnswerValue = answer.AnswerValue,
-                    Description = answer.Description,
-                    IsTrue = answer.IsTrue,
-                });
-            }
-
-            await this.questionsService.CreateAsync(questionDto);
+            await this.questionsService.CreateAsync(inputModel);
 
             return this.Redirect("/");
         }
+
     }
 }

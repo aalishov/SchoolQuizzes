@@ -1,7 +1,6 @@
 ﻿namespace SchoolQuizzes.Data
 {
     using System;
-    using System.ComponentModel.DataAnnotations.Schema;
     using System.Linq;
     using System.Reflection;
     using System.Threading;
@@ -22,10 +21,13 @@
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
-            
         }
 
         public virtual DbSet<Answer> Answers { get; set; }
+
+        public virtual DbSet<Take> Takes { get; set; }
+
+        public virtual DbSet<TakedAnswer> TakedAnswers { get; set; }
 
         public virtual DbSet<Category> Categories { get; set; }
 
@@ -88,7 +90,7 @@
                 foreignKey.DeleteBehavior = DeleteBehavior.Restrict;
             }
         }
-        
+
         private static void SetIsDeletedQueryFilter<T>(ModelBuilder builder)
             where T : class, IDeletableEntity
         {

@@ -1,4 +1,4 @@
-﻿namespace SchoolQuizzes.Web.ViewModels.Questions
+﻿namespace SchoolQuizzes.Web.ViewModels.Answers
 {
     using System;
     using System.Collections.Generic;

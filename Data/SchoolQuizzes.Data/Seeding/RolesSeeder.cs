@@ -4,11 +4,10 @@
     using System.Linq;
     using System.Threading.Tasks;
 
-    using SchoolQuizzes.Common;
-    using SchoolQuizzes.Data.Models;
-
     using Microsoft.AspNetCore.Identity;
     using Microsoft.Extensions.DependencyInjection;
+    using SchoolQuizzes.Common;
+    using SchoolQuizzes.Data.Models;
 
     internal class RolesSeeder : ISeeder
     {

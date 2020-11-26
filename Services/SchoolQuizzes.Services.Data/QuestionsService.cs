@@ -1,22 +1,17 @@
 ﻿namespace SchoolQuizzes.Services.Data
 {
-    using System;
     using System.Collections.Generic;
     using System.Linq;
-    using System.Security.Cryptography.X509Certificates;
-    using System.Text;
     using System.Threading.Tasks;
 
-    using SchoolQuizzes.Data.Common.Models;
     using SchoolQuizzes.Data.Common.Repositories;
     using SchoolQuizzes.Data.Models;
     using SchoolQuizzes.Services.Data.Contracts;
     using SchoolQuizzes.Services.Data.ModelsDto;
+    using SchoolQuizzes.Web.ViewModels.Questions;
 
-  
     public class QuestionsService : IQuestionsService
     {
-        
         private readonly IDeletableEntityRepository<Question> questionsRepository;
         private readonly IDeletableEntityRepository<Answer> answerRepository;
 
@@ -26,26 +21,26 @@
             this.answerRepository = answerRepository;
         }
 
-        public async Task CreateAsync(CreateQuestionDto input)
+        public async Task CreateAsync(CreateQuestionViewModel input)
         {
             Question question = new Question();
-            question.QuestionValue = input.QuestionValue;
+            question.Value = input.QuestionValue;
             question.DifficultId = input.DifficultId;
             question.CategoryId = input.CategoryId;
             question.Description = input.Description;
-            question.AddedByUserId = input.AddedByUserId;
+            question.AddedByUserId = input.UserId;
 
             foreach (var inputAnswer in input.Answers)
             {
-                var answer = this.answerRepository.All().FirstOrDefault(a => a.AnswerValue == inputAnswer.AnswerValue);
+                var answer = this.answerRepository.All().FirstOrDefault(a => a.Value == inputAnswer.AnswerValue);
                 bool isCorrect = inputAnswer.IsTrue == "on" ? true : false;
                 if (answer == null)
                 {
                     answer = new Answer()
                     {
-                        AnswerValue = inputAnswer.AnswerValue,
+                        Value = inputAnswer.AnswerValue,
                         Description = inputAnswer.Description,
-                        AddedByUserId = input.AddedByUserId,
+                        AddedByUserId = input.UserId,
                     };
                 }
 
@@ -64,6 +59,7 @@
                 .ToList();
         }
 
+     
         public ICollection<Question> GetQuestionsForQuiz(int categoryId, int difficultId, int count)
         {
             return this.questionsRepository.AllAsNoTracking()

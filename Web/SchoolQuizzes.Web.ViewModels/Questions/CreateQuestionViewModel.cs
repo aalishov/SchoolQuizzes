@@ -6,6 +6,7 @@
     using System.Text;
 
     using SchoolQuizzes.Data.Models;
+    using SchoolQuizzes.Web.ViewModels.Answers;
 
     public class CreateQuestionViewModel
     {
@@ -27,6 +28,8 @@
 
         [Display(Name = "Трудност")]
         public int DifficultId { get; set; }
+
+        public string UserId { get; set; }
 
         [Display(Name = "Отговори:")]
         public ICollection<CreateAnswerViewModel> Answers { get; set; }

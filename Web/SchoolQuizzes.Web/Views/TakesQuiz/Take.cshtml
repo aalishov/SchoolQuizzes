@@ -1,0 +1,56 @@
+﻿@model SchoolQuizzes.Web.ViewModels.Takes.TakeQuestionAnswerViewModel;
+@{
+    this.ViewData["Title"] = "Детайли";
+}
+<h1>@Model.Title</h1>
+
+<form method="post">
+    <input type="hidden" asp-for="Title" value="@Model.Title" />
+    <input type="hidden" asp-for="Question" value="@Model.Question" />
+    <input type="hidden" asp-for="CurrentQuestionId" value="@Model.CurrentQuestionId" />
+    <input type="hidden" asp-for="PageNumber" value="@Model.PageNumber" />
+    <input type="hidden" asp-for="ElementsCount" value="@Model.ElementsCount" />
+
+    <p class="lead">@Model.Question</p>
+    <div class=" justify-content-lg-start">
+        @foreach (var answer in Model.Answers)
+        {
+            <input type="radio" value="@answer" asp-for="UserAnswer" />
+            <p class="lead m-3">@answer</p>
+        }
+    </div>
+    <input type="submit" class="btn btn-primary" value="Предай" />
+
+    <nav aria-label="...">
+        <ul class="pagination justify-content-center">
+            @*<li class="page-item @if (!Model.HasPreviousPage) { <text>disabled</text> }">
+                    <a class="page-link" asp-action="Take" asp-route-id="@Model.PreviousPageNumber">Previous</a>
+                </li>*@
+            @for (int i = Model.PageNumber - 4; i < Model.PageNumber; i++)
+            {
+                if (i > 0)
+                {
+                    <li class="page-item"><a class="page-link" asp-action="Take" asp-route-id="@i">@i</a></li>
+                }
+            }
+            <li class="page-item active" aria-current="page">
+                <span class="page-link">
+                    @Model.PageNumber
+                    <span class="sr-only">(current)</span>
+                </span>
+            </li>
+            @for (int i = Model.PageNumber + 1; i <= Model.PageNumber + 4; i++)
+            {
+                if (i <= Model.PagesCount)
+                {
+                    <li class="page-item"><a class="page-link" asp-action="Take" asp-route-id="@i">@i</a></li>
+                }
+            }
+            @*<li class="page-item @if (!Model.HasNextPage) { <text>disabled</text> }">
+                    <a class="page-link" asp-action="Take" asp-route-id="@Model.NextPageNumber">Next</a>
+                </li>*@
+        </ul>
+    </nav>
+
+</form>
+

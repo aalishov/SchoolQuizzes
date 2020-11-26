@@ -10,7 +10,7 @@ using SchoolQuizzes.Data;
 namespace SchoolQuizzes.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20201115213556_InitialMigration")]
+    [Migration("20201120174539_InitialMigration")]
     partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -136,11 +136,6 @@ namespace SchoolQuizzes.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("AnswerValue")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(254)")
-                        .HasMaxLength(254);
-
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
 
@@ -156,6 +151,11 @@ namespace SchoolQuizzes.Data.Migrations
 
                     b.Property<DateTime?>("ModifiedOn")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("Value")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(254)")
+                        .HasMaxLength(254);
 
                     b.HasKey("Id");
 
@@ -338,16 +338,16 @@ namespace SchoolQuizzes.Data.Migrations
                         .HasColumnType("nvarchar(127)")
                         .HasMaxLength(127);
 
-                    b.Property<string>("DifficultLevel")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(30)")
-                        .HasMaxLength(30);
-
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
                     b.Property<DateTime?>("ModifiedOn")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(30)")
+                        .HasMaxLength(30);
 
                     b.HasKey("Id");
 
@@ -389,7 +389,7 @@ namespace SchoolQuizzes.Data.Migrations
                     b.Property<DateTime?>("ModifiedOn")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("QuestionValue")
+                    b.Property<string>("Value")
                         .IsRequired()
                         .HasColumnType("nvarchar(254)")
                         .HasMaxLength(254);

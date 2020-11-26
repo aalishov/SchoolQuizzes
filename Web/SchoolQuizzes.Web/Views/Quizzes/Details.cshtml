@@ -12,9 +12,20 @@
     <span>@Model.Difficult</span>
 </div>
 <h2>Въпроси в теста: </h2>
-@foreach (var item in Model.Questions)
-{
-    <div class=" form-group">
-        <p class="lead">@item.QuestionValue</p>
-    </div>
-}
+<div class="row justify-content-lg-start">
+    @foreach (var question in Model.Questions)
+    {
+
+        <div class="media col-md-4">
+            <div class="media-body">
+                <h5 class="mt-0">@question.Value</h5>
+                @foreach (var answer in question.Answers)
+                {
+                    <p class="lead m-3">@answer.Value</p>
+                }
+            </div>
+
+        </div>
+
+    }
+</div>

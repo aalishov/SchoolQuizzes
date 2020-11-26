@@ -10,8 +10,9 @@
     {
         public DetailsQuizViewModel()
         {
-            this.Questions = new HashSet<QuestionQuizViewModel>();
+            this.Questions = new List<QuestionQuizViewModel>();
         }
+
         public int Id { get; set; }
 
         public string Title { get; set; }

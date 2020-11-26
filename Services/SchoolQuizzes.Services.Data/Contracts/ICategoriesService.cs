@@ -4,8 +4,8 @@
 
     public interface ICategoriesService
     {
-        string GetCategoryNameById(int id);
+        public string GetCategoryNameById(int id);
 
-        ICollection<KeyValuePair<string, string>> GetAllAsKeyValuePairs();
+        public ICollection<KeyValuePair<string, string>> GetAllAsKeyValuePairs();
     }
 }

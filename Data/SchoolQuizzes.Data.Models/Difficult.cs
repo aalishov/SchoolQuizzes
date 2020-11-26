@@ -18,7 +18,7 @@
         // easy, medium, or difficult
         [Required]
         [MaxLength(30)]
-        public string DifficultLevel { get; set; }
+        public string Name { get; set; }
 
         [MaxLength(127)]
         public string Description { get; set; }
