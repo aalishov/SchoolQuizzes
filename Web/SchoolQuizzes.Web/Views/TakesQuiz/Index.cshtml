@@ -1,6 +1,11 @@
-﻿@{
+﻿@model SchoolQuizzes.Web.ViewModels.Takes.TakeIndexViewModel
+@{
     this.ViewData["Title"] = "Начало на тест: " + ViewBag.Title;
 }
 <h1>@this.ViewData["Title"]</h1>
 
-<a class="btn btn-success" asp-area="" asp-controller="TakesQuiz" asp-action="Take">Започни този тест</a>
+<form method="post">
+    <label asp-for="QuizId"></label>
+    <input asp-for="QuizId" />
+    <input type="submit" class="btn btn-success" />
+</form>

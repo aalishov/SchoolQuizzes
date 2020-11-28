@@ -21,5 +21,7 @@
         public int ElementsCount { get; set; }
 
         public int ItemsPerPage { get; set; }
+
+        public string Action { get; set; }
     }
 }

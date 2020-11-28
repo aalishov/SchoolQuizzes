@@ -1,5 +1,6 @@
 ﻿namespace SchoolQuizzes.Web.Controllers
 {
+    using System.Security.Claims;
     using System.Threading.Tasks;
 
     using Microsoft.AspNetCore.Authorization;
@@ -50,7 +51,8 @@
                 DifficultId = inputModel.DifficultId,
                 CategoryId = inputModel.CategoryId,
                 Questions = this.questionsService.GetQuestionsForQuiz(inputModel.CategoryId, inputModel.DifficultId, inputModel.Count),
-            };
+                UserId = this.User.FindFirst(ClaimTypes.NameIdentifier).Value,
+        };
 
             await this.quizzesService.CreateAsync(quizDto);
             return this.Redirect("/Quizzes/Index");

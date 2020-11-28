@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations.Schema;
     using System.Text;
 
     using SchoolQuizzes.Data.Common.Models;
@@ -14,6 +15,12 @@
             this.Questions = new HashSet<Question>();
             this.Quizzes = new HashSet<Quiz>();
         }
+
+        [Required]
+        [ForeignKey(nameof(ApplicationUser))]
+        public string AddedByUserId { get; set; }
+
+        public ApplicationUser AddedByUser { get; set; }
 
         [Required]
         [MaxLength(50)]

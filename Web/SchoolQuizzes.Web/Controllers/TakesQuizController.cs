@@ -1,45 +1,84 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Routing;
-using SchoolQuizzes.Services.Data.Contracts;
-using SchoolQuizzes.Web.ViewModels.Quizzes;
-using SchoolQuizzes.Web.ViewModels.Takes;
-using System.Linq;
-
-namespace SchoolQuizzes.Web.Controllers
+﻿namespace SchoolQuizzes.Web.Controllers
 {
+    using System.Linq;
+    using System.Threading.Tasks;
+    using Microsoft.AspNetCore.Authorization;
+    using Microsoft.AspNetCore.Identity;
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.Routing;
+    using SchoolQuizzes.Data.Models;
+    using SchoolQuizzes.Services.Data.Contracts;
+    using SchoolQuizzes.Web.ViewModels.Quizzes;
+    using SchoolQuizzes.Web.ViewModels.Takes;
+
+    [Authorize]
     public class TakesQuizController : BaseController
     {
         private readonly IQuizzesService quizzesService;
         private readonly ITakesService takesService;
+        private readonly Microsoft.AspNetCore.Identity.UserManager<ApplicationUser> userManager;
 
-        public TakesQuizController(IQuizzesService quizzesService, ITakesService takesService)
+        public TakesQuizController(IQuizzesService quizzesService, ITakesService takesService, UserManager<ApplicationUser> userManager)
         {
             this.quizzesService = quizzesService;
             this.takesService = takesService;
+            this.userManager = userManager;
         }
 
         [HttpGet]
-        public IActionResult Index(int id = 1)
+        public IActionResult Index()
         {
-            // TODO: Make id to come from somewhere
-            string model = this.quizzesService.GetGuizNameById(id);
-            this.ViewBag.Title = model;
+            if (this.takesService.IsUserHasNotFinishedQuiz(this.userManager.GetUserId(this.User)))
+            {
+                return this.RedirectToAction("IndexContinue");
+            }
+            else
+            {
+                return this.View();
+            }
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Index(TakeIndexViewModel model)
+        {
+            await this.takesService.CreateTakeAsync(this.userManager.GetUserId(this.User), model.QuizId);
+            return this.RedirectToAction("Take");
+        }
+
+        [HttpGet]
+        public IActionResult IndexContinue()
+        {
             return this.View();
         }
 
         [HttpGet]
         public IActionResult Take(int id = 1)
         {
-            TakeQuestionAnswerViewModel model = this.takesService.GetExamQuestion(id);
+            TakeQuestionAnswerViewModel model = this.takesService.GetExamQuestion(this.userManager.GetUserId(this.User), id);
+            model.Action = "Take";
             return this.View(model);
         }
 
         [HttpPost]
-        public IActionResult Take(TakeQuestionAnswerViewModel input)
+        public async Task<IActionResult> Take(TakeQuestionAnswerViewModel input)
         {
-            return this.Json(input);
-            //return this.RedirectToAction("Take", new RouteValueDictionary(
-            //         new { controller = "TakesQuiz", action = "Take", Id = ++input.PageNumber }));
+            await this.takesService.SaveTakedAnswerAsync(this.userManager.GetUserId(this.User), input.CurrentQuestionId, input.UserAnswerId);
+
+            if (input.PageNumber + 1 > input.QuestionsCount)
+            {
+                input.PageNumber = 0;
+            }
+
+            return this.RedirectToAction("Take", new RouteValueDictionary(
+                     new { controller = "TakesQuiz", action = "Take", Id = ++input.PageNumber }));
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Finish(int quizId)
+        {
+            await this.takesService.FinishQuizAsync(this.userManager.GetUserId(this.User), quizId);
+
+            return this.View();
         }
     }
 }

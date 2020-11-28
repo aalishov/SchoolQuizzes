@@ -15,6 +15,12 @@
             this.Quizzes = new HashSet<Quiz>();
         }
 
+        [Required]
+        [ForeignKey(nameof(ApplicationUser))]
+        public string AddedByUserId { get; set; }
+
+        public ApplicationUser AddedByUser { get; set; }
+
         // easy, medium, or difficult
         [Required]
         [MaxLength(30)]

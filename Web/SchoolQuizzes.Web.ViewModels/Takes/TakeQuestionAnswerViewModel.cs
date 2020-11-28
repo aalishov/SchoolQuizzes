@@ -1,16 +1,15 @@
 ﻿namespace SchoolQuizzes.Web.ViewModels.Takes
 {
-    using System;
     using System.Collections.Generic;
-    using System.Text;
 
+    using SchoolQuizzes.Web.ViewModels.Answers;
     using SchoolQuizzes.Web.ViewModels.Shared;
 
     public class TakeQuestionAnswerViewModel : PagingViewModel
     {
         public TakeQuestionAnswerViewModel()
         {
-            this.Answers = new List<string>();
+            this.Answers = new List<AnswerQuizViewModel>();
         }
 
         public int QuizId { get; set; }
@@ -21,8 +20,12 @@
 
         public string Question { get; set; }
 
-        public ICollection<string> Answers { get; set; }
+        public int QuestionsCount { get; set; }
 
-        public string UserAnswer { get; set; }
+        public ICollection<AnswerQuizViewModel> Answers { get; set; }
+
+        public int UserAnswerId { get; set; }
+
+        public int? TakenAnswer { get; set; }
     }
 }

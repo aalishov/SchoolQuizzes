@@ -16,6 +16,12 @@
         }
 
         [Required]
+        [ForeignKey(nameof(ApplicationUser))]
+        public string AddedByUserId { get; set; }
+
+        public ApplicationUser AddedByUser { get; set; }
+
+        [Required]
         [MaxLength(254)]
         public string Title { get; set; }
 

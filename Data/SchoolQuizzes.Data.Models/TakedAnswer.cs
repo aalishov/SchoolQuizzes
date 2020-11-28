@@ -1,13 +1,14 @@
-﻿using SchoolQuizzes.Data.Common.Models;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Text;
-
-namespace SchoolQuizzes.Data.Models
+﻿namespace SchoolQuizzes.Data.Models
 {
-    public class TakedAnswer : BaseDeletableModel<int>
+    using System;
+    using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations.Schema;
+    using System.Text;
+
+    using SchoolQuizzes.Data.Common.Models;
+
+    public class TakedAnswer
     {
         [Required]
         [ForeignKey(nameof(Question))]
@@ -21,6 +22,10 @@ namespace SchoolQuizzes.Data.Models
 
         public Answer Answer { get; set; }
 
-        public bool IsCorrect { get; set; }
+        [Required]
+        [ForeignKey(nameof(Take))]
+        public int TakeId { get; set; }
+
+        public Take Take { get; set; }
     }
 }

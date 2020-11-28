@@ -7,7 +7,7 @@
 
     using SchoolQuizzes.Data.Common.Models;
 
-    public class QuizzesQuestions : BaseDeletableModel<int>
+    public class QuizzesQuestions
     {
         [ForeignKey(nameof(Quiz))]
         public int QuizId { get; set; }

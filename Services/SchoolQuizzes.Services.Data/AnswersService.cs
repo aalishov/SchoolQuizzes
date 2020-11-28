@@ -6,6 +6,7 @@
     using SchoolQuizzes.Data.Common.Repositories;
     using SchoolQuizzes.Data.Models;
     using SchoolQuizzes.Services.Data.Contracts;
+    using SchoolQuizzes.Web.ViewModels.Answers;
 
     public class AnswersService : IAnswersService
     {
@@ -22,6 +23,15 @@
                 .AllAsNoTracking()
                 .Where(x => x.Questions.Any(q => q.QuestionId == questionId))
                 .ToList();
+        }
+
+        public ICollection<AnswerQuizViewModel> GetQuestionAnswersFoTakesById(int questionId)
+        {
+            return this.answerRepository
+                    .AllAsNoTracking()
+                    .Where(x => x.Questions.Any(q => q.QuestionId == questionId))
+                    .Select(x => new AnswerQuizViewModel { Id = x.Id, Value = x.Value })
+                    .ToList();
         }
     }
 }

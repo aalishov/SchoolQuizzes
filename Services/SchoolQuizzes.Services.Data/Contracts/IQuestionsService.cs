@@ -8,9 +8,12 @@
 
     public interface IQuestionsService
     {
-        Task CreateAsync(CreateQuestionViewModel questionDto);
-        ICollection<Question> GetQuestionsForQuiz(int categoryId, int difficultId, int count);
+        public Task CreateAsync(CreateQuestionViewModel questionDto);
 
-        ICollection<Question> GetQuestionsByQuizId(int quizId);
+        public ICollection<Question> GetQuestionsForQuiz(int categoryId, int difficultId, int count);
+
+        public ICollection<Question> GetQuestionsByQuizId(int quizId);
+
+        public bool IsCorrectAnswer(int questionId, int asnwerId);
     }
 }

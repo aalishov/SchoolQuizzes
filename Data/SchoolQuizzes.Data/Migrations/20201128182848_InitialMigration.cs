@@ -55,42 +55,6 @@ namespace SchoolQuizzes.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Categories",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    CreatedOn = table.Column<DateTime>(nullable: false),
-                    ModifiedOn = table.Column<DateTime>(nullable: true),
-                    IsDeleted = table.Column<bool>(nullable: false),
-                    DeletedOn = table.Column<DateTime>(nullable: true),
-                    Name = table.Column<string>(maxLength: 50, nullable: false),
-                    Description = table.Column<string>(maxLength: 254, nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Categories", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "DifficultLevels",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    CreatedOn = table.Column<DateTime>(nullable: false),
-                    ModifiedOn = table.Column<DateTime>(nullable: true),
-                    IsDeleted = table.Column<bool>(nullable: false),
-                    DeletedOn = table.Column<DateTime>(nullable: true),
-                    Name = table.Column<string>(maxLength: 30, nullable: false),
-                    Description = table.Column<string>(maxLength: 127, nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_DifficultLevels", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Settings",
                 columns: table => new
                 {
@@ -140,8 +104,7 @@ namespace SchoolQuizzes.Data.Migrations
                     IsDeleted = table.Column<bool>(nullable: false),
                     DeletedOn = table.Column<DateTime>(nullable: true),
                     AddedByUserId = table.Column<string>(nullable: false),
-                    Value = table.Column<string>(maxLength: 254, nullable: false),
-                    Description = table.Column<string>(maxLength: 254, nullable: true)
+                    Value = table.Column<string>(maxLength: 254, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -240,6 +203,56 @@ namespace SchoolQuizzes.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Categories",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    CreatedOn = table.Column<DateTime>(nullable: false),
+                    ModifiedOn = table.Column<DateTime>(nullable: true),
+                    IsDeleted = table.Column<bool>(nullable: false),
+                    DeletedOn = table.Column<DateTime>(nullable: true),
+                    AddedByUserId = table.Column<string>(nullable: false),
+                    Name = table.Column<string>(maxLength: 50, nullable: false),
+                    Description = table.Column<string>(maxLength: 254, nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Categories", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Categories_AspNetUsers_AddedByUserId",
+                        column: x => x.AddedByUserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "DifficultLevels",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    CreatedOn = table.Column<DateTime>(nullable: false),
+                    ModifiedOn = table.Column<DateTime>(nullable: true),
+                    IsDeleted = table.Column<bool>(nullable: false),
+                    DeletedOn = table.Column<DateTime>(nullable: true),
+                    AddedByUserId = table.Column<string>(nullable: false),
+                    Name = table.Column<string>(maxLength: 30, nullable: false),
+                    Description = table.Column<string>(maxLength: 127, nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_DifficultLevels", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_DifficultLevels_AspNetUsers_AddedByUserId",
+                        column: x => x.AddedByUserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Questions",
                 columns: table => new
                 {
@@ -288,6 +301,7 @@ namespace SchoolQuizzes.Data.Migrations
                     ModifiedOn = table.Column<DateTime>(nullable: true),
                     IsDeleted = table.Column<bool>(nullable: false),
                     DeletedOn = table.Column<DateTime>(nullable: true),
+                    AddedByUserId = table.Column<string>(nullable: false),
                     Title = table.Column<string>(maxLength: 254, nullable: false),
                     CategoryId = table.Column<int>(nullable: false),
                     DifficultId = table.Column<int>(nullable: false)
@@ -295,6 +309,12 @@ namespace SchoolQuizzes.Data.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Quizzes", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Quizzes_AspNetUsers_AddedByUserId",
+                        column: x => x.AddedByUserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Quizzes_Categories_CategoryId",
                         column: x => x.CategoryId,
@@ -313,19 +333,13 @@ namespace SchoolQuizzes.Data.Migrations
                 name: "QuestionsAnswers",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    CreatedOn = table.Column<DateTime>(nullable: false),
-                    ModifiedOn = table.Column<DateTime>(nullable: true),
-                    IsDeleted = table.Column<bool>(nullable: false),
-                    DeletedOn = table.Column<DateTime>(nullable: true),
                     QuestionId = table.Column<int>(nullable: false),
                     AnswerId = table.Column<int>(nullable: false),
                     IsCorrect = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_QuestionsAnswers", x => x.Id);
+                    table.PrimaryKey("PK_QuestionsAnswers", x => new { x.AnswerId, x.QuestionId });
                     table.ForeignKey(
                         name: "FK_QuestionsAnswers_Answers_AnswerId",
                         column: x => x.AnswerId,
@@ -344,18 +358,12 @@ namespace SchoolQuizzes.Data.Migrations
                 name: "QuizisQuestions",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    CreatedOn = table.Column<DateTime>(nullable: false),
-                    ModifiedOn = table.Column<DateTime>(nullable: true),
-                    IsDeleted = table.Column<bool>(nullable: false),
-                    DeletedOn = table.Column<DateTime>(nullable: true),
                     QuizId = table.Column<int>(nullable: false),
                     QuestionId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_QuizisQuestions", x => x.Id);
+                    table.PrimaryKey("PK_QuizisQuestions", x => new { x.QuestionId, x.QuizId });
                     table.ForeignKey(
                         name: "FK_QuizisQuestions_Questions_QuestionId",
                         column: x => x.QuestionId,
@@ -366,6 +374,67 @@ namespace SchoolQuizzes.Data.Migrations
                         name: "FK_QuizisQuestions_Quizzes_QuizId",
                         column: x => x.QuizId,
                         principalTable: "Quizzes",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Takes",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    CreatedOn = table.Column<DateTime>(nullable: false),
+                    ModifiedOn = table.Column<DateTime>(nullable: true),
+                    IsDeleted = table.Column<bool>(nullable: false),
+                    DeletedOn = table.Column<DateTime>(nullable: true),
+                    UserId = table.Column<string>(nullable: false),
+                    QuizId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Takes", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Takes_Quizzes_QuizId",
+                        column: x => x.QuizId,
+                        principalTable: "Quizzes",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Takes_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "TakedAnswers",
+                columns: table => new
+                {
+                    QuestionId = table.Column<int>(nullable: false),
+                    TakeId = table.Column<int>(nullable: false),
+                    AnswerId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_TakedAnswers", x => new { x.QuestionId, x.TakeId });
+                    table.ForeignKey(
+                        name: "FK_TakedAnswers_Answers_AnswerId",
+                        column: x => x.AnswerId,
+                        principalTable: "Answers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_TakedAnswers_Questions_QuestionId",
+                        column: x => x.QuestionId,
+                        principalTable: "Questions",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_TakedAnswers_Takes_TakeId",
+                        column: x => x.TakeId,
+                        principalTable: "Takes",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -430,9 +499,19 @@ namespace SchoolQuizzes.Data.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Categories_AddedByUserId",
+                table: "Categories",
+                column: "AddedByUserId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Categories_IsDeleted",
                 table: "Categories",
                 column: "IsDeleted");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_DifficultLevels_AddedByUserId",
+                table: "DifficultLevels",
+                column: "AddedByUserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_DifficultLevels_IsDeleted",
@@ -460,34 +539,19 @@ namespace SchoolQuizzes.Data.Migrations
                 column: "IsDeleted");
 
             migrationBuilder.CreateIndex(
-                name: "IX_QuestionsAnswers_AnswerId",
-                table: "QuestionsAnswers",
-                column: "AnswerId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_QuestionsAnswers_IsDeleted",
-                table: "QuestionsAnswers",
-                column: "IsDeleted");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_QuestionsAnswers_QuestionId",
                 table: "QuestionsAnswers",
-                column: "QuestionId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_QuizisQuestions_IsDeleted",
-                table: "QuizisQuestions",
-                column: "IsDeleted");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_QuizisQuestions_QuestionId",
-                table: "QuizisQuestions",
                 column: "QuestionId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_QuizisQuestions_QuizId",
                 table: "QuizisQuestions",
                 column: "QuizId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Quizzes_AddedByUserId",
+                table: "Quizzes",
+                column: "AddedByUserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Quizzes_CategoryId",
@@ -508,6 +572,31 @@ namespace SchoolQuizzes.Data.Migrations
                 name: "IX_Settings_IsDeleted",
                 table: "Settings",
                 column: "IsDeleted");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_TakedAnswers_AnswerId",
+                table: "TakedAnswers",
+                column: "AnswerId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_TakedAnswers_TakeId",
+                table: "TakedAnswers",
+                column: "TakeId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Takes_IsDeleted",
+                table: "Takes",
+                column: "IsDeleted");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Takes_QuizId",
+                table: "Takes",
+                column: "QuizId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Takes_UserId",
+                table: "Takes",
+                column: "UserId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -537,6 +626,9 @@ namespace SchoolQuizzes.Data.Migrations
                 name: "Settings");
 
             migrationBuilder.DropTable(
+                name: "TakedAnswers");
+
+            migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
@@ -546,16 +638,19 @@ namespace SchoolQuizzes.Data.Migrations
                 name: "Questions");
 
             migrationBuilder.DropTable(
-                name: "Quizzes");
+                name: "Takes");
 
             migrationBuilder.DropTable(
-                name: "AspNetUsers");
+                name: "Quizzes");
 
             migrationBuilder.DropTable(
                 name: "Categories");
 
             migrationBuilder.DropTable(
                 name: "DifficultLevels");
+
+            migrationBuilder.DropTable(
+                name: "AspNetUsers");
         }
     }
 }

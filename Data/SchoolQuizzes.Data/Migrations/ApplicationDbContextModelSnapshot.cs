@@ -140,10 +140,6 @@ namespace SchoolQuizzes.Data.Migrations
                     b.Property<DateTime?>("DeletedOn")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(254)")
-                        .HasMaxLength(254);
-
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
@@ -291,6 +287,10 @@ namespace SchoolQuizzes.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<string>("AddedByUserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
 
@@ -314,6 +314,8 @@ namespace SchoolQuizzes.Data.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("AddedByUserId");
+
                     b.HasIndex("IsDeleted");
 
                     b.ToTable("Categories");
@@ -325,6 +327,10 @@ namespace SchoolQuizzes.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("AddedByUserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
@@ -348,6 +354,8 @@ namespace SchoolQuizzes.Data.Migrations
                         .HasMaxLength(30);
 
                     b.HasKey("Id");
+
+                    b.HasIndex("AddedByUserId");
 
                     b.HasIndex("IsDeleted");
 
@@ -407,37 +415,16 @@ namespace SchoolQuizzes.Data.Migrations
 
             modelBuilder.Entity("SchoolQuizzes.Data.Models.QuestionAnswer", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
                     b.Property<int>("AnswerId")
                         .HasColumnType("int");
-
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("DeletedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("IsCorrect")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTime?>("ModifiedOn")
-                        .HasColumnType("datetime2");
 
                     b.Property<int>("QuestionId")
                         .HasColumnType("int");
 
-                    b.HasKey("Id");
+                    b.Property<bool>("IsCorrect")
+                        .HasColumnType("bit");
 
-                    b.HasIndex("AnswerId");
-
-                    b.HasIndex("IsDeleted");
+                    b.HasKey("AnswerId", "QuestionId");
 
                     b.HasIndex("QuestionId");
 
@@ -450,6 +437,10 @@ namespace SchoolQuizzes.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("AddedByUserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<int>("CategoryId")
                         .HasColumnType("int");
@@ -476,6 +467,8 @@ namespace SchoolQuizzes.Data.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("AddedByUserId");
+
                     b.HasIndex("CategoryId");
 
                     b.HasIndex("DifficultId");
@@ -487,34 +480,13 @@ namespace SchoolQuizzes.Data.Migrations
 
             modelBuilder.Entity("SchoolQuizzes.Data.Models.QuizzesQuestions", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("DeletedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTime?>("ModifiedOn")
-                        .HasColumnType("datetime2");
-
                     b.Property<int>("QuestionId")
                         .HasColumnType("int");
 
                     b.Property<int>("QuizId")
                         .HasColumnType("int");
 
-                    b.HasKey("Id");
-
-                    b.HasIndex("IsDeleted");
-
-                    b.HasIndex("QuestionId");
+                    b.HasKey("QuestionId", "QuizId");
 
                     b.HasIndex("QuizId");
 
@@ -569,6 +541,9 @@ namespace SchoolQuizzes.Data.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
+                    b.Property<bool>("IsFinished")
+                        .HasColumnType("bit");
+
                     b.Property<DateTime?>("ModifiedOn")
                         .HasColumnType("datetime2");
 
@@ -592,42 +567,18 @@ namespace SchoolQuizzes.Data.Migrations
 
             modelBuilder.Entity("SchoolQuizzes.Data.Models.TakedAnswer", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                    b.Property<int>("QuestionId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TakeId")
+                        .HasColumnType("int");
 
                     b.Property<int>("AnswerId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("DeletedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("IsCorrect")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTime?>("ModifiedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("QuestionId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("TakeId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
+                    b.HasKey("QuestionId", "TakeId");
 
                     b.HasIndex("AnswerId");
-
-                    b.HasIndex("IsDeleted");
-
-                    b.HasIndex("QuestionId");
 
                     b.HasIndex("TakeId");
 
@@ -694,6 +645,24 @@ namespace SchoolQuizzes.Data.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("SchoolQuizzes.Data.Models.Category", b =>
+                {
+                    b.HasOne("SchoolQuizzes.Data.Models.ApplicationUser", "AddedByUser")
+                        .WithMany()
+                        .HasForeignKey("AddedByUserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("SchoolQuizzes.Data.Models.Difficult", b =>
+                {
+                    b.HasOne("SchoolQuizzes.Data.Models.ApplicationUser", "AddedByUser")
+                        .WithMany()
+                        .HasForeignKey("AddedByUserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("SchoolQuizzes.Data.Models.Question", b =>
                 {
                     b.HasOne("SchoolQuizzes.Data.Models.ApplicationUser", "AddedByUser")
@@ -732,6 +701,12 @@ namespace SchoolQuizzes.Data.Migrations
 
             modelBuilder.Entity("SchoolQuizzes.Data.Models.Quiz", b =>
                 {
+                    b.HasOne("SchoolQuizzes.Data.Models.ApplicationUser", "AddedByUser")
+                        .WithMany()
+                        .HasForeignKey("AddedByUserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.HasOne("SchoolQuizzes.Data.Models.Category", "Category")
                         .WithMany("Quizzes")
                         .HasForeignKey("CategoryId")
@@ -789,9 +764,11 @@ namespace SchoolQuizzes.Data.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("SchoolQuizzes.Data.Models.Take", null)
+                    b.HasOne("SchoolQuizzes.Data.Models.Take", "Take")
                         .WithMany("TakedAnswers")
-                        .HasForeignKey("TakeId");
+                        .HasForeignKey("TakeId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

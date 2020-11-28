@@ -9,6 +9,11 @@ namespace SchoolQuizzes.Data.Models
 {
     public class Take : BaseDeletableModel<int>
     {
+        public Take()
+        {
+            this.TakedAnswers = new HashSet<TakedAnswer>();
+        }
+
         [Required]
         [ForeignKey(nameof(ApplicationUser))]
         public string UserId { get; set; }
@@ -20,6 +25,8 @@ namespace SchoolQuizzes.Data.Models
         public int QuizId { get; set; }
 
         public Quiz Quiz { get; set; }
+
+        public bool IsFinished { get; set; }
 
         public virtual ICollection<TakedAnswer> TakedAnswers { get; set; }
     }

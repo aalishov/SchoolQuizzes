@@ -39,7 +39,6 @@
                     answer = new Answer()
                     {
                         Value = inputAnswer.AnswerValue,
-                        Description = inputAnswer.Description,
                         AddedByUserId = input.UserId,
                     };
                 }
@@ -59,13 +58,33 @@
                 .ToList();
         }
 
-     
         public ICollection<Question> GetQuestionsForQuiz(int categoryId, int difficultId, int count)
         {
             return this.questionsRepository.AllAsNoTracking()
                 .Where(q => q.CategoryId == categoryId && q.DifficultId == difficultId)
                 .Take(count)
                 .ToList();
+        }
+
+        public bool IsCorrectAnswer(int questionId, int asnwerId)
+        {
+            var answers = this.questionsRepository.AllAsNoTracking()
+                 .Select(x => new
+                 {
+                     x.Id,
+                     Answers = x.Answers
+                        .Select(a =>
+                        new
+                        {
+                            a.AnswerId,
+                            a.IsCorrect,
+                        }),
+                 })
+                 .FirstOrDefault(x => x.Id == questionId)
+                 .Answers
+                 .ToList();
+            bool isCorrect = answers.FirstOrDefault(x => x.AnswerId == asnwerId).IsCorrect;
+            return isCorrect;
         }
     }
 }

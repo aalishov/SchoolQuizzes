@@ -37,6 +37,7 @@
             quiz.Title = generateDto.Title;
             quiz.CategoryId = generateDto.CategoryId;
             quiz.DifficultId = generateDto.DifficultId;
+            quiz.AddedByUserId = generateDto.UserId;
 
             foreach (var question in generateDto.Questions)
             {

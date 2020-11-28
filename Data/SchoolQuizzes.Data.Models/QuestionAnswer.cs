@@ -8,7 +8,7 @@
 
     using SchoolQuizzes.Data.Common.Models;
 
-    public class QuestionAnswer : BaseDeletableModel<int>
+    public class QuestionAnswer
     {
         [ForeignKey(nameof(Question))]
         public int QuestionId { get; set; }
