@@ -8,6 +8,7 @@
     using SchoolQuizzes.Data.Models;
     using SchoolQuizzes.Services.Data.Contracts;
     using SchoolQuizzes.Services.Data.ModelsDto;
+    using SchoolQuizzes.Services.Mapping;
     using SchoolQuizzes.Web.ViewModels.Answers;
     using SchoolQuizzes.Web.ViewModels.Questions;
     using SchoolQuizzes.Web.ViewModels.Quizzes;
@@ -66,31 +67,17 @@
 
         public DetailsQuizViewModel GetQuizWithQuestionsAndAnswersById(int id)
         {
-            var quiz = this.GetQuizById(id);
-            var questions = this.questionsService.GetQuestionsByQuizId(id);
+            DetailsQuizViewModel model = this.quizisRepository
+                .AllAsNoTracking()
+                .Where(x => x.Id == id)
+                .To<DetailsQuizViewModel>()
+                .FirstOrDefault(x => x.Id == id);
 
-            DetailsQuizViewModel model = new DetailsQuizViewModel();
-
-            model.Id = id;
-            model.Title = quiz.Title;
-            model.Difficult = this.difficultsService.GetDifficultNameById(quiz.DifficultId);
-            model.Category = this.categoriesService.GetCategoryNameById(quiz.CategoryId);
-            foreach (var question in questions)
-            {
-                model.Questions.Add(new QuestionQuizViewModel
-                {
-                    Value = question.Value,
-                    Id = question.Id,
-                });
-            }
+            model.Questions = this.questionsService.GetQuestionsByQuizId<QuestionQuizViewModel>(id);
 
             foreach (var question in model.Questions)
             {
-                var answers = this.answersService.GetQuestionAnswersById(question.Id);
-                foreach (var answer in answers)
-                {
-                    question.Answers.Add(new AnswerQuizViewModel { Value = answer.Value, Id = answer.Id });
-                }
+                question.Answers = this.answersService.GetQuestionAnswersById<AnswerQuizViewModel>(question.Id);
             }
 
             return model;
@@ -98,7 +85,7 @@
 
         public int GetQuizQuestionsCountByQuizId(int quizId)
         {
-            return this.questionsService.GetQuestionsByQuizId(quizId).Count();
+            return this.questionsService.GetQuestionsByQuizId<QuestionQuizViewModel>(quizId).Count();
         }
     }
 }

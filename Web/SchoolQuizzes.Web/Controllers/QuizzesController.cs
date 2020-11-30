@@ -69,8 +69,8 @@
                 {
                     Id = q.Id,
                     Title = q.Title,
-                    Difficult = this.difficultsService.GetDifficultNameById(q.DifficultId),
-                    Category = this.categoriesService.GetCategoryNameById(q.CategoryId),
+                    DifficultName = this.difficultsService.GetDifficultNameById(q.DifficultId),
+                    CategoryName = this.categoriesService.GetCategoryNameById(q.CategoryId),
                 });
             }
 

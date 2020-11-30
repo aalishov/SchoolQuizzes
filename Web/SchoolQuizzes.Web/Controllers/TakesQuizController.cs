@@ -1,5 +1,6 @@
 ﻿namespace SchoolQuizzes.Web.Controllers
 {
+    using System.Collections.Generic;
     using System.Threading.Tasks;
 
     using Microsoft.AspNetCore.Authorization;
@@ -80,6 +81,13 @@
             FinishTakeViewModel model = new FinishTakeViewModel();
             model.TakeId = id;
             model.Result = this.takesService.GetResult(id);
+
+            return this.View(model);
+        }
+
+        public IActionResult MyTakes()
+        {
+            ICollection<UserTakeViewModel> model = this.takesService.GetUserTakesByUserId(this.userManager.GetUserId(this.User));
 
             return this.View(model);
         }

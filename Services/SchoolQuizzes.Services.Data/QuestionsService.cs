@@ -4,11 +4,11 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
-
     using SchoolQuizzes.Data.Common.Repositories;
     using SchoolQuizzes.Data.Models;
     using SchoolQuizzes.Services.Data.Contracts;
     using SchoolQuizzes.Services.Data.ModelsDto;
+    using SchoolQuizzes.Services.Mapping;
     using SchoolQuizzes.Web.ViewModels.Questions;
 
     public class QuestionsService : IQuestionsService
@@ -51,11 +51,12 @@
             await this.questionsRepository.SaveChangesAsync();
         }
 
-        public ICollection<Question> GetQuestionsByQuizId(int quizId)
+        public ICollection<T> GetQuestionsByQuizId<T>(int quizId)
         {
             return this.questionsRepository
                 .AllAsNoTracking()
                 .Where(x => x.Quizzes.Any(q => q.QuizId == quizId))
+                .To<T>()
                 .ToList();
         }
 

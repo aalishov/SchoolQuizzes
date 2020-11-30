@@ -7,9 +7,9 @@
 
     public interface IAnswersService
     {
-        ICollection<Answer> GetQuestionAnswersById(int questionId);
+        ICollection<T> GetQuestionAnswersById<T>(int questionId);
 
-        ICollection<AnswerQuizViewModel> GetQuestionAnswersFoTakesById(int questionId);
+        ICollection<AnswerQuizViewModel> GetQuestionAnswersForTakesById(int questionId);
 
         public string GetAnswerValueById(int answerId);
     }

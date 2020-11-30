@@ -3,10 +3,12 @@
     using System;
     using System.Collections.Generic;
     using System.Text;
-
+    using AutoMapper;
+    using SchoolQuizzes.Data.Models;
+    using SchoolQuizzes.Services.Mapping;
     using SchoolQuizzes.Web.ViewModels.Answers;
 
-    public class QuestionQuizViewModel
+    public class QuestionQuizViewModel : IMapFrom<Question>, IHaveCustomMappings
     {
         public QuestionQuizViewModel()
         {
@@ -18,5 +20,12 @@
         public string Value { get; set; }
 
         public ICollection<AnswerQuizViewModel> Answers { get; set; }
+
+        public void CreateMappings(IProfileExpression configuration)
+        {
+            configuration.CreateMap<Question, QuestionQuizViewModel>()
+                .ForMember(x => x.Answers, opt => opt.Ignore());
+        }
+
     }
 }
