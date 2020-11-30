@@ -38,6 +38,7 @@
             quiz.CategoryId = generateDto.CategoryId;
             quiz.DifficultId = generateDto.DifficultId;
             quiz.AddedByUserId = generateDto.UserId;
+            generateDto.Questions = this.questionsService.GetRandomQuestionsForQuiz(generateDto.CategoryId, generateDto.DifficultId, generateDto.Count);
 
             foreach (var question in generateDto.Questions)
             {
@@ -93,6 +94,11 @@
             }
 
             return model;
+        }
+
+        public int GetQuizQuestionsCountByQuizId(int quizId)
+        {
+            return this.questionsService.GetQuestionsByQuizId(quizId).Count();
         }
     }
 }

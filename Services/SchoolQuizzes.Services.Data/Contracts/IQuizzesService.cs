@@ -18,6 +18,8 @@
 
         public Quiz GetQuizById(int id);
 
+        public int GetQuizQuestionsCountByQuizId(int quizId);
+
         public DetailsQuizViewModel GetQuizWithQuestionsAndAnswersById(int id);
     }
 }

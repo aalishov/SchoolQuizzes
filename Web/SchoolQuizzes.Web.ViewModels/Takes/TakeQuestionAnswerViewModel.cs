@@ -11,6 +11,7 @@
         {
             this.Answers = new List<AnswerQuizViewModel>();
         }
+        public int TakeId { get; set; }
 
         public int QuizId { get; set; }
 

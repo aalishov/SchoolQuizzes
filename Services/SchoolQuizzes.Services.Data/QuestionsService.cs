@@ -1,5 +1,6 @@
 ﻿namespace SchoolQuizzes.Services.Data
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
@@ -66,6 +67,31 @@
                 .ToList();
         }
 
+        public ICollection<Question> GetRandomQuestionsForQuiz(int categoryId, int difficultId, int count)
+        {
+            ICollection<Question> questions = new List<Question>();
+            List<int> questionsId = this.questionsRepository.AllAsNoTracking()
+                .Where(x => x.CategoryId == categoryId && x.DifficultId == difficultId)
+                .Select(x => x.Id)
+                 .ToList();
+
+            for (int i = 0; i < count; i++)
+            {
+                Random random = new Random();
+                int randIndex = random.Next(0, questionsId.Count - 1);
+                int questionIndex = questionsId[randIndex];
+                questionsId.RemoveAt(randIndex);
+                questions.Add(this.questionsRepository.AllAsNoTracking().FirstOrDefault(x => x.Id == questionIndex));
+            }
+
+            return questions;
+        }
+
+        public string GetQuestionValueById(int questionId)
+        {
+            return this.questionsRepository.AllAsNoTracking().FirstOrDefault(x => x.Id == questionId).Value;
+        }
+
         public bool IsCorrectAnswer(int questionId, int asnwerId)
         {
             var answers = this.questionsRepository.AllAsNoTracking()
@@ -86,5 +112,7 @@
             bool isCorrect = answers.FirstOrDefault(x => x.AnswerId == asnwerId).IsCorrect;
             return isCorrect;
         }
+
+
     }
 }

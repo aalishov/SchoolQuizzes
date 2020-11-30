@@ -1,14 +1,13 @@
 ﻿namespace SchoolQuizzes.Web.Controllers
 {
-    using System.Linq;
     using System.Threading.Tasks;
+
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Routing;
     using SchoolQuizzes.Data.Models;
     using SchoolQuizzes.Services.Data.Contracts;
-    using SchoolQuizzes.Web.ViewModels.Quizzes;
     using SchoolQuizzes.Web.ViewModels.Takes;
 
     [Authorize]
@@ -74,11 +73,15 @@
         }
 
         [HttpGet]
-        public async Task<IActionResult> Finish(int quizId)
+        public async Task<IActionResult> Finish(int id)
         {
-            await this.takesService.FinishQuizAsync(this.userManager.GetUserId(this.User), quizId);
+            await this.takesService.FinishQuizAsync(id);
 
-            return this.View();
+            FinishTakeViewModel model = new FinishTakeViewModel();
+            model.TakeId = id;
+            model.Result = this.takesService.GetResult(id);
+
+            return this.View(model);
         }
     }
 }

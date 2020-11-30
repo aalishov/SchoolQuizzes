@@ -12,7 +12,11 @@
 
         public ICollection<Question> GetQuestionsForQuiz(int categoryId, int difficultId, int count);
 
+        public ICollection<Question> GetRandomQuestionsForQuiz(int categoryId, int difficultId, int count);
+
         public ICollection<Question> GetQuestionsByQuizId(int quizId);
+
+        public string GetQuestionValueById(int questionId);
 
         public bool IsCorrectAnswer(int questionId, int asnwerId);
     }

@@ -21,6 +21,8 @@
 
         public int DifficultId { get; set; }
 
+        public int Count { get; set; }
+
         public ICollection<Question> Questions { get; set; }
     }
 }

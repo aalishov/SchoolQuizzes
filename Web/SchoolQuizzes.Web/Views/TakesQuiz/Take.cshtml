@@ -6,6 +6,7 @@
 <hr />
 <form method="post">
     <input type="hidden" asp-for="Title" value="@Model.Title" />
+    <input type="hidden" asp-for="TakeId" value="@Model.TakeId" />
     <input type="hidden" asp-for="QuizId" value="@Model.QuizId" />
     <input type="hidden" asp-for="Question" value="@Model.Question" />
     <input type="hidden" asp-for="CurrentQuestionId" value="@Model.CurrentQuestionId" />
@@ -42,9 +43,9 @@
     <partial name="_PagingPartial" model="@Model" />
 
     <div class="row ">
-        <a class=" btn btn-danger mx-auto" asp-controller="TakesQuiz" asp-action="Finish" asp-route-id="@Model.QuizId">Завърши теста</a>
+        <a class=" btn btn-danger mx-auto" asp-controller="TakesQuiz" asp-action="Finish" asp-route-id="@Model.TakeId">Завърши теста</a>
     </div>
-    
+
 
 </form>
 

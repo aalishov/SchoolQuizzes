@@ -36,9 +36,9 @@
             await this.takeRepository.SaveChangesAsync();
         }
 
-        public async Task FinishQuizAsync(string userId, int quizId)
+        public async Task FinishQuizAsync(int takeId)
         {
-            Take take = this.GetTake(userId);
+            Take take = this.GetTakeById(takeId);
             take.IsFinished = true;
             this.takeRepository.Update(take);
             await this.takeRepository.SaveChangesAsync();
@@ -47,7 +47,7 @@
         public TakeQuestionAnswerViewModel GetExamQuestion(string userId, int page, int num = 1)
         {
             int itemsPerPage = 1;
-            int quizId = this.GetTakeQuizId(userId);
+            int quizId = this.GetTakeQuizByUserId(userId);
             Quiz quiz = this.quizzesService.GetQuizById(quizId);
             int takeId = this.GetTake(userId).Id;
             ICollection<Question> questions = this.questionsService.GetQuestionsByQuizId(quizId);
@@ -55,6 +55,7 @@
                 .OrderByDescending(x => x.Id).Skip((page - 1) * itemsPerPage).Take(itemsPerPage).FirstOrDefault();
 
             TakeQuestionAnswerViewModel model = new TakeQuestionAnswerViewModel();
+            model.TakeId = takeId;
             model.ItemsPerPage = itemsPerPage;
             model.Title = quiz.Title;
             model.QuizId = quiz.Id;
@@ -90,6 +91,31 @@
             return this.takeRepository.All().Any(x => x.UserId == userId && x.IsFinished == false);
         }
 
+        public string GetResult(int takeId)
+        {
+            int correctAnswers = 0;
+            var quizId = this.takeRepository.AllAsNoTracking().FirstOrDefault(x => x.Id == takeId).QuizId;
+            var takes = this.takedAnswerRepository.AllAsNoTracking().Where(x => x.TakeId == takeId).ToList();
+
+            int questionsCount = this.quizzesService.GetQuizQuestionsCountByQuizId(quizId);
+
+            foreach (var take in takes)
+            {
+                bool isCorrect = this.questionsService.IsCorrectAnswer(take.QuestionId, take.AnswerId);
+                if (isCorrect)
+                {
+                    correctAnswers++;
+                }
+            }
+
+            return $"{correctAnswers}/{questionsCount}";
+        }
+
+        public Take GetTakeById(int takeId)
+        {
+            return this.takeRepository.All().FirstOrDefault(x => x.Id == takeId);
+        }
+
         private Take GetTake(string userId)
         {
             return this.takeRepository.All().FirstOrDefault(x => x.UserId == userId && x.IsFinished == false);
@@ -107,10 +133,11 @@
             return null;
         }
 
-        private int GetTakeQuizId(string userId)
+        private int GetTakeQuizByUserId(string userId)
         {
             return this.takeRepository.All().FirstOrDefault(x => x.UserId == userId && x.IsFinished == false).QuizId;
         }
+
 
     }
 }

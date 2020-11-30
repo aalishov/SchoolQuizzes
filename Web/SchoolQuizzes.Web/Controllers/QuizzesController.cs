@@ -50,9 +50,9 @@
                 Title = inputModel.Title,
                 DifficultId = inputModel.DifficultId,
                 CategoryId = inputModel.CategoryId,
-                Questions = this.questionsService.GetQuestionsForQuiz(inputModel.CategoryId, inputModel.DifficultId, inputModel.Count),
+                Count = inputModel.Count,
                 UserId = this.User.FindFirst(ClaimTypes.NameIdentifier).Value,
-        };
+            };
 
             await this.quizzesService.CreateAsync(quizDto);
             return this.Redirect("/Quizzes/Index");

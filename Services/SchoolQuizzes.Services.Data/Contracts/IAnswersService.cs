@@ -8,6 +8,9 @@
     public interface IAnswersService
     {
         ICollection<Answer> GetQuestionAnswersById(int questionId);
+
         ICollection<AnswerQuizViewModel> GetQuestionAnswersFoTakesById(int questionId);
+
+        public string GetAnswerValueById(int answerId);
     }
 }

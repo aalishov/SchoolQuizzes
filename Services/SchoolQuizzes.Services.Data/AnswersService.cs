@@ -17,6 +17,11 @@
             this.answerRepository = answerRepository;
         }
 
+        public string GetAnswerValueById(int answerId)
+        {
+            return this.answerRepository.AllAsNoTracking().FirstOrDefault(x => x.Id == answerId).Value;
+        }
+
         public ICollection<Answer> GetQuestionAnswersById(int questionId)
         {
             return this.answerRepository
