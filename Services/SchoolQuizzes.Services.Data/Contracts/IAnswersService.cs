@@ -9,7 +9,7 @@
     {
         ICollection<T> GetQuestionAnswersById<T>(int questionId);
 
-        ICollection<AnswerQuizViewModel> GetQuestionAnswersForTakesById(int questionId);
+        ICollection<AnswerViewModel> GetQuestionAnswersForTakesById(int questionId);
 
         public string GetAnswerValueById(int answerId);
     }

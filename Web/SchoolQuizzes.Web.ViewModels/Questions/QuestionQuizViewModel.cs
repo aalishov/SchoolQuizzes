@@ -12,14 +12,14 @@
     {
         public QuestionQuizViewModel()
         {
-            this.Answers = new HashSet<AnswerQuizViewModel>();
+            this.Answers = new HashSet<AnswerViewModel>();
         }
 
         public int Id { get; set; }
 
         public string Value { get; set; }
 
-        public ICollection<AnswerQuizViewModel> Answers { get; set; }
+        public ICollection<AnswerViewModel> Answers { get; set; }
 
         public void CreateMappings(IProfileExpression configuration)
         {

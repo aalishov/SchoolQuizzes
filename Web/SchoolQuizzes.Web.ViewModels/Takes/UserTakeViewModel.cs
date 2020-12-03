@@ -1,10 +1,11 @@
-﻿using AutoMapper;
-using SchoolQuizzes.Data.Models;
-using SchoolQuizzes.Services.Mapping;
-using System.Linq;
-
-namespace SchoolQuizzes.Web.ViewModels.Takes
+﻿namespace SchoolQuizzes.Web.ViewModels.Takes
 {
+    using System.Linq;
+
+    using AutoMapper;
+    using SchoolQuizzes.Data.Models;
+    using SchoolQuizzes.Services.Mapping;
+
     public class UserTakeViewModel : IMapFrom<Take>
     {
         public int Id { get; set; }
@@ -17,7 +18,7 @@ namespace SchoolQuizzes.Web.ViewModels.Takes
 
         public string QuizDifficultName { get; set; }
 
-        public int QuestionsCount { get; set; }
+        public int QuizQuestionsCount { get; set; }
 
         public string Result { get; set; }
 

@@ -7,7 +7,7 @@
     using SchoolQuizzes.Services.Mapping;
     using SchoolQuizzes.Web.ViewModels.Questions;
 
-    public class DetailsQuizViewModel : IMapFrom<Quiz>,IHaveCustomMappings
+    public class DetailsQuizViewModel : IMapFrom<Quiz>, IHaveCustomMappings
     {
         public DetailsQuizViewModel()
         {

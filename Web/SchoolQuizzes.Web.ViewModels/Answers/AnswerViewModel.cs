@@ -3,7 +3,7 @@
     using SchoolQuizzes.Data.Models;
     using SchoolQuizzes.Services.Mapping;
 
-    public class AnswerQuizViewModel : IMapFrom<Answer>
+    public class AnswerViewModel : IMapFrom<Answer>
     {
         public int Id { get; set; }
 

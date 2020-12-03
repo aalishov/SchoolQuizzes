@@ -32,12 +32,12 @@
                 .ToList();
         }
 
-        public ICollection<AnswerQuizViewModel> GetQuestionAnswersForTakesById(int questionId)
+        public ICollection<AnswerViewModel> GetQuestionAnswersForTakesById(int questionId)
         {
             return this.answerRepository
                     .AllAsNoTracking()
                     .Where(x => x.Questions.Any(q => q.QuestionId == questionId))
-                    .Select(x => new AnswerQuizViewModel { Id = x.Id, Value = x.Value })
+                    .Select(x => new AnswerViewModel { Id = x.Id, Value = x.Value })
                     .ToList();
         }
     }

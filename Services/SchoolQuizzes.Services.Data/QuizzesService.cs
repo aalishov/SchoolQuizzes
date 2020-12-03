@@ -77,7 +77,7 @@
 
             foreach (var question in model.Questions)
             {
-                question.Answers = this.answersService.GetQuestionAnswersById<AnswerQuizViewModel>(question.Id);
+                question.Answers = this.answersService.GetQuestionAnswersById<AnswerViewModel>(question.Id);
             }
 
             return model;

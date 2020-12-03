@@ -5,7 +5,7 @@
     using System.Linq;
     using System.Text;
     using System.Threading.Tasks;
-
+    using SchoolQuizzes.Services.Mapping;
     using SchoolQuizzes.Data.Common.Repositories;
     using SchoolQuizzes.Data.Models;
     using SchoolQuizzes.Services.Data.Contracts;
@@ -51,23 +51,26 @@
             int itemsPerPage = 1;
             int quizId = this.GetTakeQuizByUserId(userId);
 
-            
             Quiz quiz = this.quizzesService.GetQuizById(quizId);
             int takeId = this.GetTake(userId).Id;
-            ICollection<QuestionQuizViewModel> questions = this.questionsService.GetQuestionsByQuizId<QuestionQuizViewModel>(quizId);
-            QuestionQuizViewModel question = questions
-                .OrderByDescending(x => x.Id).Skip((page - 1) * itemsPerPage).Take(itemsPerPage).FirstOrDefault();
 
-            TakeQuestionAnswerViewModel model = new TakeQuestionAnswerViewModel();
-            model.TakeId = takeId;
+            QuestionQuizViewModel question =this.questionsService
+                .GetQuestionsByQuizId<QuestionQuizViewModel>(quizId)
+                .OrderByDescending(x => x.Id).Skip((page - 1) * itemsPerPage)
+                .Take(itemsPerPage)
+                .FirstOrDefault();
+
+            TakeQuestionAnswerViewModel model = this.takeRepository.All()
+                .Where(x => x.UserId == userId)
+                .To<TakeQuestionAnswerViewModel>()
+                .ToList()
+                .FirstOrDefault();
+
             model.ItemsPerPage = itemsPerPage;
-            model.Title = quiz.Title;
-            model.QuizId = quiz.Id;
-            model.CurrentQuestionId = question.Id;
-            model.QuestionsCount = questions.Count();
-            model.Question = question.Value;
             model.PageNumber = page;
-            model.ElementsCount = questions.Count();
+            model.ElementsCount = model.QuizQuestionsCount;
+            model.CurrentQuestionId = question.Id;
+            model.Question = question.Value;
             model.Answers = this.answersService.GetQuestionAnswersForTakesById(model.CurrentQuestionId);
             model.TakenAnswer = this.SelectedAnswere(question.Id, takeId);
             return model;
@@ -129,7 +132,6 @@
                  .ToList();
             foreach (var take in takes)
             {
-                take.QuestionsCount = this.quizzesService.GetQuizQuestionsCountByQuizId(take.QuizId);
                 take.Result = this.GetResult(take.Id);
             }
 

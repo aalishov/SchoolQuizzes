@@ -2,16 +2,16 @@
 @{
     this.ViewData["Title"] = "Детайли";
 }
-<h1>@Model.Title</h1>
+<h1>@Model.QuizTitle</h1>
 <hr />
 <form method="post">
-    <input type="hidden" asp-for="Title" value="@Model.Title" />
-    <input type="hidden" asp-for="TakeId" value="@Model.TakeId" />
+    <input type="hidden" asp-for="QuizTitle" value="@Model.QuizTitle" />
+    <input type="hidden" asp-for="Id" value="@Model.Id" />
     <input type="hidden" asp-for="QuizId" value="@Model.QuizId" />
     <input type="hidden" asp-for="Question" value="@Model.Question" />
     <input type="hidden" asp-for="CurrentQuestionId" value="@Model.CurrentQuestionId" />
     <input type="hidden" asp-for="PageNumber" value="@Model.PageNumber" />
-    <input type="hidden" asp-for="QuestionsCount" value="@Model.QuestionsCount" />
+    <input type="hidden" asp-for="QuizQuestionsCount" value="@Model.QuizQuestionsCount" />
     <input type="hidden" asp-for="ElementsCount" value="@Model.ElementsCount" />
 
     <div class="row">
@@ -43,7 +43,7 @@
     <partial name="_PagingPartial" model="@Model" />
 
     <div class="row ">
-        <a class=" btn btn-danger mx-auto" asp-controller="TakesQuiz" asp-action="Finish" asp-route-id="@Model.TakeId">Завърши теста</a>
+        <a class=" btn btn-danger mx-auto" asp-controller="TakesQuiz" asp-action="Finish" asp-route-id="@Model.Id">Завърши теста</a>
     </div>
 
 

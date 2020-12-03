@@ -64,7 +64,7 @@
         {
             await this.takesService.SaveTakedAnswerAsync(this.userManager.GetUserId(this.User), input.CurrentQuestionId, input.UserAnswerId);
 
-            if (input.PageNumber + 1 > input.QuestionsCount)
+            if (input.PageNumber + 1 > input.QuizQuestionsCount)
             {
                 input.PageNumber = 0;
             }
