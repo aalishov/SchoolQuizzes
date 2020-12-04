@@ -41,7 +41,7 @@
 
         public virtual DbSet<QuizzesQuestions> QuizisQuestions { get; set; }
 
-        public DbSet<Setting> Settings { get; set; }
+        public virtual DbSet<Rating> Ratings { get; set; }
 
         public override int SaveChanges() => this.SaveChanges(true);
 

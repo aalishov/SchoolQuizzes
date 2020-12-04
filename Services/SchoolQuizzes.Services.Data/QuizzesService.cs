@@ -12,22 +12,17 @@
     using SchoolQuizzes.Web.ViewModels.Answers;
     using SchoolQuizzes.Web.ViewModels.Questions;
     using SchoolQuizzes.Web.ViewModels.Quizzes;
-    using SchoolQuizzes.Web.ViewModels.Takes;
 
     public class QuizzesService : IQuizzesService
     {
         private readonly IDeletableEntityRepository<Quiz> quizisRepository;
         private readonly IAnswersService answersService;
-        private readonly ICategoriesService categoriesService;
-        private readonly IDifficultsService difficultsService;
         private readonly IQuestionsService questionsService;
 
-        public QuizzesService(IDeletableEntityRepository<Quiz> quizisRepository, IAnswersService answersService, ICategoriesService categoriesService, IDifficultsService difficultsService, IQuestionsService questionsService)
+        public QuizzesService(IDeletableEntityRepository<Quiz> quizisRepository, IAnswersService answersService, IQuestionsService questionsService)
         {
             this.quizisRepository = quizisRepository;
             this.answersService = answersService;
-            this.categoriesService = categoriesService;
-            this.difficultsService = difficultsService;
             this.questionsService = questionsService;
         }
 
@@ -86,6 +81,15 @@
         public int GetQuizQuestionsCountByQuizId(int quizId)
         {
             return this.questionsService.GetQuestionsByQuizId<QuestionQuizViewModel>(quizId).Count();
+        }
+
+        public ICollection<KeyValuePair<string, string>> GetAllAsKeyValuePairs()
+        {
+            return this.quizisRepository.AllAsNoTracking()
+                        .Select(x => new { x.Id, x.Title })
+                        .ToList()
+                        .Select(x => new KeyValuePair<string, string>(x.Id.ToString(), x.Title))
+                        .ToList();
         }
     }
 }

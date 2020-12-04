@@ -10,7 +10,7 @@
     using SchoolQuizzes.Web.ViewModels.Quizzes;
 
     [Authorize]
-    public class QuizzesController : Controller
+    public class QuizzesController : BaseController
     {
         private readonly IAnswersService answersService;
         private readonly ICategoriesService categoriesService;

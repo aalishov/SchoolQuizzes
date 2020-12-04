@@ -15,6 +15,7 @@ namespace SchoolQuizzes.Data.Models
             this.Roles = new HashSet<IdentityUserRole<string>>();
             this.Claims = new HashSet<IdentityUserClaim<string>>();
             this.Logins = new HashSet<IdentityUserLogin<string>>();
+            this.Ratings = new HashSet<Rating>();
         }
 
         // Audit info
@@ -32,5 +33,7 @@ namespace SchoolQuizzes.Data.Models
         public virtual ICollection<IdentityUserClaim<string>> Claims { get; set; }
 
         public virtual ICollection<IdentityUserLogin<string>> Logins { get; set; }
+
+        public virtual ICollection<Rating> Ratings { get; set; }
     }
 }

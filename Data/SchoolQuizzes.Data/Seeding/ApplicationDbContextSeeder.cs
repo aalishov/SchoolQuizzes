@@ -30,7 +30,6 @@
                 new DifficultLevelsSeeder(),
                 new QuestionsSeeder(),
                 new RolesSeeder(),
-                new SettingsSeeder(),
             };
 
             foreach (var seeder in seeders)

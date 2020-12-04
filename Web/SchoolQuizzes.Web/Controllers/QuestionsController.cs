@@ -11,7 +11,7 @@
     using SchoolQuizzes.Web.ViewModels.Questions;
 
     [Authorize]
-    public class QuestionsController : Controller
+    public class QuestionsController : BaseController
     {
         private readonly ICategoriesService categoriesService;
         private readonly IDifficultsService difficultsService;

@@ -18,6 +18,8 @@
 
         public string GetQuestionValueById(int questionId);
 
+        public double GetQuestionRatingById(int questionId);
+
         public bool IsCorrectAnswer(int questionId, int asnwerId);
     }
 }

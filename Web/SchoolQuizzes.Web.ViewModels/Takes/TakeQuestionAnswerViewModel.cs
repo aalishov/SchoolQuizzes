@@ -1,6 +1,8 @@
 ﻿namespace SchoolQuizzes.Web.ViewModels.Takes
 {
     using System.Collections.Generic;
+    using System.Linq;
+
     using AutoMapper;
     using SchoolQuizzes.Data.Models;
     using SchoolQuizzes.Services.Mapping;
@@ -22,7 +24,7 @@
 
         public string QuizTitle { get; set; }
 
-        public string Question { get; set; }
+        public string QuestionValue { get; set; }
 
         public int QuizQuestionsCount { get; set; }
 
@@ -32,11 +34,13 @@
 
         public int? TakenAnswer { get; set; }
 
+        public double AverageRating { get; set; }
+
         public void CreateMappings(IProfileExpression configuration)
         {
-            configuration.CreateMap<int, TakeQuestionAnswerViewModel>()
-                .ForMember(x => x.ItemsPerPage, opt => opt.DoNotUseDestinationValue())
-                .BeforeMap((s, d) => d.ItemsPerPage = 1);
+            configuration.CreateMap<Question, TakeQuestionAnswerViewModel>()
+                   .ForMember(x => x.AverageRating, opt =>
+                    opt.MapFrom(x => x.Ratings.Count() == 0 ? 0 : x.Ratings.Average(v => v.Value)));
         }
     }
 }

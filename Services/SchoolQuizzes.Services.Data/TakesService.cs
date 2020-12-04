@@ -1,21 +1,20 @@
 ﻿namespace SchoolQuizzes.Services.Data
 {
-    using System;
     using System.Collections.Generic;
     using System.Linq;
-    using System.Text;
     using System.Threading.Tasks;
-    using SchoolQuizzes.Services.Mapping;
+
     using SchoolQuizzes.Data.Common.Repositories;
     using SchoolQuizzes.Data.Models;
     using SchoolQuizzes.Services.Data.Contracts;
     using SchoolQuizzes.Services.Mapping;
     using SchoolQuizzes.Web.ViewModels.Questions;
-    using SchoolQuizzes.Web.ViewModels.Quizzes;
     using SchoolQuizzes.Web.ViewModels.Takes;
 
     public class TakesService : ITakesService
     {
+        private const int ItemsPerPage = 1;
+
         private readonly IQuizzesService quizzesService;
         private readonly IAnswersService answersService;
         private readonly IQuestionsService questionsService;
@@ -38,6 +37,37 @@
             await this.takeRepository.SaveChangesAsync();
         }
 
+        public int GetCorrectAnswerCountByTakeId(int takeId)
+        {
+            int correctAnswers = 0;
+            var quizId = this.takeRepository.AllAsNoTracking().FirstOrDefault(x => x.Id == takeId).QuizId;
+            var takes = this.takedAnswerRepository.AllAsNoTracking().Where(x => x.TakeId == takeId).ToList();
+
+            int questionsCount = this.quizzesService.GetQuizQuestionsCountByQuizId(quizId);
+
+            foreach (var take in takes)
+            {
+                bool isCorrect = this.questionsService.IsCorrectAnswer(take.QuestionId, take.AnswerId);
+                if (isCorrect)
+                {
+                    correctAnswers++;
+                }
+            }
+
+            return correctAnswers;
+        }
+
+        public int GetTakeQuizByUserId(string userId)
+        {
+            var notFinishedTake = this.takeRepository.All().FirstOrDefault(x => x.UserId == userId && x.IsFinished == false);
+            if (notFinishedTake != null)
+            {
+                return notFinishedTake.QuizId;
+            }
+
+            return -1;
+        }
+
         public async Task FinishQuizAsync(int takeId)
         {
             Take take = this.GetTakeById(takeId);
@@ -48,31 +78,22 @@
 
         public TakeQuestionAnswerViewModel GetExamQuestion(string userId, int page, int num = 1)
         {
-            int itemsPerPage = 1;
             int quizId = this.GetTakeQuizByUserId(userId);
-
-            Quiz quiz = this.quizzesService.GetQuizById(quizId);
             int takeId = this.GetTake(userId).Id;
-
-            QuestionQuizViewModel question =this.questionsService
+            Quiz quiz = this.quizzesService.GetQuizById(quizId);
+            QuestionQuizViewModel question = this.questionsService
                 .GetQuestionsByQuizId<QuestionQuizViewModel>(quizId)
-                .OrderByDescending(x => x.Id).Skip((page - 1) * itemsPerPage)
-                .Take(itemsPerPage)
+                .OrderByDescending(x => x.Id).Skip((page - 1) * ItemsPerPage)
+                .Take(ItemsPerPage)
                 .FirstOrDefault();
 
             TakeQuestionAnswerViewModel model = this.takeRepository.All()
-                .Where(x => x.UserId == userId)
+                .Where(x => x.Id == takeId)
                 .To<TakeQuestionAnswerViewModel>()
                 .ToList()
                 .FirstOrDefault();
 
-            model.ItemsPerPage = itemsPerPage;
-            model.PageNumber = page;
-            model.ElementsCount = model.QuizQuestionsCount;
-            model.CurrentQuestionId = question.Id;
-            model.Question = question.Value;
-            model.Answers = this.answersService.GetQuestionAnswersForTakesById(model.CurrentQuestionId);
-            model.TakenAnswer = this.SelectedAnswere(question.Id, takeId);
+            this.SetModelValue(page, takeId, question, model);
             return model;
         }
 
@@ -100,20 +121,9 @@
 
         public string GetResult(int takeId)
         {
-            int correctAnswers = 0;
-            var quizId = this.takeRepository.AllAsNoTracking().FirstOrDefault(x => x.Id == takeId).QuizId;
-            var takes = this.takedAnswerRepository.AllAsNoTracking().Where(x => x.TakeId == takeId).ToList();
+            int questionsCount = this.GetQuestionsCountByTakeId(takeId);
 
-            int questionsCount = this.quizzesService.GetQuizQuestionsCountByQuizId(quizId);
-
-            foreach (var take in takes)
-            {
-                bool isCorrect = this.questionsService.IsCorrectAnswer(take.QuestionId, take.AnswerId);
-                if (isCorrect)
-                {
-                    correctAnswers++;
-                }
-            }
+            int correctAnswers = this.GetCorrectAnswerCountByTakeId(takeId);
 
             return $"{correctAnswers}/{questionsCount}";
         }
@@ -138,6 +148,11 @@
             return takes;
         }
 
+        public int GetQuestionsCountByTakeId(int takeId)
+        {
+            return this.quizzesService.GetQuizQuestionsCountByQuizId(this.takeRepository.AllAsNoTracking().FirstOrDefault(x => x.Id == takeId).QuizId);
+        }
+
         private Take GetTake(string userId)
         {
             return this.takeRepository.All().FirstOrDefault(x => x.UserId == userId && x.IsFinished == false);
@@ -155,17 +170,16 @@
             return null;
         }
 
-        private int GetTakeQuizByUserId(string userId)
+        private void SetModelValue(int page, int takeId, QuestionQuizViewModel question, TakeQuestionAnswerViewModel model)
         {
-            var notFinishedTake = this.takeRepository.All().FirstOrDefault(x => x.UserId == userId && x.IsFinished == false);
-            if (notFinishedTake != null)
-            {
-                return notFinishedTake.QuizId;
-            }
-
-            return -1;
+            model.ItemsPerPage = ItemsPerPage;
+            model.PageNumber = page;
+            model.ElementsCount = model.QuizQuestionsCount;
+            model.CurrentQuestionId = question.Id;
+            model.QuestionValue = question.Value;
+            model.AverageRating = this.questionsService.GetQuestionRatingById(question.Id);
+            model.Answers = this.answersService.GetQuestionAnswersForTakesById(model.CurrentQuestionId);
+            model.TakenAnswer = this.SelectedAnswere(question.Id, takeId);
         }
-
-
     }
 }

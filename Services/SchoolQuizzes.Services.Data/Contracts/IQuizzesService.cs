@@ -6,7 +6,6 @@
     using SchoolQuizzes.Data.Models;
     using SchoolQuizzes.Services.Data.ModelsDto;
     using SchoolQuizzes.Web.ViewModels.Quizzes;
-    using SchoolQuizzes.Web.ViewModels.Takes;
 
     public interface IQuizzesService
     {
@@ -21,5 +20,7 @@
         public int GetQuizQuestionsCountByQuizId(int quizId);
 
         public DetailsQuizViewModel GetQuizWithQuestionsAndAnswersById(int id);
+
+        public ICollection<KeyValuePair<string, string>> GetAllAsKeyValuePairs();
     }
 }

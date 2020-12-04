@@ -8,7 +8,7 @@
     <input type="hidden" asp-for="QuizTitle" value="@Model.QuizTitle" />
     <input type="hidden" asp-for="Id" value="@Model.Id" />
     <input type="hidden" asp-for="QuizId" value="@Model.QuizId" />
-    <input type="hidden" asp-for="Question" value="@Model.Question" />
+    <input type="hidden" asp-for="QuestionValue" value="@Model.QuestionValue" />
     <input type="hidden" asp-for="CurrentQuestionId" value="@Model.CurrentQuestionId" />
     <input type="hidden" asp-for="PageNumber" value="@Model.PageNumber" />
     <input type="hidden" asp-for="QuizQuestionsCount" value="@Model.QuizQuestionsCount" />
@@ -16,7 +16,16 @@
 
     <div class="row">
         <div class=" justify-content-lg-start mx-auto">
-            <p class="lead">@Model.Question</p>
+            <p class="h2">@Model.QuestionValue</p>
+            <div class="item-rating list-group list-group-horizontal-sm">
+                <span class="star-fill list-group-item-success" data-rating="1"><i class="fas fa-star"></i></span>
+                <span class="star-fill list-group-item-success" data-rating="2"><i class="fas fa-star"></i></span>
+                <span class="star-fill list-group-item-success" data-rating="3"><i class="fas fa-star"></i></span>
+                <span class="star-fill list-group-item-success" data-rating="4"><i class="fas fa-star"></i></span>
+                <span class="star-fill list-group-item-success" data-rating="5"><i class="fas fa-star"></i></span>
+                <span>&#8614;</span>
+                <span><span id="averageRating">@Model.AverageRating.ToString("0.0")</span><span> / 5</span> </span>
+            </div>
             @foreach (var answer in Model.Answers)
             {
                 <p class="lead m-3">
@@ -35,9 +44,11 @@
                 </p>
 
             }
+
             <input type="submit" class="btn btn-primary" value="Маркирай отговор" />
         </div>
     </div>
+
     <hr />
 
     <partial name="_PagingPartial" model="@Model" />
@@ -45,7 +56,30 @@
     <div class="row ">
         <a class=" btn btn-danger mx-auto" asp-controller="TakesQuiz" asp-action="Finish" asp-route-id="@Model.Id">Завърши теста</a>
     </div>
-
-
 </form>
 
+<form method="post" id="antiForgeryForm"></form>
+@section Scripts {
+    <script>
+        $("span[data-rating]").each(function (el) {
+            $(this).click(function () {
+                var value = parseInt($(this).attr("data-rating"));
+                var questionId = @Model.CurrentQuestionId;
+                var antiForgeryToken = $('#antiForgeryForm input[name=__RequestVerificationToken]').val();
+                var data = { questionId: questionId, value: value };
+                $.ajax({
+                    type: "POST",
+                    url: "/api/Ratings",
+                    data: JSON.stringify(data),
+                    headers: {
+                        'X-CSRF-TOKEN': antiForgeryToken
+                    },
+                    success: function (data) {
+                        $('#averageRating').html(data.averageRating.toFixed(1));
+                    },
+                    contentType: 'application/json',
+                });
+            })
+        });
+    </script>
+}

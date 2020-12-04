@@ -493,7 +493,7 @@ namespace SchoolQuizzes.Data.Migrations
                     b.ToTable("QuizisQuestions");
                 });
 
-            modelBuilder.Entity("SchoolQuizzes.Data.Models.Setting", b =>
+            modelBuilder.Entity("SchoolQuizzes.Data.Models.Rating", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -503,26 +503,25 @@ namespace SchoolQuizzes.Data.Migrations
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime?>("DeletedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
                     b.Property<DateTime?>("ModifiedOn")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("QuestionId")
+                        .HasColumnType("int");
 
-                    b.Property<string>("Value")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("Value")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("IsDeleted");
+                    b.HasIndex("QuestionId");
 
-                    b.ToTable("Settings");
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Ratings");
                 });
 
             modelBuilder.Entity("SchoolQuizzes.Data.Models.Take", b =>
@@ -733,6 +732,19 @@ namespace SchoolQuizzes.Data.Migrations
                         .HasForeignKey("QuizId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("SchoolQuizzes.Data.Models.Rating", b =>
+                {
+                    b.HasOne("SchoolQuizzes.Data.Models.Question", "Question")
+                        .WithMany("Ratings")
+                        .HasForeignKey("QuestionId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("SchoolQuizzes.Data.Models.ApplicationUser", "User")
+                        .WithMany("Ratings")
+                        .HasForeignKey("UserId");
                 });
 
             modelBuilder.Entity("SchoolQuizzes.Data.Models.Take", b =>

@@ -34,12 +34,14 @@
             }
             else
             {
-                return this.View();
+                var model = new SelectTakeIndexViewModel();
+                model.QuizzesItems = this.quizzesService.GetAllAsKeyValuePairs();
+                return this.View(model);
             }
         }
 
         [HttpPost]
-        public async Task<IActionResult> Index(TakeIndexViewModel model)
+        public async Task<IActionResult> Index(SelectTakeIndexViewModel model)
         {
             await this.takesService.CreateTakeAsync(this.userManager.GetUserId(this.User), model.QuizId);
             return this.RedirectToAction("Take");

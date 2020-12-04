@@ -4,10 +4,10 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
+
     using SchoolQuizzes.Data.Common.Repositories;
     using SchoolQuizzes.Data.Models;
     using SchoolQuizzes.Services.Data.Contracts;
-    using SchoolQuizzes.Services.Data.ModelsDto;
     using SchoolQuizzes.Services.Mapping;
     using SchoolQuizzes.Web.ViewModels.Questions;
 
@@ -114,6 +114,15 @@
             return isCorrect;
         }
 
-
+        public double GetQuestionRatingById(int questionId)
+        {
+            return this.questionsRepository.All()
+                .Select(x => new { x.Id, Ratings = x.Ratings.ToList() })
+                .FirstOrDefault(x => x.Id == questionId)
+                .Ratings.Count() == 0 ? 0 : this.questionsRepository.All()
+                .Select(x => new { x.Id, Ratings = x.Ratings.ToList() })
+                .FirstOrDefault(x => x.Id == questionId)
+                .Ratings.Average(x => x.Value);
+        }
     }
 }
