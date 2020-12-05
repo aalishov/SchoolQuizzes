@@ -34,8 +34,10 @@
             }
             else
             {
-                var model = new SelectTakeIndexViewModel();
-                model.QuizzesItems = this.quizzesService.GetAllAsKeyValuePairs();
+                SelectTakeIndexViewModel model = new SelectTakeIndexViewModel
+                {
+                    QuizzesItems = this.quizzesService.GetAllAsKeyValuePairs(),
+                };
                 return this.View(model);
             }
         }
@@ -80,9 +82,11 @@
         {
             await this.takesService.FinishQuizAsync(id);
 
-            FinishTakeViewModel model = new FinishTakeViewModel();
-            model.TakeId = id;
-            model.Result = this.takesService.GetResult(id);
+            FinishTakeViewModel model = new FinishTakeViewModel
+            {
+                TakeId = id,
+                Result = this.takesService.GetResult(id),
+            };
 
             return this.View(model);
         }

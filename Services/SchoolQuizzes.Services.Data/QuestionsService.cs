@@ -24,17 +24,19 @@
 
         public async Task CreateAsync(CreateQuestionViewModel input)
         {
-            Question question = new Question();
-            question.Value = input.QuestionValue;
-            question.DifficultId = input.DifficultId;
-            question.CategoryId = input.CategoryId;
-            question.Description = input.Description;
-            question.AddedByUserId = input.UserId;
+            Question question = new Question
+            {
+                Value = input.QuestionValue,
+                DifficultId = input.DifficultId,
+                CategoryId = input.CategoryId,
+                Description = input.Description,
+                AddedByUserId = input.UserId,
+            };
 
             foreach (var inputAnswer in input.Answers)
             {
                 var answer = this.answerRepository.All().FirstOrDefault(a => a.Value == inputAnswer.AnswerValue);
-                bool isCorrect = inputAnswer.IsTrue == "on" ? true : false;
+                bool isCorrect = inputAnswer.IsTrue == "on";
                 if (answer == null)
                 {
                     answer = new Answer()

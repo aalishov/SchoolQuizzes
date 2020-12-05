@@ -3,14 +3,20 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using System.Text;
     using System.Threading.Tasks;
 
     using SchoolQuizzes.Data.Models;
 
     public class QuestionsSeeder : ISeeder
     {
+        private const int QuestionsCount = 50;
+
         public async Task SeedAsync(ApplicationDbContext dbContext, IServiceProvider serviceProvider)
+        {
+           await SeedMathQuestionsAsync(dbContext);
+        }
+
+        private static async Task SeedMathQuestionsAsync(ApplicationDbContext dbContext)
         {
             if (dbContext.Questions.Any())
             {
@@ -24,8 +30,7 @@
             List<Question> questions = new List<Question>();
             Random random = new Random();
 
-
-            for (int i = 0; i < 10; i++)
+            for (int i = 0; i < QuestionsCount; i++)
             {
                 int randomNumber = random.Next(-8, 8);
                 int sum = randomNumber + i + i;
@@ -47,7 +52,7 @@
                             AddedByUserId = addedByUserId,
                             Value = $"{answerValue}",
                         },
-                        IsCorrect = sum == answerValue ? true : false,
+                        IsCorrect = sum == answerValue,
                     });
                 }
 

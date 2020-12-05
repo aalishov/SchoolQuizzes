@@ -25,11 +25,12 @@
 
             var seeders = new List<ISeeder>
             {
+                new RolesSeeder(),
                 new UserSeeder(),
                 new CategoriesSeeder(),
                 new DifficultLevelsSeeder(),
                 new QuestionsSeeder(),
-                new RolesSeeder(),
+                new QuizzesSeeder(),
             };
 
             foreach (var seeder in seeders)

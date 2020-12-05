@@ -19,21 +19,22 @@
         private readonly IAnswersService answersService;
         private readonly IQuestionsService questionsService;
 
-        public QuizzesService(IDeletableEntityRepository<Quiz> quizisRepository, IAnswersService answersService, IQuestionsService questionsService)
+        public QuizzesService(IDeletableEntityRepository<Quiz> quizisRepository, IAnswersService answersService, IQuestionsService questionsServicer)
         {
             this.quizisRepository = quizisRepository;
             this.answersService = answersService;
-            this.questionsService = questionsService;
+            this.questionsService = questionsServicer;
         }
 
         public async Task CreateAsync(GenerateQuizDto generateDto)
         {
-            Quiz quiz = new Quiz();
-
-            quiz.Title = generateDto.Title;
-            quiz.CategoryId = generateDto.CategoryId;
-            quiz.DifficultId = generateDto.DifficultId;
-            quiz.AddedByUserId = generateDto.UserId;
+            Quiz quiz = new Quiz
+            {
+                Title = generateDto.Title,
+                CategoryId = generateDto.CategoryId,
+                DifficultId = generateDto.DifficultId,
+                AddedByUserId = generateDto.UserId,
+            };
             generateDto.Questions = this.questionsService.GetRandomQuestionsForQuiz(generateDto.CategoryId, generateDto.DifficultId, generateDto.Count);
 
             foreach (var question in generateDto.Questions)

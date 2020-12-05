@@ -5,8 +5,9 @@
     using System.Text;
 
     using SchoolQuizzes.Data.Models;
+    using SchoolQuizzes.Services.Mapping;
 
-    public class GenerateQuizDto
+    public class GenerateQuizDto : IMapTo<Quiz>
     {
         public GenerateQuizDto()
         {
