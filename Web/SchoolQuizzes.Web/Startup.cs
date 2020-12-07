@@ -67,7 +67,6 @@
             services.AddTransient<IDifficultsService, DifficultsService>();
             services.AddTransient<IEmailSender, NullMessageSender>();
             services.AddTransient<IGetCountService, GetCountService>();
-            services.AddTransient<ISettingsService, SettingsService>();
             services.AddTransient<ITakesService, TakesService>();
             services.AddTransient<IQuestionsService, QuestionsService>();
             services.AddTransient<IQuizzesService, QuizzesService>();

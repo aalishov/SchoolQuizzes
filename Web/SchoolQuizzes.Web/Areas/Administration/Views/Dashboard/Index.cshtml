@@ -1,7 +1,20 @@
-﻿@model SchoolQuizzes.Web.ViewModels.Administration.Dashboard.IndexViewModel
+﻿@model SchoolQuizzes.Web.ViewModels.Administration.Dashboard.DashboardIndexViewModel
 @{
     this.ViewData["Title"] = "Admin dashboard";
 }
 
 <h1>@this.ViewData["Title"]</h1>
-Settings: @this.Model.SettingsCount
+
+
+<div class="text-center">
+    <div class="col-md-4 offset-md-4">
+        <ul class="list-group">
+            <li class="list-group-item bg-light">Потребители: @Model.UsersCount</li>
+            <li class="list-group-item bg-white">Въпроси: @Model.QuestionsCount</li>
+            <li class="list-group-item bg-light">Отговори: @Model.AnswersCount</li>
+            <li class="list-group-item bg-white">Категории: @Model.CategoriesCount</li>
+            <li class="list-group-item bg-white">Тестове: @Model.QuizzesCount</li>
+        </ul>
+    </div>
+
+</div>

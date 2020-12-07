@@ -1,15 +1,17 @@
 ﻿@using SchoolQuizzes.Common
 @using SchoolQuizzes.Data.Models
 @using Microsoft.AspNetCore.Identity
+@using System.Security.Claims
 @inject SignInManager<ApplicationUser> SignInManager
 @inject UserManager<ApplicationUser> UserManager
-
+@inject RoleManager<ApplicationRole> RoleManager
 <ul class="navbar-nav">
     @if (this.SignInManager.IsSignedIn(this.User))
     {
         <li class="nav-item">
-            <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @(this.User.Identity.Name)!</a>
+            <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello <vc:user-role></vc:user-role>  @this.User.Identity.Name!</a>
         </li>
+
         if (this.User.IsInRole(GlobalConstants.AdministratorRoleName))
         {
             <li class="nav-item">

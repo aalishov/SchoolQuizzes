@@ -27,7 +27,7 @@
             await SeedUserAsync(userManager, roleManager, "teacher3@live.com", "teacher3@live.com", "123456", GlobalConstants.TeacherRoleName);
             for (int i = 0; i < 50; i++)
             {
-                await SeedUserAsync(userManager, roleManager, $"student{i}@live.com", $"strudent{i}@live.com", "123456", GlobalConstants.TeacherRoleName);
+                await SeedUserAsync(userManager, roleManager, $"student{i}@live.com", $"student{i}@live.com", "123456", GlobalConstants.StudentRoleName);
             }
         }
 

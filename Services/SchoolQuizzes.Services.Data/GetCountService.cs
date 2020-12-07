@@ -6,6 +6,7 @@
     using SchoolQuizzes.Data.Models;
     using SchoolQuizzes.Services.Data.Contracts;
     using SchoolQuizzes.Services.Data.ModelsDto;
+    using SchoolQuizzes.Web.ViewModels.Administration.Dashboard;
 
     public class GetCountService : IGetCountService
     {
@@ -24,9 +25,9 @@
             this.categories = categories;
         }
 
-        public CountDto GetCounts()
+        public DashboardIndexViewModel GetCounts()
         {
-            var data = new CountDto()
+            var data = new DashboardIndexViewModel()
             {
                 UsersCount = this.users.All().Count(),
                 QuestionsCount = this.questions.All().Count(),

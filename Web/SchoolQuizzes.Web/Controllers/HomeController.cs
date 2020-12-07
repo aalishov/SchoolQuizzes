@@ -10,27 +10,13 @@
 
     public class HomeController : BaseController
     {
-        private readonly IGetCountService getCount;
-
         public HomeController(IGetCountService getCount)
         {
-            this.getCount = getCount;
         }
 
         public IActionResult Index()
         {
-            var countDto = this.getCount.GetCounts();
-
-            var viewModel = new IndexViewModel()
-            {
-                UsersCount = countDto.UsersCount,
-                AnswersCount = countDto.AnswersCount,
-                CategoriesCount = countDto.CategoriesCount,
-                QuestionsCount = countDto.QuestionsCount,
-                QuzziesCount = countDto.QuizzesCount,
-            };
-
-            return this.View(viewModel);
+            return this.View();
         }
 
         public IActionResult Privacy()
