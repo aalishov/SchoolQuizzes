@@ -148,6 +148,22 @@
             return takes;
         }
 
+        public UserTakeDetailViewModel GetTakeDetailsById(int takeId)
+        {
+            var answeredQuestions = this.takedAnswerRepository.AllAsNoTracking()
+                .Where(x => x.TakeId == takeId)
+                .To<TakedQuestionViewModel>()
+                .ToList();
+
+            var model = this.takeRepository.AllAsNoTracking()
+                .Where(t => t.Id == takeId)
+                .To<UserTakeDetailViewModel>()
+                .FirstOrDefault();
+            model.AnsweredQuestions = answeredQuestions;
+
+            return model;
+        }
+
         public int GetQuestionsCountByTakeId(int takeId)
         {
             return this.quizzesService.GetQuizQuestionsCountByQuizId(this.takeRepository.AllAsNoTracking().FirstOrDefault(x => x.Id == takeId).QuizId);

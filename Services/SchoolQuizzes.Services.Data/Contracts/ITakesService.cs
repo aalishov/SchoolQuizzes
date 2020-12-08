@@ -20,6 +20,8 @@
 
         public Take GetTakeById(int takeId);
 
+        public UserTakeDetailViewModel GetTakeDetailsById(int takeId);
+
         public string GetResult(int takeId);
 
         public int GetCorrectAnswerCountByTakeId(int takeId);

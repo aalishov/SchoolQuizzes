@@ -9,6 +9,7 @@
             <th>Трудност</th>
             <th>Брой въпроси</th>
             <th>Резултат</th>
+            <th>Опции</th>
         </tr>
     </thead>
     <tbody>
@@ -20,6 +21,7 @@
                 <td>@take.QuizDifficultName</td>
                 <td>@take.QuizQuestionsCount</td>
                 <td>@take.Result</td>
+                <td><a asp-action="MyTakeDetails" asp-route-id="@take.Id">Детайли</a></td>
             </tr>
         }
     </tbody>

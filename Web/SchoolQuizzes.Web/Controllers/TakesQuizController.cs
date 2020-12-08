@@ -97,5 +97,12 @@
 
             return this.View(model);
         }
+
+
+        public IActionResult MyTakeDetails(int id)
+        {
+            UserTakeDetailViewModel model = this.takesService.GetTakeDetailsById(id);
+            return this.View(model);
+        }
     }
 }

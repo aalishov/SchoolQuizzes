@@ -1,0 +1,18 @@
+﻿@model SchoolQuizzes.Web.ViewModels.Takes.UserTakeDetailViewModel
+@{
+    this.ViewData["Title"] = "Тест: ";
+}
+<div class="jumbotron">
+    <h1 class="h-100">@ViewData["Title"] @Model.QuizTitle</h1>
+    <p class="h-25">Категория: @Model.QuizCategoryName</p>
+    <p class="h-25">Трудност: @Model.QuizDifficultName</p>
+    <p class="text-center h2">Въпроси</p>
+    @foreach (var question in Model.AnsweredQuestions)
+    {
+        <div class="container p-3 my-3 bg-dark text-white">
+            <p class="h3">@question.QuestionValue</p>
+            @{string isCorrect = question.AnswerIsCorrect ? "Верен" : "Грешен";}
+            <p>Твоят отговор: @question.AnswerValue -  @isCorrect</p>
+        </div>
+    }
+</div>
