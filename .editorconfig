@@ -5,3 +5,21 @@ dotnet_diagnostic.SA1117.severity = none
 
 # Default severity for analyzer diagnostics with category 'StyleCop.CSharp.OrderingRules'
 dotnet_analyzer_diagnostic.category-StyleCop.CSharp.OrderingRules.severity = none
+
+# Default severity for all analyzer diagnostics
+dotnet_analyzer_diagnostic.severity = suggestion
+
+# Default severity for analyzer diagnostics with category 'Style'
+dotnet_analyzer_diagnostic.category-Style.severity = suggestion
+
+# IDE0065: Misplaced using directive
+csharp_using_directive_placement = inside_namespace:suggestion
+
+# IDE0058: Expression value is never used
+dotnet_diagnostic.IDE0058.severity = warning
+
+# IDE0008: Use explicit type
+dotnet_diagnostic.IDE0008.severity = warning
+
+# SA1516: Elements should be separated by blank line
+dotnet_diagnostic.SA1516.severity = suggestion

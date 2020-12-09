@@ -1,10 +1,8 @@
 ﻿namespace SchoolQuizzes.Web.Controllers
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
     using System.Security.Claims;
     using System.Threading.Tasks;
+
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using SchoolQuizzes.Services.Data.Contracts;
@@ -26,9 +24,9 @@
         [IgnoreAntiforgeryToken]
         public async Task<ActionResult<PostRatingResponseModel>> Post(PostRatingInputModel input)
         {
-            var userId = this.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            string userId = this.User.FindFirst(ClaimTypes.NameIdentifier).Value;
             await this.ratingService.SetRatingAsync(input.QuestionId, userId, input.Value);
-            var averageRating = this.ratingService.GetAverageRatings(input.QuestionId);
+            double averageRating = this.ratingService.GetAverageRatings(input.QuestionId);
             return new PostRatingResponseModel { AverageRating = averageRating };
         }
     }

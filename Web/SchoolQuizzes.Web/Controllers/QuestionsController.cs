@@ -7,7 +7,6 @@
     using Microsoft.AspNetCore.Mvc;
     using SchoolQuizzes.Data.Models;
     using SchoolQuizzes.Services.Data.Contracts;
-    using SchoolQuizzes.Services.Data.ModelsDto;
     using SchoolQuizzes.Web.ViewModels.Questions;
 
     [Authorize]
@@ -29,9 +28,11 @@
         [HttpGet]
         public IActionResult Create()
         {
-            var model = new CreateQuestionViewModel();
-            model.CategoriesItems = this.categoriesService.GetAllAsKeyValuePairs();
-            model.DifficultsItems = this.difficultsService.GetAllAsKeyValuePairs();
+            CreateQuestionViewModel model = new CreateQuestionViewModel
+            {
+                CategoriesItems = this.categoriesService.GetAllAsKeyValuePairs(),
+                DifficultsItems = this.difficultsService.GetAllAsKeyValuePairs(),
+            };
             return this.View(model);
         }
 
@@ -51,6 +52,5 @@
 
             return this.Redirect("/");
         }
-
     }
 }

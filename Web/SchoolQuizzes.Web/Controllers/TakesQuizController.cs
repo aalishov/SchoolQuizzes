@@ -74,7 +74,7 @@
             }
 
             return this.RedirectToAction("Take", new RouteValueDictionary(
-                     new { controller = "TakesQuiz", action = "Take", Id = ++input.PageNumber }));
+                     (controller: "TakesQuiz", action: "Take", Id: ++input.PageNumber)));
         }
 
         [HttpGet]
@@ -97,7 +97,6 @@
 
             return this.View(model);
         }
-
 
         public IActionResult MyTakeDetails(int id)
         {
