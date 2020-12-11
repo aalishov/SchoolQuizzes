@@ -2,9 +2,16 @@
 {
     using SchoolQuizzes.Services.Data.ModelsDto;
     using SchoolQuizzes.Web.ViewModels.Administration.Dashboard;
+    using System.Threading.Tasks;
 
     public interface IGetCountService
     {
         DashboardIndexViewModel GetCounts();
+
+        public  Task<int> GetTeachersCountAsync();
+
+        public  Task<int> GetStudentsCountAsync();
+
+        public Task<int> GetAdminsCountAsync();
     }
 }

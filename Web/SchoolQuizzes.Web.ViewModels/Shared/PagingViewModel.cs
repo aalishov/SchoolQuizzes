@@ -1,11 +1,14 @@
 ﻿namespace SchoolQuizzes.Web.ViewModels.Shared
 {
     using System;
-    using System.Collections.Generic;
-    using System.Text;
 
     public class PagingViewModel
     {
+        public PagingViewModel()
+        {
+            ItemsPerPage =5;
+            Action = "Index";
+        }
         public int PageNumber { get; set; }
 
         public bool HasPreviousPage => this.PageNumber > 1;

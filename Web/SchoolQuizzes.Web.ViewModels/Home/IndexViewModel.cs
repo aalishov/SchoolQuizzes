@@ -2,14 +2,10 @@
 {
     public class IndexViewModel
     {
-        public int UsersCount { get; set; }
+        public int StudentsCount { get; set; }
 
-        public int QuestionsCount { get; set; }
+        public int TeachersCount { get; set; }
 
-        public int AnswersCount { get; set; }
-
-        public int CategoriesCount { get; set; }
-
-        public int QuzziesCount { get; set; }
+        public int AdminCount { get; set; }
     }
 }

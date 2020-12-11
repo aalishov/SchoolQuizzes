@@ -56,9 +56,9 @@
         }
 
         [HttpGet]
-        public IActionResult Take(int id = 1)
+        public IActionResult Take(int page = 1)
         {
-            TakeQuestionAnswerViewModel model = this.takesService.GetExamQuestion(this.userManager.GetUserId(this.User), id);
+            TakeQuestionAnswerViewModel model = this.takesService.GetExamQuestion(this.userManager.GetUserId(this.User), page);
             model.Action = "Take";
             return this.View(model);
         }
@@ -73,8 +73,7 @@
                 input.PageNumber = 0;
             }
 
-            return this.RedirectToAction("Take", new RouteValueDictionary(
-                     (controller: "TakesQuiz", action: "Take", Id: ++input.PageNumber)));
+            return this.RedirectToAction("Take", "TakesQuiz", new { page = ++input.PageNumber });
         }
 
         [HttpGet]

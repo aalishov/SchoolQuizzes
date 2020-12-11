@@ -2,7 +2,6 @@
 {
     using System.Linq;
     using System.Threading.Tasks;
-    using System.Collections.Generic;
 
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Rendering;
@@ -26,11 +25,16 @@
         }
 
         // GET: Administration/Categories
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int page=1)
         {
-            List<IndexCategoriesViewModel> model = await this.categories.AllWithDeleted()
-                .To<IndexCategoriesViewModel>()
-                .ToListAsync();
+            IndexCategoriesViewModel model = new IndexCategoriesViewModel();
+            model.Categories = await this.categories.AllWithDeleted()
+               .To<CategoryViewModel>()
+                .OrderByDescending(x => x.Id).Skip((page - 1) * model.ItemsPerPage)
+                .Take(model.ItemsPerPage)
+               .ToListAsync();
+            model.ElementsCount = this.categories.AllWithDeleted().Count();
+            model.PageNumber = page;
 
             return this.View(model);
         }
@@ -43,7 +47,7 @@
                 return this.NotFound();
             }
 
-            IndexCategoriesViewModel category = await this.GetCategoryAsync(id);
+            CategoryViewModel category = await this.GetCategoryAsync(id);
 
             return category == null ? this.NotFound() : (IActionResult)this.View(category);
         }
@@ -78,7 +82,7 @@
                 return this.NotFound();
             }
 
-            IndexCategoriesViewModel category = await this.GetCategoryAsync(id);
+            CategoryViewModel category = await this.GetCategoryAsync(id);
             if (category == null)
             {
                 return this.NotFound();
@@ -132,7 +136,7 @@
                 return this.NotFound();
             }
 
-            IndexCategoriesViewModel category = await this.GetCategoryAsync(id);
+            CategoryViewModel category = await this.GetCategoryAsync(id);
             return category == null ? this.NotFound() : (IActionResult)this.View(category);
         }
 
@@ -168,9 +172,9 @@
             return this.categories.All().Any(e => e.Id == id);
         }
 
-        private async Task<IndexCategoriesViewModel> GetCategoryAsync(int? id)
+        private async Task<CategoryViewModel> GetCategoryAsync(int? id)
         {
-            return await this.categories.All().To<IndexCategoriesViewModel>().FirstOrDefaultAsync(x => x.Id == id);
+            return await this.categories.All().To<CategoryViewModel>().FirstOrDefaultAsync(x => x.Id == id);
         }
     }
 }
