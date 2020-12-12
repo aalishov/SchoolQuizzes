@@ -7,5 +7,9 @@
         public int TeachersCount { get; set; }
 
         public int AdminCount { get; set; }
+        public int CorrectAnswersCount { get; set; }
+        public int InCorrectAnswersCount { get; set; }
+
+
     }
 }

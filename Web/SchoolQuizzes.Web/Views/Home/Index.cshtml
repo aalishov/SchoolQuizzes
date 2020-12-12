@@ -3,7 +3,7 @@
 @{
     this.ViewData["Title"] = "Home Page";
 }
-@section Styles{ 
+@section Styles{
     <link href="~/css/HighChart/pie.css" rel="stylesheet" />
 }
 
@@ -24,6 +24,17 @@
         column charts, they remain a popular choice for small datasets.
     </p>
 </figure>
+<hr />
+<figure class="highcharts-figure">
+    <div id="containerAnswers"></div>
+    <input type="hidden" id="correct" value="@Model.CorrectAnswersCount" />
+    <input type="hidden" id="inCorrect" value="@Model.InCorrectAnswersCount" />
+    <p class="highcharts-description">
+        Pie charts are very popular for showing a compact overview of a
+        composition or comparison. While they can be harder to read than
+        column charts, they remain a popular choice for small datasets.
+    </p>
+</figure>
 
 @section Scripts{
     <script src="https://code.highcharts.com/highcharts.js"></script>
@@ -31,4 +42,5 @@
     <script src="https://code.highcharts.com/modules/export-data.js"></script>
     <script src="https://code.highcharts.com/modules/accessibility.js"></script>
     <script src="~/js/HighChart/pieUsers.js"></script>
+    <script src="~/js/HighChart/pieAnswers.js"></script>
 }

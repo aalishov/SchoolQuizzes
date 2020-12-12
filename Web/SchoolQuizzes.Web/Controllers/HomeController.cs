@@ -23,6 +23,8 @@
             model.StudentsCount =await getCount.GetStudentsCountAsync();
             model.TeachersCount =await getCount.GetTeachersCountAsync();
             model.AdminCount = await getCount.GetAdminsCountAsync();
+            model.CorrectAnswersCount = getCount.GetCorrectAnswerCount();
+            model.InCorrectAnswersCount = getCount.GetInCorrectAnswerCount();
             return this.View(model);
         }
 

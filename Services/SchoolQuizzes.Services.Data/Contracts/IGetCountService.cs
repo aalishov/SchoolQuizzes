@@ -13,5 +13,9 @@
         public  Task<int> GetStudentsCountAsync();
 
         public Task<int> GetAdminsCountAsync();
+
+        public int GetCorrectAnswerCount();
+
+        public int GetInCorrectAnswerCount();
     }
 }

@@ -197,5 +197,25 @@
             model.Answers = this.answersService.GetQuestionAnswersForTakesById(model.CurrentQuestionId);
             model.TakenAnswer = this.SelectedAnswere(question.Id, takeId);
         }
+
+        public int GetInCorrectAnswerCountByTakeId(int takeId)
+        {
+            int inCorrectAnswers = 0;
+            int quizId = this.takeRepository.AllAsNoTracking().FirstOrDefault(x => x.Id == takeId).QuizId;
+            List<TakedAnswer> takes = this.takedAnswerRepository.AllAsNoTracking().Where(x => x.TakeId == takeId).ToList();
+
+            int questionsCount = this.quizzesService.GetQuizQuestionsCountByQuizId(quizId);
+
+            foreach (TakedAnswer take in takes)
+            {
+                bool isCorrect = this.questionsService.IsCorrectAnswer(take.QuestionId, take.AnswerId);
+                if (!isCorrect)
+                {
+                    inCorrectAnswers++;
+                }
+            }
+
+            return inCorrectAnswers;
+        }
     }
 }

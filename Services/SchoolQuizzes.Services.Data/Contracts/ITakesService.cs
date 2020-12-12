@@ -26,6 +26,8 @@
 
         public int GetCorrectAnswerCountByTakeId(int takeId);
 
+        public int GetInCorrectAnswerCountByTakeId(int takeId);
+
         public bool IsUserHasNotFinishedQuiz(string userId);
 
         public Task FinishQuizAsync(int takeId);
