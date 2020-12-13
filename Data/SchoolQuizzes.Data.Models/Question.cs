@@ -40,6 +40,11 @@
 
         public virtual Difficult Difficult { get; set; }
 
+        [ForeignKey(nameof(Stage))]
+        public int StageId { get; set; }
+
+        public virtual Stage Stage { get; set; }
+
         public virtual ICollection<QuestionAnswer> Answers { get; set; }
 
         public virtual ICollection<QuizzesQuestions> Quizzes { get; set; }

@@ -25,9 +25,13 @@
 
         public virtual DbSet<Answer> Answers { get; set; }
 
+        public virtual DbSet<ClassRoom> ClassRooms { get; set; }
+
         public virtual DbSet<Take> Takes { get; set; }
 
         public virtual DbSet<TakedAnswer> TakedAnswers { get; set; }
+
+        public virtual DbSet<Teacher> Teachers { get; set; }
 
         public virtual DbSet<Category> Categories { get; set; }
 
@@ -42,6 +46,10 @@
         public virtual DbSet<QuizzesQuestions> QuizisQuestions { get; set; }
 
         public virtual DbSet<Rating> Ratings { get; set; }
+
+        public virtual DbSet<Stage> Stages { get; set; }
+
+        public virtual DbSet<Student> Students { get; set; }
 
         public override int SaveChanges() => this.SaveChanges(true);
 
@@ -90,15 +98,18 @@
                 foreignKey.DeleteBehavior = DeleteBehavior.Restrict;
             }
 
-            builder.Entity<QuestionAnswer>().HasKey(x => new { x.AnswerId, x.QuestionId });
-            builder.Entity<QuizzesQuestions>().HasKey(x => new { x.QuestionId, x.QuizId });
-            builder.Entity<TakedAnswer>().HasKey(x => new { x.QuestionId, x.TakeId });
+            _ = builder.Entity<QuestionAnswer>().HasKey(x => new { x.AnswerId, x.QuestionId });
+            _ = builder.Entity<QuizzesQuestions>().HasKey(x => new { x.QuestionId, x.QuizId });
+            _ = builder.Entity<TakedAnswer>().HasKey(x => new { x.QuestionId, x.TakeId });
+            _ = builder.Entity<Student>().HasOne(s => s.ApplicationUser).WithOne(a => a.Student).HasForeignKey<ApplicationUser>(s => s.Student);
+            _ = builder.Entity<Teacher>().HasOne(t => t.ApplicationUser).WithOne(a => a.Teacher).HasForeignKey<ApplicationUser>(t => t.Teacher);
+            _ = builder.Entity<ClassRoom>().HasIndex(c => c.ClassRoomCode).IsUnique();
         }
 
         private static void SetIsDeletedQueryFilter<T>(ModelBuilder builder)
             where T : class, IDeletableEntity
         {
-            builder.Entity<T>().HasQueryFilter(e => !e.IsDeleted);
+            _ = builder.Entity<T>().HasQueryFilter(e => !e.IsDeleted);
         }
 
         // Applies configurations

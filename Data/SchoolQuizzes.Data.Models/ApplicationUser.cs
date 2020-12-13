@@ -28,6 +28,10 @@ namespace SchoolQuizzes.Data.Models
 
         public DateTime? DeletedOn { get; set; }
 
+        public Student Student { get; set; }
+
+        public Teacher Teacher { get; set; }
+
         public virtual ICollection<IdentityUserRole<string>> Roles { get; set; }
 
         public virtual ICollection<IdentityUserClaim<string>> Claims { get; set; }
