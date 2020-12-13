@@ -16,10 +16,10 @@ dotnet_analyzer_diagnostic.category-Style.severity = suggestion
 csharp_using_directive_placement = inside_namespace:suggestion
 
 # IDE0058: Expression value is never used
-dotnet_diagnostic.IDE0058.severity = warning
+dotnet_diagnostic.IDE0058.severity = none
 
 # IDE0008: Use explicit type
-dotnet_diagnostic.IDE0008.severity = warning
+dotnet_diagnostic.IDE0008.severity = none
 
 # SA1516: Elements should be separated by blank line
 dotnet_diagnostic.SA1516.severity = suggestion

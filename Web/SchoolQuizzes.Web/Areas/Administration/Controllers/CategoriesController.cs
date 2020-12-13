@@ -55,13 +55,13 @@
         // GET: Administration/Categories/Create
         public IActionResult Create()
         {
-            this.ViewData["AddedByUserId"] = new SelectList(this.users.AllAsNoTracking(), "Id", "UserName");
+            //this.ViewData["AddedByUserId"] = new SelectList(this.users.AllAsNoTracking(), "Id", "UserName");
             return this.View();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("AddedByUserId,Name,Description,IsDeleted,DeletedOn,Id,CreatedOn,ModifiedOn")] Category category)
+        public async Task<IActionResult> Create([Bind("Name,Description,IsDeleted,DeletedOn,Id,CreatedOn,ModifiedOn")] Category category)
         {
             if (this.ModelState.IsValid)
             {
@@ -70,7 +70,7 @@
                 return this.RedirectToAction(nameof(this.Index));
             }
 
-            this.ViewData["AddedByUserId"] = new SelectList(this.users.AllAsNoTracking(), "Id", "UserName");
+            //this.ViewData["AddedByUserId"] = new SelectList(this.users.AllAsNoTracking(), "Id", "UserName");
             return this.View(category);
         }
 
@@ -88,14 +88,14 @@
                 return this.NotFound();
             }
 
-            this.ViewData["AddedByUserId"] = new SelectList(this.users.AllAsNoTracking(), "Id", "UserName");
+            //this.ViewData["AddedByUserId"] = new SelectList(this.users.AllAsNoTracking(), "Id", "UserName");
             return this.View(category);
         }
 
         // POST: Administration/Categories/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("AddedByUserId,Name,Description,IsDeleted,DeletedOn,Id,CreatedOn,ModifiedOn")] Category category)
+        public async Task<IActionResult> Edit(int id, [Bind("Name,Description,IsDeleted,DeletedOn,Id,CreatedOn,ModifiedOn")] Category category)
         {
             if (id != category.Id)
             {
@@ -124,7 +124,7 @@
                 return this.RedirectToAction(nameof(this.Index));
             }
 
-            this.ViewData["AddedByUserId"] = new SelectList(this.users.AllAsNoTracking(), "Id", "UserName");
+            //this.ViewData["AddedByUserId"] = new SelectList(this.users.AllAsNoTracking(), "Id", "UserName");
             return this.View(category);
         }
 

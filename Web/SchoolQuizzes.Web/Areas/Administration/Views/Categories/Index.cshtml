@@ -13,9 +13,6 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Categories.FirstOrDefault().AddedByUserUserName)
-            </th>
-            <th>
                 @Html.DisplayNameFor(model => model.Categories.FirstOrDefault().Name)
             </th>
             <th>
@@ -40,9 +37,6 @@
         @foreach (var item in Model.Categories)
         {
             <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.AddedByUserUserName)
-                </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Name)
                 </td>

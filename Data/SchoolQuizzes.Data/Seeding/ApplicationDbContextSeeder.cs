@@ -27,6 +27,8 @@
             {
                 new RolesSeeder(),
                 new UserSeeder(),
+                new StageSeeder(),
+                new TeachersAndStudentsSeeder(),
                 new CategoriesSeeder(),
                 new DifficultLevelsSeeder(),
                 new QuestionsSeeder(),
@@ -36,7 +38,7 @@
             foreach (var seeder in seeders)
             {
                 await seeder.SeedAsync(dbContext, serviceProvider);
-                await dbContext.SaveChangesAsync();
+                _ = await dbContext.SaveChangesAsync();
                 logger.LogInformation($"Seeder {seeder.GetType().Name} done.");
             }
         }

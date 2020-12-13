@@ -11,7 +11,7 @@
 
         public virtual ApplicationUser ApplicationUser { get; set; }
 
-        public int StageId { get; set; }
+        public int? StageId { get; set; }
 
         public virtual Stage Stage { get; set; }
     }

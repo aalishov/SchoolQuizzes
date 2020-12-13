@@ -16,7 +16,9 @@
     using Microsoft.AspNetCore.Mvc.RazorPages;
     using Microsoft.AspNetCore.WebUtilities;
     using Microsoft.Extensions.Logging;
+    using SchoolQuizzes.Common;
     using SchoolQuizzes.Data.Models;
+    using SchoolQuizzes.Services.Data.Contracts;
 
     [AllowAnonymous]
     public class RegisterModel : PageModel
@@ -26,18 +28,20 @@
         private readonly ILogger<RegisterModel> logger;
         private readonly IEmailSender emailSender;
         private readonly RoleManager<ApplicationRole> roleManager;
+        private readonly IUsersService usersService;
 
         public RegisterModel(
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
             ILogger<RegisterModel> logger,
-            IEmailSender emailSender, RoleManager<ApplicationRole> roleManager)
+            IEmailSender emailSender, RoleManager<ApplicationRole> roleManager,IUsersService usersService)
         {
             this.userManager = userManager;
             this.signInManager = signInManager;
             this.logger = logger;
             this.emailSender = emailSender;
             this.roleManager = roleManager;
+            this.usersService = usersService;
         }
 
         [BindProperty]
@@ -97,6 +101,7 @@
                         }
                     }
 
+
                     this.logger.LogInformation("User created a new account with password.");
 
                     var code = await this.userManager.GenerateEmailConfirmationTokenAsync(user);
@@ -110,6 +115,15 @@
                     await this.emailSender.SendEmailAsync(this.Input.Email, "Confirm your email",
                         $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
 
+                    if (Input.Role == GlobalConstants.TeacherRoleName)
+                    {
+                        await this.usersService.AddTeacher(user);
+                    }
+                    else if (Input.Role == GlobalConstants.StudentRoleName)
+                    {
+                        await this.usersService.AddStudent(user);
+                    }
+
                     if (this.userManager.Options.SignIn.RequireConfirmedAccount)
                     {
                         return this.RedirectToPage("RegisterConfirmation", new { email = this.Input.Email, returnUrl = returnUrl });
@@ -119,6 +133,7 @@
                         await this.signInManager.SignInAsync(user, isPersistent: false);
                         return this.LocalRedirect(returnUrl);
                     }
+
                 }
 
                 foreach (var error in result.Errors)

@@ -16,20 +16,19 @@
                 return;
             }
 
-            string addedByUserId = dbContext.Users.FirstOrDefault().Id;
-            await dbContext.Categories.AddAsync(new Category() { AddedByUserId = addedByUserId, Name = "Математика", Description = "Въпроси от категория математика" });
-            await dbContext.Categories.AddAsync(new Category() { AddedByUserId = addedByUserId, Name = "Информатика", Description = "Въпроси от категория информатика" });
-            await dbContext.Categories.AddAsync(new Category() { AddedByUserId = addedByUserId, Name = "Информационни технологии" });
-            await dbContext.Categories.AddAsync(new Category() { AddedByUserId = addedByUserId, Name = "Български език и литература" });
-            await dbContext.Categories.AddAsync(new Category() { AddedByUserId = addedByUserId, Name = "История" });
-            await dbContext.Categories.AddAsync(new Category() { AddedByUserId = addedByUserId, Name = "Георгафия" });
-            await dbContext.Categories.AddAsync(new Category() { AddedByUserId = addedByUserId, Name = "Химия" });
-            await dbContext.Categories.AddAsync(new Category() { AddedByUserId = addedByUserId, Name = "Биология" });
-            await dbContext.Categories.AddAsync(new Category() { AddedByUserId = addedByUserId, Name = "Физика" });
-            await dbContext.Categories.AddAsync(new Category() { AddedByUserId = addedByUserId, Name = "Изобразително изкуство" });
-            await dbContext.Categories.AddAsync(new Category() { AddedByUserId = addedByUserId, Name = "Музика" });
+            _ = await dbContext.Categories.AddAsync(new Category() { Name = "Математика", Description = "Въпроси от категория математика" });
+            _ = await dbContext.Categories.AddAsync(new Category() { Name = "Информатика", Description = "Въпроси от категория информатика" });
+            _ = await dbContext.Categories.AddAsync(new Category() { Name = "Информационни технологии" });
+            _ = await dbContext.Categories.AddAsync(new Category() { Name = "Български език и литература" });
+            _ = await dbContext.Categories.AddAsync(new Category() { Name = "История" });
+            _ = await dbContext.Categories.AddAsync(new Category() { Name = "Георгафия" });
+            _ = await dbContext.Categories.AddAsync(new Category() { Name = "Химия" });
+            _ = await dbContext.Categories.AddAsync(new Category() { Name = "Биология" });
+            _ = await dbContext.Categories.AddAsync(new Category() { Name = "Физика" });
+            _ = await dbContext.Categories.AddAsync(new Category() { Name = "Изобразително изкуство" });
+            _ = await dbContext.Categories.AddAsync(new Category() { Name = "Музика" });
 
-            await dbContext.SaveChangesAsync();
+            _ = await dbContext.SaveChangesAsync();
         }
     }
 }

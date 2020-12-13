@@ -42,7 +42,6 @@
                     answer = new Answer()
                     {
                         Value = inputAnswer.AnswerValue,
-                        AddedByUserId = input.UserId,
                     };
                 }
 

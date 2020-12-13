@@ -13,7 +13,7 @@
 
         public async Task SeedAsync(ApplicationDbContext dbContext, IServiceProvider serviceProvider)
         {
-           await SeedMathQuestionsAsync(dbContext);
+            await SeedMathQuestionsAsync(dbContext);
         }
 
         private static async Task SeedMathQuestionsAsync(ApplicationDbContext dbContext)
@@ -29,6 +29,7 @@
 
             List<Question> questions = new List<Question>();
             Random random = new Random();
+            Stage stage = dbContext.Stages.FirstOrDefault();
 
             for (int i = 0; i < QuestionsCount; i++)
             {
@@ -41,6 +42,7 @@
                     AddedByUserId = addedByUserId,
                     CategoryId = cattegoryId,
                     DifficultId = difficultLevelId,
+                    Stage = stage,
                 };
                 for (int j = 0; j < 4; j++)
                 {
@@ -49,7 +51,6 @@
                     {
                         Answer = new Answer()
                         {
-                            AddedByUserId = addedByUserId,
                             Value = $"{answerValue}",
                         },
                         IsCorrect = sum == answerValue,
@@ -60,7 +61,7 @@
             }
 
             await dbContext.Questions.AddRangeAsync(questions);
-            await dbContext.SaveChangesAsync();
+            _ = await dbContext.SaveChangesAsync();
         }
     }
 }

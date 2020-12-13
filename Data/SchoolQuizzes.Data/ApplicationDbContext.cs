@@ -101,8 +101,17 @@
             _ = builder.Entity<QuestionAnswer>().HasKey(x => new { x.AnswerId, x.QuestionId });
             _ = builder.Entity<QuizzesQuestions>().HasKey(x => new { x.QuestionId, x.QuizId });
             _ = builder.Entity<TakedAnswer>().HasKey(x => new { x.QuestionId, x.TakeId });
-            _ = builder.Entity<Student>().HasOne(s => s.ApplicationUser).WithOne(a => a.Student).HasForeignKey<ApplicationUser>(s => s.Student);
-            _ = builder.Entity<Teacher>().HasOne(t => t.ApplicationUser).WithOne(a => a.Teacher).HasForeignKey<ApplicationUser>(t => t.Teacher);
+
+            _ = builder.Entity<ApplicationUser>()
+                .HasOne<Student>(s => s.Student)
+                .WithOne(a => a.ApplicationUser)
+                .HasForeignKey<Student>(s => s.ApplicationUserId);
+
+            _ = builder.Entity<ApplicationUser>()
+                .HasOne<Teacher>(t => t.Teacher)
+                .WithOne(a => a.ApplicationUser)
+                .HasForeignKey<Teacher>(t => t.ApplicationUserId);
+
             _ = builder.Entity<ClassRoom>().HasIndex(c => c.ClassRoomCode).IsUnique();
         }
 

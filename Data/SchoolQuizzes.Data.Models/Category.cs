@@ -16,11 +16,6 @@
             this.Quizzes = new HashSet<Quiz>();
         }
 
-        [Required]
-        [ForeignKey(nameof(ApplicationUser))]
-        public string AddedByUserId { get; set; }
-
-        public ApplicationUser AddedByUser { get; set; }
 
         [Required]
         [MaxLength(50)]

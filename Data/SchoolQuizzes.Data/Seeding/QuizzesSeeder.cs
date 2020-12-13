@@ -37,30 +37,17 @@
                     AddedByUserId = addedByUserId,
                 };
 
-                ICollection<Question> questions = new List<Question>();
-                List<int> questionsId = dbContext.Questions
-                    .Where(x => x.CategoryId == 1 && x.DifficultId == difficultLevelId)
-                    .Select(x => x.Id)
-                     .ToList();
-
-                for (int j = 0; j < QuestionsCount; j++)
-                {
-                    Random random = new Random();
-                    int randIndex = random.Next(0, questionsId.Count - 1);
-                    int questionIndex = questionsId[randIndex];
-                    questionsId.RemoveAt(randIndex);
-                    questions.Add(dbContext.Questions.FirstOrDefault(x => x.Id == questionIndex));
-                }
+                List<Question> questions = dbContext.Questions.OrderBy(x => Guid.NewGuid()).Take(QuestionsCount).ToList();
 
                 foreach (var question in questions)
                 {
                     quiz.Questions.Add(new QuizzesQuestions { QuestionId = question.Id });
                 }
 
-                await dbContext.Quizzes.AddAsync(quiz);
+                _ = await dbContext.Quizzes.AddAsync(quiz);
             }
 
-            await dbContext.SaveChangesAsync();
+            _ = await dbContext.SaveChangesAsync();
         }
     }
 }
