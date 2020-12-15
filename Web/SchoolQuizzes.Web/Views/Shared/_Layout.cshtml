@@ -27,16 +27,23 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle text-dark" asp-controller="" asp-action="" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Въпроси
-                            </a>
-                            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                                <a class="dropdown-item" asp-area="" asp-controller="Questions" asp-action="Create">Създаване</a>
-                                <a class="dropdown-item" asp-area="" asp-controller="" asp-action="">Редактиране</a>
-                                <a class="dropdown-item" asp-area="" asp-controller="" asp-action="">Въпроси и отговори</a>
-                            </div>
-                        </li>
+                        @if (User.IsInRole(GlobalConstants.TeacherRoleName))
+                        {
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle text-dark" asp-controller="" asp-action="" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Въпроси
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                    <a class="dropdown-item" asp-area="" asp-controller="Questions" asp-action="Create">Създаване</a>
+                                    <a class="dropdown-item" asp-area="" asp-controller="" asp-action="">-</a>
+                                    <a class="dropdown-item" asp-area="" asp-controller="" asp-action="">*-</a>
+                                </div>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="ClassRooms" asp-action="Index">Класни стаи</a>
+                            </li>
+                        }
+
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle text-dark" asp-controller="" asp-action="" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 Тестове
@@ -60,7 +67,7 @@
                         {
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle text-dark" asp-controller="" asp-action="" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                   Admin
+                                    Admin
                                 </a>
                                 <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                                     <a class="dropdown-item" asp-area="Administration" asp-controller="Categories" asp-action="Index">Старт</a>

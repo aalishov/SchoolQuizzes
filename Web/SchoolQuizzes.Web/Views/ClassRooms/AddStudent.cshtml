@@ -1,0 +1,22 @@
+﻿@model ICollection<SchoolQuizzes.Web.ViewModels.ClassRooms.AddStudentInClassRoomViewModel>;
+@{
+    this.ViewData["Title"] = "Добави ученик";
+}
+<h1>@this.ViewData["Title"]</h1>
+
+
+<div class="jumbotron">
+    @foreach (var s in Model)
+    {
+    <div class="container p-3 my-3 bg-dark text-white">
+        <p class="h3">@s.ApplicationUserUserName</p>
+     
+        <form method="post">
+            <input type="hidden" name="studentId" id="@s.Id" value="@s.Id" />
+            <input type="hidden" name="roomId" id="@ViewData["RoomId"]" value="@ViewData["RoomId"]"/>
+            <input type="submit" value="AddStudent" class="btn btn-danger" /> |
+            <a asp-action="Index">Back to List</a>
+        </form>
+    </div>
+    }
+</div>

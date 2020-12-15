@@ -1,12 +1,11 @@
 ﻿namespace SchoolQuizzes.Services.Data
 {
-    using SchoolQuizzes.Data.Common.Models;
     using SchoolQuizzes.Data.Common.Repositories;
     using SchoolQuizzes.Data.Models;
     using SchoolQuizzes.Services.Data.Contracts;
-    using System;
+    using SchoolQuizzes.Services.Mapping;
     using System.Collections.Generic;
-    using System.Text;
+    using System.Linq;
     using System.Threading.Tasks;
 
     public class UsersService : IUsersService
@@ -19,6 +18,7 @@
             this.teachersRepository = teachersRepository;
             this.studentsRepository = studentsRepository;
         }
+
         public async Task AddStudent(ApplicationUser user)
         {
             await this.studentsRepository.AddAsync(new Student { ApplicationUser = user });
@@ -30,5 +30,15 @@
             await this.teachersRepository.AddAsync(new Teacher { ApplicationUser = user });
             await this.teachersRepository.SaveChangesAsync();
         }
+
+        public ICollection<T> GetAllStudentsByStageId<T>(int roomId, int stageId)
+        {
+            return this.studentsRepository.AllAsNoTracking()
+                .Where(x => x.StageId == stageId && !x.ClassRooms.Any(x => x.ClassRoomId == roomId))
+                .To<T>()
+                .ToList();
+        }
+
+
     }
 }

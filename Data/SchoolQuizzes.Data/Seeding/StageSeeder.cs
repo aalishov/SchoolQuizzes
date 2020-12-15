@@ -20,12 +20,12 @@
 
             for (int i = 1; i <= 12; i++)
             {
-                _ = await dbContext.Stages.AddAsync(new Stage() { Name = "1 {клас}", Description = "Ученици" });
+                _ = await dbContext.Stages.AddAsync(new Stage() { Name = $"{i} клас", Description = "Ученици" });
             }
 
             for (int i = 1; i <= 4; i++)
             {
-                _ = await dbContext.Stages.AddAsync(new Stage() { Name = "1 {курс}", Description = "Студенти" });
+                _ = await dbContext.Stages.AddAsync(new Stage() { Name = $"{i} курс", Description = "Студенти" });
             }
 
             _ = await dbContext.SaveChangesAsync();

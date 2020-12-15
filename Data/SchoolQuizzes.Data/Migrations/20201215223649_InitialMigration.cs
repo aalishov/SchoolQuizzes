@@ -339,6 +339,36 @@ namespace SchoolQuizzes.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Students",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    CreatedOn = table.Column<DateTime>(nullable: false),
+                    ModifiedOn = table.Column<DateTime>(nullable: true),
+                    IsDeleted = table.Column<bool>(nullable: false),
+                    DeletedOn = table.Column<DateTime>(nullable: true),
+                    ApplicationUserId = table.Column<string>(nullable: true),
+                    StageId = table.Column<int>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Students", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Students_AspNetUsers_ApplicationUserId",
+                        column: x => x.ApplicationUserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Students_Stages_StageId",
+                        column: x => x.StageId,
+                        principalTable: "Stages",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "ClassRooms",
                 columns: table => new
                 {
@@ -350,11 +380,18 @@ namespace SchoolQuizzes.Data.Migrations
                     DeletedOn = table.Column<DateTime>(nullable: true),
                     ClassRoomCode = table.Column<string>(nullable: true),
                     TeacherId = table.Column<int>(nullable: false),
-                    StageId = table.Column<int>(nullable: false)
+                    StageId = table.Column<int>(nullable: false),
+                    CategoryId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_ClassRooms", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ClassRooms_Categories_CategoryId",
+                        column: x => x.CategoryId,
+                        principalTable: "Categories",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_ClassRooms_Stages_StageId",
                         column: x => x.StageId,
@@ -365,37 +402,6 @@ namespace SchoolQuizzes.Data.Migrations
                         name: "FK_ClassRooms_Teachers_TeacherId",
                         column: x => x.TeacherId,
                         principalTable: "Teachers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Takes",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    CreatedOn = table.Column<DateTime>(nullable: false),
-                    ModifiedOn = table.Column<DateTime>(nullable: true),
-                    IsDeleted = table.Column<bool>(nullable: false),
-                    DeletedOn = table.Column<DateTime>(nullable: true),
-                    UserId = table.Column<string>(nullable: false),
-                    QuizId = table.Column<int>(nullable: false),
-                    IsFinished = table.Column<bool>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Takes", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Takes_Quizzes_QuizId",
-                        column: x => x.QuizId,
-                        principalTable: "Quizzes",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Takes_AspNetUsers_UserId",
-                        column: x => x.UserId,
-                        principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -479,7 +485,7 @@ namespace SchoolQuizzes.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Students",
+                name: "ClassRoomQuizzes",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
@@ -488,29 +494,87 @@ namespace SchoolQuizzes.Data.Migrations
                     ModifiedOn = table.Column<DateTime>(nullable: true),
                     IsDeleted = table.Column<bool>(nullable: false),
                     DeletedOn = table.Column<DateTime>(nullable: true),
-                    ApplicationUserId = table.Column<string>(nullable: true),
-                    StageId = table.Column<int>(nullable: false),
-                    ClassRoomId = table.Column<int>(nullable: true)
+                    ClassRoomId = table.Column<int>(nullable: false),
+                    Title = table.Column<string>(nullable: true),
+                    QuizId = table.Column<int>(nullable: false),
+                    IsExam = table.Column<bool>(nullable: false),
+                    IsActive = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Students", x => x.Id);
+                    table.PrimaryKey("PK_ClassRoomQuizzes", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Students_AspNetUsers_ApplicationUserId",
-                        column: x => x.ApplicationUserId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Students_ClassRooms_ClassRoomId",
+                        name: "FK_ClassRoomQuizzes_ClassRooms_ClassRoomId",
                         column: x => x.ClassRoomId,
                         principalTable: "ClassRooms",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Students_Stages_StageId",
-                        column: x => x.StageId,
-                        principalTable: "Stages",
+                        name: "FK_ClassRoomQuizzes_Quizzes_QuizId",
+                        column: x => x.QuizId,
+                        principalTable: "Quizzes",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ClassRoomStudents",
+                columns: table => new
+                {
+                    ClassRoomId = table.Column<int>(nullable: false),
+                    StudentId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ClassRoomStudents", x => new { x.ClassRoomId, x.StudentId });
+                    table.ForeignKey(
+                        name: "FK_ClassRoomStudents_ClassRooms_ClassRoomId",
+                        column: x => x.ClassRoomId,
+                        principalTable: "ClassRooms",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_ClassRoomStudents_Students_StudentId",
+                        column: x => x.StudentId,
+                        principalTable: "Students",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Takes",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    CreatedOn = table.Column<DateTime>(nullable: false),
+                    ModifiedOn = table.Column<DateTime>(nullable: true),
+                    IsDeleted = table.Column<bool>(nullable: false),
+                    DeletedOn = table.Column<DateTime>(nullable: true),
+                    UserId = table.Column<string>(nullable: false),
+                    QuizId = table.Column<int>(nullable: false),
+                    IsFinished = table.Column<bool>(nullable: false),
+                    ClassRoomQuizId = table.Column<int>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Takes", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Takes_ClassRoomQuizzes_ClassRoomQuizId",
+                        column: x => x.ClassRoomQuizId,
+                        principalTable: "ClassRoomQuizzes",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Takes_Quizzes_QuizId",
+                        column: x => x.QuizId,
+                        principalTable: "Quizzes",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Takes_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -606,6 +670,26 @@ namespace SchoolQuizzes.Data.Migrations
                 column: "IsDeleted");
 
             migrationBuilder.CreateIndex(
+                name: "IX_ClassRoomQuizzes_ClassRoomId",
+                table: "ClassRoomQuizzes",
+                column: "ClassRoomId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ClassRoomQuizzes_IsDeleted",
+                table: "ClassRoomQuizzes",
+                column: "IsDeleted");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ClassRoomQuizzes_QuizId",
+                table: "ClassRoomQuizzes",
+                column: "QuizId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ClassRooms_CategoryId",
+                table: "ClassRooms",
+                column: "CategoryId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_ClassRooms_ClassRoomCode",
                 table: "ClassRooms",
                 column: "ClassRoomCode",
@@ -626,6 +710,11 @@ namespace SchoolQuizzes.Data.Migrations
                 name: "IX_ClassRooms_TeacherId",
                 table: "ClassRooms",
                 column: "TeacherId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ClassRoomStudents_StudentId",
+                table: "ClassRoomStudents",
+                column: "StudentId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_DifficultLevels_IsDeleted",
@@ -710,11 +799,6 @@ namespace SchoolQuizzes.Data.Migrations
                 filter: "[ApplicationUserId] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Students_ClassRoomId",
-                table: "Students",
-                column: "ClassRoomId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Students_IsDeleted",
                 table: "Students",
                 column: "IsDeleted");
@@ -733,6 +817,11 @@ namespace SchoolQuizzes.Data.Migrations
                 name: "IX_TakedAnswers_TakeId",
                 table: "TakedAnswers",
                 column: "TakeId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Takes_ClassRoomQuizId",
+                table: "Takes",
+                column: "ClassRoomQuizId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Takes_IsDeleted",
@@ -780,6 +869,9 @@ namespace SchoolQuizzes.Data.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "ClassRoomStudents");
+
+            migrationBuilder.DropTable(
                 name: "QuestionsAnswers");
 
             migrationBuilder.DropTable(
@@ -789,16 +881,13 @@ namespace SchoolQuizzes.Data.Migrations
                 name: "Ratings");
 
             migrationBuilder.DropTable(
-                name: "Students");
-
-            migrationBuilder.DropTable(
                 name: "TakedAnswers");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
-                name: "ClassRooms");
+                name: "Students");
 
             migrationBuilder.DropTable(
                 name: "Answers");
@@ -810,22 +899,28 @@ namespace SchoolQuizzes.Data.Migrations
                 name: "Takes");
 
             migrationBuilder.DropTable(
-                name: "Teachers");
+                name: "ClassRoomQuizzes");
 
             migrationBuilder.DropTable(
-                name: "Stages");
+                name: "ClassRooms");
 
             migrationBuilder.DropTable(
                 name: "Quizzes");
 
             migrationBuilder.DropTable(
-                name: "AspNetUsers");
+                name: "Stages");
+
+            migrationBuilder.DropTable(
+                name: "Teachers");
 
             migrationBuilder.DropTable(
                 name: "Categories");
 
             migrationBuilder.DropTable(
                 name: "DifficultLevels");
+
+            migrationBuilder.DropTable(
+                name: "AspNetUsers");
         }
     }
 }

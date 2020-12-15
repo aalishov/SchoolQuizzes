@@ -22,4 +22,7 @@ dotnet_diagnostic.IDE0058.severity = none
 dotnet_diagnostic.IDE0008.severity = none
 
 # SA1516: Elements should be separated by blank line
-dotnet_diagnostic.SA1516.severity = suggestion
+dotnet_diagnostic.SA1516.severity = warning
+
+# IDE0005: Using directive is unnecessary.
+dotnet_diagnostic.IDE0005.severity = warning

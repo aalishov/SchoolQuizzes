@@ -22,12 +22,12 @@
             var userManager = serviceProvider.GetRequiredService<UserManager<ApplicationUser>>();
             await SeedUserAsync(dbContext, userManager, roleManager, "admin@abv.bg", "admin@abv.bg", "123456", GlobalConstants.AdministratorRoleName);
             await SeedUserAsync(dbContext, userManager, roleManager, "aalishov@live.com", "aalishov@live.com", "123456", GlobalConstants.AdministratorRoleName);
-            await SeedUserAsync(dbContext, userManager, roleManager, "teacher1@live.com", "teacher1@live.com", "123456", GlobalConstants.TeacherRoleName);
-            await SeedUserAsync(dbContext, userManager, roleManager, "teacher2@live.com", "teacher2@live.com", "123456", GlobalConstants.TeacherRoleName);
-            await SeedUserAsync(dbContext, userManager, roleManager, "teacher3@live.com", "teacher3@live.com", "123456", GlobalConstants.TeacherRoleName);
-            await SeedUserAsync(dbContext, userManager, roleManager, "teacher4@live.com", "teacher4@live.com", "123456", GlobalConstants.TeacherRoleName);
-            await SeedUserAsync(dbContext, userManager, roleManager, "teacher5@live.com", "teacher5@live.com", "123456", GlobalConstants.TeacherRoleName);
-            for (int i = 0; i < 50; i++)
+            
+            for (int i = 0; i < 25; i++)
+            {
+                await SeedUserAsync(dbContext, userManager, roleManager, $"teacher{i}@live.com", $"teacher{i}@live.com", "123456", GlobalConstants.TeacherRoleName);
+            }
+            for (int i = 0; i < 250; i++)
             {
                 await SeedUserAsync(dbContext, userManager, roleManager, $"student{i}@live.com", $"student{i}@live.com", "123456", GlobalConstants.StudentRoleName);
             }

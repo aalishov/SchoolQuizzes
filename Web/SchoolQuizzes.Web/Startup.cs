@@ -65,6 +65,7 @@
             // Application services
             services.AddTransient<IAnswersService, AnswersService>();
             services.AddTransient<ICategoriesService, CategoriesService>();
+            services.AddTransient<IClassRoomsService, ClassRoomsService>();
             services.AddTransient<IDifficultsService, DifficultsService>();
             services.AddTransient<IEmailSender, NullMessageSender>();
             services.AddTransient<IGetCountService, GetCountService>();
@@ -72,6 +73,7 @@
             services.AddTransient<IQuestionsService, QuestionsService>();
             services.AddTransient<IQuizzesService, QuizzesService>();
             services.AddTransient<IRatingsService, RatingsService>();
+            services.AddTransient<IStagesService, StagesService>();
             services.AddTransient<IUsersService, UsersService>();
         }
 

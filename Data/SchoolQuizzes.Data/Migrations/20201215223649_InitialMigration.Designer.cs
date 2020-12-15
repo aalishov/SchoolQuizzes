@@ -10,7 +10,7 @@ using SchoolQuizzes.Data;
 namespace SchoolQuizzes.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20201213193931_InitialMigration")]
+    [Migration("20201215223649_InitialMigration")]
     partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -318,6 +318,9 @@ namespace SchoolQuizzes.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int>("CategoryId")
+                        .HasColumnType("int");
+
                     b.Property<string>("ClassRoomCode")
                         .HasColumnType("nvarchar(450)");
 
@@ -341,6 +344,8 @@ namespace SchoolQuizzes.Data.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CategoryId");
+
                     b.HasIndex("ClassRoomCode")
                         .IsUnique()
                         .HasFilter("[ClassRoomCode] IS NOT NULL");
@@ -352,6 +357,66 @@ namespace SchoolQuizzes.Data.Migrations
                     b.HasIndex("TeacherId");
 
                     b.ToTable("ClassRooms");
+                });
+
+            modelBuilder.Entity("SchoolQuizzes.Data.Models.ClassRoomQuiz", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("ClassRoomId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DeletedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsExam")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("ModifiedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("QuizId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Title")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ClassRoomId");
+
+                    b.HasIndex("IsDeleted");
+
+                    b.HasIndex("QuizId");
+
+                    b.ToTable("ClassRoomQuizzes");
+                });
+
+            modelBuilder.Entity("SchoolQuizzes.Data.Models.ClassRoomStudent", b =>
+                {
+                    b.Property<int>("ClassRoomId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("StudentId")
+                        .HasColumnType("int");
+
+                    b.HasKey("ClassRoomId", "StudentId");
+
+                    b.HasIndex("StudentId");
+
+                    b.ToTable("ClassRoomStudents");
                 });
 
             modelBuilder.Entity("SchoolQuizzes.Data.Models.Difficult", b =>
@@ -510,7 +575,7 @@ namespace SchoolQuizzes.Data.Migrations
                     b.ToTable("Quizzes");
                 });
 
-            modelBuilder.Entity("SchoolQuizzes.Data.Models.QuizzesQuestions", b =>
+            modelBuilder.Entity("SchoolQuizzes.Data.Models.QuizQuestion", b =>
                 {
                     b.Property<int>("QuestionId")
                         .HasColumnType("int");
@@ -598,9 +663,6 @@ namespace SchoolQuizzes.Data.Migrations
                     b.Property<string>("ApplicationUserId")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<int?>("ClassRoomId")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
 
@@ -613,7 +675,7 @@ namespace SchoolQuizzes.Data.Migrations
                     b.Property<DateTime?>("ModifiedOn")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("StageId")
+                    b.Property<int?>("StageId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -621,8 +683,6 @@ namespace SchoolQuizzes.Data.Migrations
                     b.HasIndex("ApplicationUserId")
                         .IsUnique()
                         .HasFilter("[ApplicationUserId] IS NOT NULL");
-
-                    b.HasIndex("ClassRoomId");
 
                     b.HasIndex("IsDeleted");
 
@@ -637,6 +697,9 @@ namespace SchoolQuizzes.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int?>("ClassRoomQuizId")
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
@@ -661,6 +724,8 @@ namespace SchoolQuizzes.Data.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ClassRoomQuizId");
 
                     b.HasIndex("IsDeleted");
 
@@ -777,6 +842,12 @@ namespace SchoolQuizzes.Data.Migrations
 
             modelBuilder.Entity("SchoolQuizzes.Data.Models.ClassRoom", b =>
                 {
+                    b.HasOne("SchoolQuizzes.Data.Models.Category", "Category")
+                        .WithMany()
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.HasOne("SchoolQuizzes.Data.Models.Stage", "Stage")
                         .WithMany("ClassRooms")
                         .HasForeignKey("StageId")
@@ -786,6 +857,36 @@ namespace SchoolQuizzes.Data.Migrations
                     b.HasOne("SchoolQuizzes.Data.Models.Teacher", "Teacher")
                         .WithMany("ClassRooms")
                         .HasForeignKey("TeacherId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("SchoolQuizzes.Data.Models.ClassRoomQuiz", b =>
+                {
+                    b.HasOne("SchoolQuizzes.Data.Models.ClassRoom", "ClassRoom")
+                        .WithMany("ClassRoomQuizzes")
+                        .HasForeignKey("ClassRoomId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("SchoolQuizzes.Data.Models.Quiz", "Quiz")
+                        .WithMany()
+                        .HasForeignKey("QuizId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("SchoolQuizzes.Data.Models.ClassRoomStudent", b =>
+                {
+                    b.HasOne("SchoolQuizzes.Data.Models.ClassRoom", "ClassRoom")
+                        .WithMany("Students")
+                        .HasForeignKey("ClassRoomId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("SchoolQuizzes.Data.Models.Student", "Student")
+                        .WithMany("ClassRooms")
+                        .HasForeignKey("StudentId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
                 });
@@ -853,7 +954,7 @@ namespace SchoolQuizzes.Data.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("SchoolQuizzes.Data.Models.QuizzesQuestions", b =>
+            modelBuilder.Entity("SchoolQuizzes.Data.Models.QuizQuestion", b =>
                 {
                     b.HasOne("SchoolQuizzes.Data.Models.Question", "Question")
                         .WithMany("Quizzes")
@@ -887,19 +988,17 @@ namespace SchoolQuizzes.Data.Migrations
                         .WithOne("Student")
                         .HasForeignKey("SchoolQuizzes.Data.Models.Student", "ApplicationUserId");
 
-                    b.HasOne("SchoolQuizzes.Data.Models.ClassRoom", null)
-                        .WithMany("Students")
-                        .HasForeignKey("ClassRoomId");
-
                     b.HasOne("SchoolQuizzes.Data.Models.Stage", "Stage")
                         .WithMany("Students")
-                        .HasForeignKey("StageId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .HasForeignKey("StageId");
                 });
 
             modelBuilder.Entity("SchoolQuizzes.Data.Models.Take", b =>
                 {
+                    b.HasOne("SchoolQuizzes.Data.Models.ClassRoomQuiz", null)
+                        .WithMany("Takes")
+                        .HasForeignKey("ClassRoomQuizId");
+
                     b.HasOne("SchoolQuizzes.Data.Models.Quiz", "Quiz")
                         .WithMany()
                         .HasForeignKey("QuizId")

@@ -8,7 +8,8 @@
     {
         public ClassRoom()
         {
-            this.Students = new HashSet<Student>();
+            this.Students = new HashSet<ClassRoomStudent>();
+            this.ClassRoomQuizzes = new HashSet<ClassRoomQuiz>();
         }
         public string ClassRoomCode { get; set; }
 
@@ -20,6 +21,12 @@
 
         public virtual Stage Stage { get; set; }
 
-        public virtual ICollection<Student> Students { get; set; }
+        public int CategoryId { get; set; }
+
+        public virtual Category Category { get; set; }
+
+        public virtual ICollection<ClassRoomStudent> Students { get; set; }
+
+        public virtual ICollection<ClassRoomQuiz> ClassRoomQuizzes { get; set; }
     }
 }

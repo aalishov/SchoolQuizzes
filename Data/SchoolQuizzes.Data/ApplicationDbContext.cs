@@ -27,6 +27,10 @@
 
         public virtual DbSet<ClassRoom> ClassRooms { get; set; }
 
+        public virtual DbSet<ClassRoomStudent> ClassRoomStudents { get; set; }
+
+        public virtual DbSet<ClassRoomQuiz> ClassRoomQuizzes { get; set; }
+
         public virtual DbSet<Take> Takes { get; set; }
 
         public virtual DbSet<TakedAnswer> TakedAnswers { get; set; }
@@ -43,7 +47,7 @@
 
         public virtual DbSet<Quiz> Quizzes { get; set; }
 
-        public virtual DbSet<QuizzesQuestions> QuizisQuestions { get; set; }
+        public virtual DbSet<QuizQuestion> QuizisQuestions { get; set; }
 
         public virtual DbSet<Rating> Ratings { get; set; }
 
@@ -99,8 +103,9 @@
             }
 
             _ = builder.Entity<QuestionAnswer>().HasKey(x => new { x.AnswerId, x.QuestionId });
-            _ = builder.Entity<QuizzesQuestions>().HasKey(x => new { x.QuestionId, x.QuizId });
+            _ = builder.Entity<QuizQuestion>().HasKey(x => new { x.QuestionId, x.QuizId });
             _ = builder.Entity<TakedAnswer>().HasKey(x => new { x.QuestionId, x.TakeId });
+            _ = builder.Entity<ClassRoomStudent>().HasKey(x => new { x.ClassRoomId, x.StudentId });
 
             _ = builder.Entity<ApplicationUser>()
                 .HasOne<Student>(s => s.Student)

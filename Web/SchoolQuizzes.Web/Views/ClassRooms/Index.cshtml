@@ -1,0 +1,30 @@
+﻿
+@model SchoolQuizzes.Web.ViewModels.ClassRooms.IndexUserClassRooms;
+@{
+    this.ViewData["Title"] = "Моите класни стаи";
+}
+<h1>@this.ViewData["Title"]</h1>
+<td><a asp-action="Create">Добави класна стая</a></td>
+<table class=" table table-responsive-lg  table-hover table-bordered table-striped">
+    <thead class="thead-light">
+        <tr>
+            <th>Потребител</th>
+            <th>Клас</th>
+            <th>Категория</th>
+            <th>Брой ученици</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var r in Model.ClassRooms)
+        {
+            <tr>
+                <td>@r.TeacherApplicationUserUserName</td>
+                <td>@r.StageName</td>
+                <td>@r.CategoryName</td>
+                <td>@r.StudentsCount</td>
+                <td><a asp-action="Details" asp-route-roomId="@r.Id">Вход</a></td>
+            </tr>
+        }
+    </tbody>
+</table>

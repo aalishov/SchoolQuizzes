@@ -1,0 +1,23 @@
+﻿
+@model SchoolQuizzes.Web.ViewModels.ClassRooms.CreateClassRoomViewModel;
+@{
+    this.ViewData["Title"] = "Създай нова класна стая";
+}
+<h1>@this.ViewData["Title"]</h1>
+
+<form method="post" class=" col-md-6 offset-md-3">
+    <div asp-validation-summary="All" class="text-danger"></div>
+    <div class=" form-group">
+        <label asp-for="CategoryId"></label>
+        <select asp-for="CategoryId" asp-items="@Model.Categories" class="form-control"></select>
+        <span asp-validation-for="CategoryId" class="text-danger"></span>
+    </div>
+    <div class=" form-group">
+        <label asp-for="StageId"></label>
+        <select asp-for="StageId" asp-items="@Model.Stages" class="form-control"></select>
+        <span asp-validation-for="StageId" class="text-danger"></span>
+    </div>
+    
+    <input type="submit" class="btn btn-primary" value="Създай" />
+
+</form>

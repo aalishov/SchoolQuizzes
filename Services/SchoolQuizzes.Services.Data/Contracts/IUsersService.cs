@@ -11,5 +11,7 @@
         public Task AddTeacher(ApplicationUser user);
 
         public Task AddStudent(ApplicationUser user);
+
+        public ICollection<T> GetAllStudentsByStageId<T>(int roomId, int stageId);
     }
 }

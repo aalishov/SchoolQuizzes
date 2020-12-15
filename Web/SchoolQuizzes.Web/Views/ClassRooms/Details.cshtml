@@ -1,0 +1,13 @@
+﻿@model SchoolQuizzes.Web.ViewModels.ClassRooms.DetailsClassRoomViewModel;
+@{
+    this.ViewData["Title"] = "Класна стая";
+}
+
+
+
+<p class="h2">@Model.TeacherApplicationUserUserName</p>
+<p class="h2">@Model.StageName</p>
+<p class="h2">@Model.CategoryName</p>
+<p class="h2">@Model.StudentsCount</p>
+
+<a asp-action="AddStudent" asp-route-roomId="@Model.Id"  class=""><i class="fas fa-trash-alt"></i></a>

@@ -23,7 +23,7 @@
             }
 
             var userManager = serviceProvider.GetRequiredService<UserManager<ApplicationUser>>();
-            Stage stage = dbContext.Stages.OrderBy(x => Guid.NewGuid()).FirstOrDefault();
+            
 
             foreach (var user in dbContext.Users)
             {
@@ -33,6 +33,7 @@
                 }
                 else if (await userManager.IsInRoleAsync(user, GlobalConstants.StudentRoleName))
                 {
+                    Stage stage = dbContext.Stages.OrderBy(x => Guid.NewGuid()).FirstOrDefault();
                     _ = dbContext.Students.Add(new Student() { ApplicationUser = user, Stage = stage });
                 }
             }

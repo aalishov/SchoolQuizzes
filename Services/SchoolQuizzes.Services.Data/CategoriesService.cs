@@ -2,7 +2,7 @@
 {
     using System.Collections.Generic;
     using System.Linq;
-
+    using Microsoft.AspNetCore.Mvc.Rendering;
     using SchoolQuizzes.Data.Common.Repositories;
     using SchoolQuizzes.Data.Models;
     using SchoolQuizzes.Services.Data.Contracts;
@@ -23,6 +23,11 @@
                   .ToList()
                   .Select(x => new KeyValuePair<string, string>(x.Id.ToString(), x.Name))
                   .ToList();
+        }
+
+        public SelectList GetAllAsSelectList()
+        {
+            return new SelectList(this.categories.AllAsNoTracking(), "Id", "Name");
         }
 
         public string GetCategoryNameById(int id)

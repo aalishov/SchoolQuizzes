@@ -7,7 +7,7 @@
 
     using SchoolQuizzes.Data.Common.Models;
 
-    public class QuizzesQuestions
+    public class QuizQuestion
     {
         [ForeignKey(nameof(Quiz))]
         public int QuizId { get; set; }

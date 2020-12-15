@@ -39,7 +39,7 @@
 
             foreach (var question in generateDto.Questions)
             {
-                quiz.Questions.Add(new QuizzesQuestions { QuestionId = question.Id });
+                quiz.Questions.Add(new QuizQuestion { QuestionId = question.Id });
             }
 
             await this.quizisRepository.AddAsync(quiz);

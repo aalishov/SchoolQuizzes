@@ -41,7 +41,7 @@
 
                 foreach (var question in questions)
                 {
-                    quiz.Questions.Add(new QuizzesQuestions { QuestionId = question.Id });
+                    quiz.Questions.Add(new QuizQuestion { QuestionId = question.Id });
                 }
 
                 _ = await dbContext.Quizzes.AddAsync(quiz);

@@ -55,7 +55,7 @@
         // GET: Administration/Categories/Create
         public IActionResult Create()
         {
-            //this.ViewData["AddedByUserId"] = new SelectList(this.users.AllAsNoTracking(), "Id", "UserName");
+            this.ViewData["AddedByUserId"] = new SelectList(this.users.AllAsNoTracking(), "Id", "UserName");
             return this.View();
         }
 
