@@ -5,9 +5,8 @@
     using SchoolQuizzes.Common;
     using SchoolQuizzes.Services.Data.Contracts;
     using SchoolQuizzes.Web.ViewModels.ClassRooms;
-    using System;
+
     using System.Collections.Generic;
-    using System.Linq;
     using System.Security.Claims;
     using System.Threading.Tasks;
 
@@ -19,20 +18,26 @@
         private readonly ICategoriesService categoriesService;
         private readonly IStagesService stagesService;
         private readonly IUsersService usersService;
+        private readonly IDifficultsService difficultsService;
+        private readonly IQuizzesService quizzesService;
 
-        public ClassRoomsController(IClassRoomsService roomsService, ICategoriesService categoriesService, IStagesService stagesService, IUsersService usersService)
+                
+        public ClassRoomsController(IClassRoomsService roomsService, ICategoriesService categoriesService, IStagesService stagesService, IUsersService usersService, IDifficultsService difficultsService, IQuizzesService quizzesService)
         {
             this.roomsService = roomsService;
             this.categoriesService = categoriesService;
             this.stagesService = stagesService;
             this.usersService = usersService;
+            this.difficultsService = difficultsService;
+            this.quizzesService = quizzesService;
         }
+
         public IActionResult Index()
         {
             string userId = this.User.FindFirst(ClaimTypes.NameIdentifier).Value;
             IndexUserClassRooms model = new IndexUserClassRooms();
             model.ClassRooms = this.roomsService.GetRooms<IndexClassRoom>(userId);
-            return View(model);
+            return this.View(model);
         }
 
         [HttpGet]
@@ -67,17 +72,17 @@
         {
             string userId = this.User.FindFirst(ClaimTypes.NameIdentifier).Value;
             DetailsClassRoomViewModel model = new DetailsClassRoomViewModel();
-            model = this.roomsService.GerRoomById<DetailsClassRoomViewModel>(roomId);
-            return View(model);
+            model = this.roomsService.GetRoomById<DetailsClassRoomViewModel>(roomId);
+            return this.View(model);
         }
 
         public IActionResult AddStudent(int roomId)
         {
             int stageId = this.roomsService.GetRoomStageId(roomId);
             ICollection<AddStudentInClassRoomViewModel> model = this.usersService.GetAllStudentsByStageId<AddStudentInClassRoomViewModel>(roomId, stageId);
-            ViewData["RoomId"] = roomId;
+            this.ViewData["RoomId"] = roomId;
 
-            return View(model);
+            return this.View(model);
         }
 
         [HttpPost]
@@ -85,7 +90,32 @@
         {
             await this.roomsService.AddStudentToClassRoomAsync(roomId, studentId);
 
-            return this.RedirectToAction( "Details", "ClassRooms", new { roomId=roomId });
+            return this.RedirectToAction("Details", "ClassRooms", new { roomId = roomId });
+        }
+
+        [HttpGet]
+        public IActionResult AssignClassRoomQuiz(int classRoomId, int difficultId = -1)
+        {
+            int categoryId = this.roomsService.GetRoomById<IndexClassRoom>(classRoomId).CategoryId;
+            AssignClassRoomQuizViewModel model = new AssignClassRoomQuizViewModel();
+            model.Difficults = this.difficultsService.GetAllAsSelectList();
+            model.Quizzes = this.quizzesService.GetQuizzesByCategoryAndDifficultAsSelectList(categoryId, difficultId);
+            return this.View(model);
+        }
+
+
+        [HttpPost]
+        public async Task<IActionResult> AssignClassRoomQuiz(AssignClassRoomQuizViewModel model)
+        {
+            if (!this.ModelState.IsValid)
+            {
+                model.Difficults = this.difficultsService.GetAllAsSelectList();
+                model.Quizzes = this.quizzesService.GetQuizzesByCategoryAndDifficultAsSelectList(model.CategoryId, model.DifficultId);
+            }
+
+            await this.roomsService.AssignClassRoomQuizAsync(model.Title, model.ClassRoomId, model.QuizId, model.IsExam);
+
+            return this.RedirectToAction("Details", "ClassRooms", new { roomId = model.ClassRoomId });
         }
     }
 }

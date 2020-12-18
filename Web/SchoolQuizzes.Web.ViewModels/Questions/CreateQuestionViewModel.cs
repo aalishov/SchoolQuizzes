@@ -1,11 +1,7 @@
 ﻿namespace SchoolQuizzes.Web.ViewModels.Questions
 {
-    using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
-    using System.Text;
-
-    using SchoolQuizzes.Data.Models;
     using SchoolQuizzes.Web.ViewModels.Answers;
 
     public class CreateQuestionViewModel

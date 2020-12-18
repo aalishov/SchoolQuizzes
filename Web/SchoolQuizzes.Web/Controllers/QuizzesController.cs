@@ -5,11 +5,12 @@
 
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
+    using SchoolQuizzes.Common;
     using SchoolQuizzes.Services.Data.Contracts;
     using SchoolQuizzes.Services.Data.ModelsDto;
     using SchoolQuizzes.Web.ViewModels.Quizzes;
 
-    [Authorize]
+    [Authorize(Roles = GlobalConstants.TeacherRoleName)]
     public class QuizzesController : BaseController
     {
         private readonly IAnswersService answersService;

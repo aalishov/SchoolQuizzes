@@ -1,8 +1,6 @@
 ﻿namespace SchoolQuizzes.Web.ViewModels.Questions
 {
-    using System;
     using System.Collections.Generic;
-    using System.Text;
     using AutoMapper;
     using SchoolQuizzes.Data.Models;
     using SchoolQuizzes.Services.Mapping;

@@ -1,8 +1,6 @@
 ﻿namespace SchoolQuizzes.Services.Data.ModelsDto
 {
-    using System;
     using System.Collections.Generic;
-    using System.Text;
 
     using SchoolQuizzes.Data.Models;
     using SchoolQuizzes.Services.Mapping;

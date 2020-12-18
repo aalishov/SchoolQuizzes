@@ -1,8 +1,8 @@
 ﻿namespace SchoolQuizzes.Web.Controllers
 {
     using System.Diagnostics;
-    using System.Linq;
     using System.Threading.Tasks;
+
     using Microsoft.AspNetCore.Mvc;
     using SchoolQuizzes.Services.Data.Contracts;
     using SchoolQuizzes.Web.ViewModels;
@@ -19,12 +19,14 @@
 
         public async Task<IActionResult> Index()
         {
-            IndexViewModel model = new IndexViewModel();
-            model.StudentsCount =await getCount.GetStudentsCountAsync();
-            model.TeachersCount =await getCount.GetTeachersCountAsync();
-            model.AdminCount = await getCount.GetAdminsCountAsync();
-            model.CorrectAnswersCount = getCount.GetCorrectAnswerCount();
-            model.InCorrectAnswersCount = getCount.GetInCorrectAnswerCount();
+            IndexViewModel model = new IndexViewModel
+            {
+                StudentsCount = await this.getCount.GetStudentsCountAsync(),
+                TeachersCount = await this.getCount.GetTeachersCountAsync(),
+                AdminCount = await this.getCount.GetAdminsCountAsync(),
+                CorrectAnswersCount = this.getCount.GetCorrectAnswerCount(),
+                InCorrectAnswersCount = this.getCount.GetInCorrectAnswerCount(),
+            };
             return this.View(model);
         }
 

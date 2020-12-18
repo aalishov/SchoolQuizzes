@@ -1,6 +1,5 @@
 ﻿namespace SchoolQuizzes.Web.ViewModels.Administration.Categories
 {
-    using SchoolQuizzes.Web.ViewModels.Administration.Categories;
     using SchoolQuizzes.Web.ViewModels.Shared;
 
     using System.Collections.Generic;

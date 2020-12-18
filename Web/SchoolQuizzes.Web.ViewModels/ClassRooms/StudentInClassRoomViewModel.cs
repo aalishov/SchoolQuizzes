@@ -3,10 +3,10 @@
     using SchoolQuizzes.Data.Models;
     using SchoolQuizzes.Services.Mapping;
 
-    public class StudentInClassRoomViewModel : IMapFrom<Student>
+    public class StudentInClassRoomViewModel : IMapFrom<ClassRoomStudent>
     {
-        public string StageName { get; set; }
+        public string StudentStageName { get; set; }
 
-        public string ApplicationUserUserName { get; set; }
+        public string StudentApplicationUserUserName { get; set; }
     }
 }

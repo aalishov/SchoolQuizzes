@@ -1,8 +1,5 @@
 ﻿namespace SchoolQuizzes.Web.ViewModels.Takes
 {
-    using System.Linq;
-
-    using AutoMapper;
     using SchoolQuizzes.Data.Models;
     using SchoolQuizzes.Services.Mapping;
 

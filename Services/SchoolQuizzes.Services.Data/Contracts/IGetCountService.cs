@@ -1,6 +1,5 @@
 ﻿namespace SchoolQuizzes.Services.Data.Contracts
 {
-    using SchoolQuizzes.Services.Data.ModelsDto;
     using SchoolQuizzes.Web.ViewModels.Administration.Dashboard;
     using System.Threading.Tasks;
 

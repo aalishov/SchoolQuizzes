@@ -6,7 +6,6 @@
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
-    using Microsoft.AspNetCore.Routing;
     using SchoolQuizzes.Data.Models;
     using SchoolQuizzes.Services.Data.Contracts;
     using SchoolQuizzes.Web.ViewModels.Takes;

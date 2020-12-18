@@ -2,7 +2,7 @@
 {
     using System.Collections.Generic;
     using System.Linq;
-
+    using Microsoft.AspNetCore.Mvc.Rendering;
     using SchoolQuizzes.Data.Common.Repositories;
     using SchoolQuizzes.Data.Models;
     using SchoolQuizzes.Services.Data.Contracts;
@@ -28,6 +28,12 @@
         public string GetDifficultNameById(int id)
         {
             return this.difficultRepository.AllAsNoTracking().FirstOrDefault(x => x.Id == id).Name;
+        }
+
+       public SelectList GetAllAsSelectList()
+        {
+            var difficults = this.difficultRepository.AllAsNoTracking().ToList();
+            return new SelectList(difficults, "Id", "Name");
         }
     }
 }

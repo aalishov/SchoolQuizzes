@@ -1,6 +1,5 @@
 ﻿namespace SchoolQuizzes.Web.ViewModels.ClassRooms
 {
-    using AutoMapper.Configuration.Annotations;
     using SchoolQuizzes.Data.Models;
     using SchoolQuizzes.Services.Mapping;
 

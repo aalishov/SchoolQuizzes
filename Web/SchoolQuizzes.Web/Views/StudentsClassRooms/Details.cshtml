@@ -1,0 +1,29 @@
+﻿@model SchoolQuizzes.Web.ViewModels.StudentsClassRooms.DetailsUserClassRoomVM;
+@{
+    this.ViewData["Title"] = "Моята класна стая";
+}
+
+<p class="h1">@ViewData["Title"]</p>
+
+<p class="h2">@Model.CategoryName - @Model.StageName, @Model.TeacherApplicationUserUserName</p>
+
+<table class="table table-responsive-lg  table-hover table-bordered table-striped">
+    <thead>
+        <tr>
+            <th> Тест</th>
+            <th> Тип </th>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.ClassRoomQuizzes)
+        {
+            <tr>
+                <td>@item.Title</td>
+                <td>@if (item.IsExam)
+                {<text>Изпитване</text>}
+            else
+            { <text>Домашна работа</text>}</td>
+                <td><a asp-action="Start" asp-route-id="@item.QuizId">Започни този тест</a></td>
+            </tr>
+        }
+    </tbody>
+</table>

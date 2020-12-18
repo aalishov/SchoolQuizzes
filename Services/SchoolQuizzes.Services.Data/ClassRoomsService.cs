@@ -1,10 +1,12 @@
 ﻿namespace SchoolQuizzes.Services.Data
 {
+    using System;
+
+    using SchoolQuizzes.Services.Mapping;
     using SchoolQuizzes.Data.Common.Repositories;
     using SchoolQuizzes.Data.Models;
     using SchoolQuizzes.Services.Data.Contracts;
-    using System;
-    using SchoolQuizzes.Services.Mapping;
+
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
@@ -15,13 +17,15 @@
         private readonly IDeletableEntityRepository<Teacher> teachers;
         private readonly IDeletableEntityRepository<Student> students;
         private readonly IRepository<ClassRoomStudent> roomStudentRepository;
+        private readonly IRepository<ClassRoomQuiz> classRoomQuizRepository;
 
-        public ClassRoomsService(IDeletableEntityRepository<ClassRoom> classRoom, IDeletableEntityRepository<Teacher> teachers, IDeletableEntityRepository<Student> students, IRepository<ClassRoomStudent> roomStudentRepository)
+        public ClassRoomsService(IDeletableEntityRepository<ClassRoom> classRoom, IDeletableEntityRepository<Teacher> teachers, IDeletableEntityRepository<Student> students, IRepository<ClassRoomStudent> roomStudentRepository, IRepository<ClassRoomQuiz> classRoomQuizRepository)
         {
             this.classRoom = classRoom;
             this.teachers = teachers;
             this.students = students;
             this.roomStudentRepository = roomStudentRepository;
+            this.classRoomQuizRepository = classRoomQuizRepository;
         }
 
         public async Task AddStudentToClassRoomAsync(int roomId, int studentId)
@@ -29,7 +33,7 @@
             Student student = this.students.All().FirstOrDefault(x => x.Id == studentId);
             ClassRoom classRoom = this.classRoom.All().FirstOrDefault(x => x.Id == roomId);
             await this.roomStudentRepository.AddAsync(new ClassRoomStudent() { ClassRoom = classRoom, Student = student });
-            await roomStudentRepository.SaveChangesAsync();
+            await this.roomStudentRepository.SaveChangesAsync();
         }
         public async Task CreateClassRoomAsync(string userTeacherId, int stageId, int categoryId)
         {
@@ -50,12 +54,12 @@
         public ICollection<T> GetRooms<T>(string userId)
         {
             return this.classRoom.AllAsNoTracking()
-                .Where(x => x.Teacher.ApplicationUserId == userId)
+                .Where(x => x.Teacher.ApplicationUserId == userId || x.Students.Any(x => x.Student.ApplicationUserId == userId))
                 .To<T>()
                 .ToList();
         }
 
-        public T GerRoomById<T>(int id)
+        public T GetRoomById<T>(int id)
         {
             return this.classRoom.AllAsNoTracking()
                 .Where(x => x.Id == id)
@@ -75,6 +79,10 @@
             return this.classRoom.AllAsNoTracking().FirstOrDefault(x => x.Id == roomId).StageId;
         }
 
-
+        public async Task AssignClassRoomQuizAsync(string title, int classRoomId, int quizId, bool isExam)
+        {
+            await this.classRoomQuizRepository.AddAsync(new ClassRoomQuiz { Title = title, QuizId = quizId, ClassRoomId = classRoomId, IsExam = isExam });
+            await this.classRoomQuizRepository.SaveChangesAsync();
+        }
     }
 }

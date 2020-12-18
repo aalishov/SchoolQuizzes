@@ -4,9 +4,6 @@
     using SchoolQuizzes.Data.Common.Repositories;
     using SchoolQuizzes.Data.Models;
     using SchoolQuizzes.Services.Data.Contracts;
-    using System;
-    using System.Collections.Generic;
-    using System.Text;
 
     public class StagesService : IStagesService
     {

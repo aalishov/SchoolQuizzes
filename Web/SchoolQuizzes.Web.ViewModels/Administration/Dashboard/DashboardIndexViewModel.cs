@@ -1,6 +1,4 @@
-﻿using SchoolQuizzes.Services.Mapping;
-
-namespace SchoolQuizzes.Web.ViewModels.Administration.Dashboard
+﻿namespace SchoolQuizzes.Web.ViewModels.Administration.Dashboard
 {
     public class DashboardIndexViewModel
     {

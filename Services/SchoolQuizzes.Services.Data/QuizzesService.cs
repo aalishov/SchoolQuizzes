@@ -3,7 +3,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
-
+    using Microsoft.AspNetCore.Mvc.Rendering;
     using SchoolQuizzes.Data.Common.Repositories;
     using SchoolQuizzes.Data.Models;
     using SchoolQuizzes.Services.Data.Contracts;
@@ -91,6 +91,18 @@
                         .ToList()
                         .Select(x => new KeyValuePair<string, string>(x.Id.ToString(), x.Title))
                         .ToList();
+        }
+
+        public SelectList GetQuizzesByCategoryAndDifficultAsSelectList(int categoryId, int difficultId)
+        {
+            if (difficultId > 0)
+            {
+                return new SelectList(this.quizisRepository.AllAsNoTracking().Where(x => x.CategoryId == categoryId && x.DifficultId == difficultId), "Id", "Title");
+            }
+            else
+            {
+                return new SelectList(this.quizisRepository.AllAsNoTracking().Where(x => x.CategoryId == categoryId), "Id", "Title");
+            }
         }
     }
 }

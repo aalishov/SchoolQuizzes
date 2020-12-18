@@ -2,7 +2,7 @@
 {
     using System.Collections.Generic;
     using System.Threading.Tasks;
-
+    using Microsoft.AspNetCore.Mvc.Rendering;
     using SchoolQuizzes.Data.Models;
     using SchoolQuizzes.Services.Data.ModelsDto;
     using SchoolQuizzes.Web.ViewModels.Quizzes;
@@ -22,5 +22,7 @@
         public DetailsQuizViewModel GetQuizWithQuestionsAndAnswersById(int id);
 
         public ICollection<KeyValuePair<string, string>> GetAllAsKeyValuePairs();
+
+        public SelectList GetQuizzesByCategoryAndDifficultAsSelectList(int categoryId, int difficultId);
     }
 }

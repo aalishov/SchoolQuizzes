@@ -5,13 +5,15 @@
 
     public interface IClassRoomsService
     {
-        public Task CreateClassRoomAsync(string userTeacherId, int stageId, int categoryId);
-
         public Task AddStudentToClassRoomAsync(int roomId, int studentId);
 
-        public ICollection<T> GetRooms<T>(string userId);
+        public Task AssignClassRoomQuizAsync(string title,int classRoomId, int quizId, bool isExam);
 
-        public T GerRoomById<T>(int id);
+        public Task CreateClassRoomAsync(string userTeacherId, int stageId, int categoryId);
+
+        public T GetRoomById<T>(int id);
+
+        public ICollection<T> GetRooms<T>(string userId);
 
         public int GetRoomStageId(int roomId);
     }

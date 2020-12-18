@@ -2,12 +2,17 @@
 {
     using SchoolQuizzes.Data.Models;
     using SchoolQuizzes.Services.Mapping;
-    using System;
+
     using System.Collections.Generic;
-    using System.Text;
 
     public class DetailsClassRoomViewModel : IMapFrom<ClassRoom>
     {
+        public DetailsClassRoomViewModel()
+        {
+            this.Students = new List<StudentInClassRoomViewModel>();
+            this.ClassRoomQuizzes = new List<ClassRoomQuizListViewModel>();
+        }
+
         public int Id { get; set; }
 
         public string StageName { get; set; }
@@ -18,7 +23,7 @@
 
         public int StudentsCount { get; set; }
 
-        public ICollection<StudentInClassRoomViewModel>  StudentsStudent { get; set; }
+        public ICollection<StudentInClassRoomViewModel> Students { get; set; }
 
         public ICollection<ClassRoomQuizListViewModel> ClassRoomQuizzes { get; set; }
     }

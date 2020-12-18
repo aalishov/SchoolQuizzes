@@ -1,13 +1,62 @@
 ﻿@model SchoolQuizzes.Web.ViewModels.ClassRooms.DetailsClassRoomViewModel;
 @{
-    this.ViewData["Title"] = "Класна стая";
+    this.ViewData["Title"] = "Моята класна стая";
 }
 
+<p class="h1">@ViewData["Title"]</p>
+
+<p class="h2">@Model.CategoryName - @Model.StageName, @Model.TeacherApplicationUserUserName</p>
 
 
-<p class="h2">@Model.TeacherApplicationUserUserName</p>
-<p class="h2">@Model.StageName</p>
-<p class="h2">@Model.CategoryName</p>
-<p class="h2">@Model.StudentsCount</p>
+<p class="h2">Ученици в класната стая - @Model.StudentsCount</p>
 
-<a asp-action="AddStudent" asp-route-roomId="@Model.Id"  class=""><i class="fas fa-trash-alt"></i></a>
+<a asp-action="AddStudent" asp-route-roomId="@Model.Id" class="">Добави ученик</a>
+
+<table class="table table-responsive-lg  table-hover table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>
+                Ученик
+            </th>
+            <th>
+                Клас
+            </th>
+
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Students)
+        {
+            <tr>
+                <td>@item.StudentApplicationUserUserName</td>
+                <td>@item.StudentStageName</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<a asp-action="AssignClassRoomQuiz" asp-route-classRoomId="@Model.Id" class="">Възложи тест</a>
+
+<table class="table table-responsive-lg  table-hover table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>
+                Тест
+            </th>
+            <th>
+                Тип
+            </th>
+            <th>
+                Брой отговори
+            </th>
+</thead>
+    <tbody>
+        @foreach (var item in Model.ClassRoomQuizzes)
+        {
+            <tr>
+                <td>@item.Title</td>
+                <td>@if(item.IsExam){<text>Изпитване</text>}else{ <text>Домашна работа</text> }</td>
+                <td>@item.TakesTakedAnswersTakeUserIdCount/@Model.StudentsCount</td>
+            </tr>
+        }
+    </tbody>
+</table>

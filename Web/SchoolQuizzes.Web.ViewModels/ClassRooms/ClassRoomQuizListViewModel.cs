@@ -10,5 +10,9 @@
         public int QuizId { get; set; }
 
         public string Title { get; set; }
+
+        public bool IsExam { get; set; }
+
+        public int TakesTakedAnswersTakeUserIdCount { get; set; }
     }
 }
