@@ -13,6 +13,7 @@
         {
             this.stages = stages;
         }
+
         public SelectList GetAllAsSelectList()
         {
             return new SelectList(this.stages.AllAsNoTracking(), "Id", "Name");

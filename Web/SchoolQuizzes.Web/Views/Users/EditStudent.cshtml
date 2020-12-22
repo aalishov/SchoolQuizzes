@@ -1,0 +1,71 @@
+﻿@model SchoolQuizzes.Web.ViewModels.Users.EditStudentViewModel
+@{
+    ViewData["Title"] = "Редактиране на информация";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="EditStudent">
+            <input type="hidden" asp-for="ApplicationUser.Id" />
+            <input type="hidden" asp-for="Student.Id" />
+            <input type="hidden" asp-for="Student.ApplicationUserId" />
+
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="form-group">
+                <label asp-for="ApplicationUser.FirstName" class="control-label"></label>
+                <input asp-for="ApplicationUser.FirstName" class="form-control" />
+                <span asp-validation-for="ApplicationUser.FirstName" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="ApplicationUser.LastName" class="control-label"></label>
+                <input asp-for="ApplicationUser.LastName" class="form-control" />
+                <span asp-validation-for="ApplicationUser.LastName" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="ApplicationUser.School" class="control-label"></label>
+                <input asp-for="ApplicationUser.School" class="form-control" />
+                <span asp-validation-for="ApplicationUser.School" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="ApplicationUser.PhoneNumber" class="control-label"></label>
+                <input asp-for="ApplicationUser.PhoneNumber" class="form-control" />
+                <span asp-validation-for="ApplicationUser.PhoneNumber" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="ApplicationUser.Email" class="control-label"></label>
+                <input  asp-for="ApplicationUser.Email" class="form-control" disabled />
+                <span asp-validation-for="ApplicationUser.Email" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="ApplicationUser.DateOfBirth" class="control-label"></label>
+                <input asp-for="ApplicationUser.DateOfBirth" type="date" class="form-control" />
+                <span asp-validation-for="ApplicationUser.DateOfBirth" class="text-danger"></span>
+            </div>
+
+            <div class=" form-group">
+                <label asp-for="Student.StageId"></label>
+                <select asp-for="Student.StageId" asp-items="@Model.Student.Stages" class="form-control"></select>
+                <span asp-validation-for="Student.StageId" class="text-danger"></span>
+            </div>
+
+
+
+            <div class="form-group">
+                <input type="submit" value="@GlobalConstants.Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">@GlobalConstants.Back</a>
+</div>

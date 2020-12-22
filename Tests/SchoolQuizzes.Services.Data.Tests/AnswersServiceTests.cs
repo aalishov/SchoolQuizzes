@@ -5,13 +5,20 @@
     using SchoolQuizzes.Data.Common.Repositories;
     using SchoolQuizzes.Data.Models;
     using SchoolQuizzes.Services.Mapping;
+    using SchoolQuizzes.Web.ViewModels;
     using System.Collections.Generic;
     using System.Linq;
-
+    using System.Reflection;
     using Xunit;
 
+    [Collection("Serial")]
     public class AnswersServiceTests
     {
+        public AnswersServiceTests()
+        {
+            
+        }
+
         [Fact]
         public void TestGetAnswerValueById()
         {
@@ -69,7 +76,6 @@
                 (Answer answer) => list.Add(answer));
 
 
-
             var service = new AnswersService(mockRepo.Object);
 
             var expected = new List<AnswerInTestModel>()
@@ -77,7 +83,7 @@
                 new AnswerInTestModel(){ Id=1,Value="1"},
                 new AnswerInTestModel(){ Id=2,Value="2"},
             };
-            AutoMapperConfig.RegisterMappings(typeof(AnswerInTestModel).Assembly);
+            AutoMapperConfig.RegisterMappings(typeof(AnswerInTestModel).GetTypeInfo().Assembly);
             var actual = service.GetQuestionAnswersById<AnswerInTestModel>(1);
 
             Assert.Equal(string.Join(" ",expected), string.Join(" ",actual));

@@ -1,6 +1,7 @@
 ﻿namespace SchoolQuizzes.Services.Data.Contracts
 {
     using SchoolQuizzes.Data.Models;
+    using SchoolQuizzes.Web.ViewModels.Users;
     using System.Collections.Generic;
     using System.Threading.Tasks;
 
@@ -10,6 +11,10 @@
 
         public Task AddStudent(ApplicationUser user);
 
+        public T GetStudentByUserId<T>(string userId);
+
         public ICollection<T> GetAllStudentsByStageId<T>(int roomId, int stageId);
+
+        public Task UpdateStudentByUserIdAsync(EditStudentViewModel user);
     }
 }

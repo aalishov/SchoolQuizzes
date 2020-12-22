@@ -58,9 +58,12 @@
                             <li class="nav-item dropdown">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="StudentsClassRooms" asp-action="Index">Класни стаи</a>
                             </li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Users" asp-action="IndexStudent">Моят ученически профил</a>
+                            </li>
                         }
 
-                        @if (User.IsInRole(GlobalConstants.StudentRoleName)|| User.IsInRole(GlobalConstants.TeacherRoleName))
+                        @if (User.IsInRole(GlobalConstants.StudentRoleName) || User.IsInRole(GlobalConstants.TeacherRoleName))
                         {
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle text-dark" asp-controller="" asp-action="" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

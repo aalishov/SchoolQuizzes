@@ -18,6 +18,14 @@ namespace SchoolQuizzes.Data.Models
             this.Ratings = new HashSet<Rating>();
         }
 
+        public string FirstName { get; set; }
+
+        public string LastName { get; set; }
+
+        public DateTime? DateOfBirth { get; set; }
+
+        public string School { get; set; }
+
         // Audit info
         public DateTime CreatedOn { get; set; }
 

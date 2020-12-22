@@ -1,0 +1,20 @@
+﻿@model SchoolQuizzes.Web.ViewModels.Users.StudentIndexViewModel;
+
+@{
+    this.ViewData["Title"] = "Моят ученически профил";
+}
+<div class="jumbotron">
+    <h1 class="display-4">@this.ViewData["Title"]</h1>
+    <p class="lead"><label asp-for="ApplicationUser.FirstName"></label> - @Model.ApplicationUser.FirstName</p>
+    <p class="lead"><label asp-for="ApplicationUser.LastName"></label> - @Model.ApplicationUser.LastName</p>
+    <p class="lead"><label asp-for="ApplicationUser.School"></label> - @Model.ApplicationUser.School</p>
+    <p class="lead"><label asp-for="ApplicationUser.DateOfBirth"></label> - @Model.ApplicationUser.DateOfBirth</p>
+    <p class="lead"><label asp-for="Student.StageId"></label> - @Model.Student.StageName</p>
+    <p class="lead"><label asp-for="ApplicationUser.Email"></label> @Model.ApplicationUser.Email</p>
+    <p class="lead"><label asp-for="ApplicationUser.PhoneNumber"></label> - @Model.ApplicationUser.PhoneNumber</p>
+    <hr class="my-4">
+    <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
+    <p class="lead">
+        <a class="btn btn-primary btn-lg" role="button" asp-action="EditStudent" asp-route-userId="@Model.ApplicationUser.Id">@GlobalConstants.Edit</a>
+    </p>
+</div>

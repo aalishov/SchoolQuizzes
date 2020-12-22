@@ -14,10 +14,8 @@
     {
         private readonly IDeletableEntityRepository<Question> questions;
         private readonly IDeletableEntityRepository<ApplicationUser> users;
-        private readonly IDeletableEntityRepository<ApplicationRole> roles;
         private readonly IDeletableEntityRepository<Quiz> quizes;
         private readonly IDeletableEntityRepository<Take> takes;
-        private readonly UserManager<ApplicationUser> userManager;
         private readonly RoleManager<ApplicationRole> roleManager;
         private readonly ITakesService takesService;
         private readonly IDeletableEntityRepository<Answer> answers;
@@ -28,7 +26,6 @@
             this.questions = questions;
             this.users = users;
             this.quizes = quizes;
-            this.userManager = userManager;
             this.roleManager = roleManager;
             this.takesService = takesService;
             this.answers = answers;

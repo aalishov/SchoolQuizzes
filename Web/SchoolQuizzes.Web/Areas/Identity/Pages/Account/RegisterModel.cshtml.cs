@@ -54,6 +54,23 @@
         public class InputModel
         {
             [Required]
+            [StringLength(50,MinimumLength =3)]
+            [Display(Name = "FirstName")]
+            public string FirstName { get; set; }
+
+            [Required]
+            [StringLength(50, MinimumLength = 3)]
+            [Display(Name = "LastName")]
+            public string LastName { get; set; }
+
+            [Required]
+            [StringLength(50, MinimumLength = 3)]
+            [Display(Name = "School")]
+            public string School { get; set; }
+
+            public DateTime? DateOfBirth { get; set; }
+
+            [Required]
             [EmailAddress]
             [Display(Name = "Email")]
             public string Email { get; set; }
@@ -84,7 +101,15 @@
             this.ExternalLogins = (await this.signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             if (this.ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = this.Input.Email, Email = this.Input.Email };
+                var user = new ApplicationUser
+                {
+                    FirstName=this.Input.FirstName,
+                    LastName=this.Input.LastName,
+                    DateOfBirth=this.Input.DateOfBirth,
+                    School=this.Input.School,
+                    UserName = this.Input.Email,
+                    Email = this.Input.Email,
+                };
                 var result = await this.userManager.CreateAsync(user, this.Input.Password);
 
                 if (result.Succeeded)

@@ -36,8 +36,7 @@
             var list = new List<Difficult>() { new Difficult() { Id = 1, Name = "Лесно" }, new Difficult() { Id = 2, Name = "Трудно" } };
             var mockRepo = new Mock<IDeletableEntityRepository<Difficult>>();
             mockRepo.Setup(x => x.AllAsNoTracking()).Returns(list.AsQueryable());
-            mockRepo.Setup(x => x.AddAsync(It.IsAny<Difficult>())).Callback(
-                (Difficult difficult) => list.Add(difficult));
+            mockRepo.Setup(x => x.AddAsync(It.IsAny<Difficult>())).Callback( (Difficult difficult) => list.Add(difficult));
 
             var service = new DifficultsService(mockRepo.Object);
 
@@ -54,8 +53,8 @@
             var list = new List<Difficult>() { new Difficult() { Id = 1, Name = "Лесно" }, new Difficult() { Id = 2, Name = "Трудно" } };
             var mockRepo = new Mock<IDeletableEntityRepository<Difficult>>();
             mockRepo.Setup(x => x.AllAsNoTracking()).Returns(list.AsQueryable());
-            mockRepo.Setup(x => x.AddAsync(It.IsAny<Difficult>())).Callback(
-                (Difficult difficult) => list.Add(difficult));
+            mockRepo.Setup(x => x.AddAsync(It.IsAny<Difficult>()))
+                .Callback((Difficult difficult) => list.Add(difficult));
 
             var service = new DifficultsService(mockRepo.Object);
 
