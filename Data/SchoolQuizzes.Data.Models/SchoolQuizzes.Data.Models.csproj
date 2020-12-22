@@ -20,6 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Services\SchoolQuizzes.Services.Mapping\SchoolQuizzes.Services.Mapping.csproj" />
     <ProjectReference Include="..\SchoolQuizzes.Data.Common\SchoolQuizzes.Data.Common.csproj" />
   </ItemGroup>
   

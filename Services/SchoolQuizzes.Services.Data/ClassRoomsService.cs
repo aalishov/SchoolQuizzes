@@ -10,34 +10,33 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
+    using SchoolQuizzes.Web.ViewModels.Users;
 
     public class ClassRoomsService : IClassRoomsService
     {
         private readonly IDeletableEntityRepository<ClassRoom> classRoom;
-        private readonly IDeletableEntityRepository<Teacher> teachers;
-        private readonly IDeletableEntityRepository<Student> students;
         private readonly IRepository<ClassRoomStudent> roomStudentRepository;
         private readonly IRepository<ClassRoomQuiz> classRoomQuizRepository;
+        private readonly IUsersService usersService;
 
-        public ClassRoomsService(IDeletableEntityRepository<ClassRoom> classRoom, IDeletableEntityRepository<Teacher> teachers, IDeletableEntityRepository<Student> students, IRepository<ClassRoomStudent> roomStudentRepository, IRepository<ClassRoomQuiz> classRoomQuizRepository)
+        public ClassRoomsService(IDeletableEntityRepository<ClassRoom> classRoom, IRepository<ClassRoomStudent> roomStudentRepository, IRepository<ClassRoomQuiz> classRoomQuizRepository, IUsersService usersService)
         {
             this.classRoom = classRoom;
-            this.teachers = teachers;
-            this.students = students;
             this.roomStudentRepository = roomStudentRepository;
             this.classRoomQuizRepository = classRoomQuizRepository;
+            this.usersService = usersService;
         }
 
         public async Task AddStudentToClassRoomAsync(int roomId, int studentId)
         {
-            Student student = this.students.All().FirstOrDefault(x => x.Id == studentId);
             ClassRoom classRoom = this.classRoom.All().FirstOrDefault(x => x.Id == roomId);
-            await this.roomStudentRepository.AddAsync(new ClassRoomStudent() { ClassRoom = classRoom, Student = student });
+            await this.roomStudentRepository.AddAsync(new ClassRoomStudent() { ClassRoom = classRoom, StudentId = studentId });
             await this.roomStudentRepository.SaveChangesAsync();
         }
+
         public async Task CreateClassRoomAsync(string userTeacherId, int stageId, int categoryId)
         {
-            var teacher = this.teachers.AllAsNoTracking().FirstOrDefault(x => x.ApplicationUserId == userTeacherId);
+            var teacher = this.usersService.GetTeacherByUserId<BaseTeacherVM>(userTeacherId);
 
             var room = new ClassRoom()
             {
@@ -65,13 +64,6 @@
                 .Where(x => x.Id == id)
                 .To<T>()
                 .FirstOrDefault();
-        }
-
-        public ICollection<Student> GetAllStudentsInClassRoom(int classRoomId)
-        {
-            return this.students.AllAsNoTracking()
-                .Where(x => x.ClassRooms.Any(x => x.ClassRoomId == classRoomId))
-                .ToList();
         }
 
         public int GetRoomStageId(int roomId)

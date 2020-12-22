@@ -1,6 +1,7 @@
 ﻿namespace SchoolQuizzes.Data.Models
 {
     using SchoolQuizzes.Data.Common.Models;
+
     using System.Collections.Generic;
 
     public class Student : BaseDeletableModel<int>
@@ -9,6 +10,7 @@
         {
             this.ClassRooms = new HashSet<ClassRoomStudent>();
         }
+
         public string ApplicationUserId { get; set; }
 
         public virtual ApplicationUser ApplicationUser { get; set; }

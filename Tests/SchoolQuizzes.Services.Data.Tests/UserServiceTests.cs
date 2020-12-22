@@ -30,12 +30,12 @@
                 .UseInMemoryDatabase(databaseName: "TestAddTeachersDb").Options;
             using var dbContext = new ApplicationDbContext(options);
             dbContext.Database.EnsureDeleted();
-            using var repository = new EfDeletableEntityRepository<Teacher>(dbContext);
+            using var repository = new EfDeletableEntityRepository<BaseTeacher>(dbContext);
             var service = new UsersService(repository, null, null);
 
-            dbContext.Teachers.Add(new Teacher() { Id = 1, ApplicationUserId = "one" });
-            dbContext.Teachers.Add(new Teacher() { Id = 2, ApplicationUserId = "two" });
-            dbContext.Teachers.Add(new Teacher() { Id = 3, ApplicationUserId = "three" });
+            dbContext.Teachers.Add(new BaseTeacher() { Id = 1, ApplicationUserId = "one" });
+            dbContext.Teachers.Add(new BaseTeacher() { Id = 2, ApplicationUserId = "two" });
+            dbContext.Teachers.Add(new BaseTeacher() { Id = 3, ApplicationUserId = "three" });
             await dbContext.SaveChangesAsync();
 
             await service.AddTeacher(new ApplicationUser() { Id = "newUser" });

@@ -47,6 +47,14 @@
                 .ToList();
         }
 
+        public ICollection<T> GetAllStudentsInClassRoom<T>(int classRoomId)
+        {
+            return this.studentsRepository.AllAsNoTracking()
+                .Where(x => x.ClassRooms.Any(x => x.ClassRoomId == classRoomId))
+                .To<T>()
+                .ToList();
+        }
+
 
         public T GetStudentByUserId<T>(string userId)
         {
@@ -54,6 +62,30 @@
                  .Where(x => x.ApplicationUserId == userId)
                  .To<T>()
                  .FirstOrDefault();
+        }
+
+        public T GetStudentById<T>(int id)
+        {
+            return this.studentsRepository.AllAsNoTracking()
+                .Where(x => x.Id == id)
+                .To<T>()
+                .FirstOrDefault();
+        }
+
+        public T GetTeacherByUserId<T>(string userId)
+        {
+            return this.teachersRepository.AllAsNoTracking()
+                 .Where(x => x.ApplicationUserId == userId)
+                 .To<T>()
+                 .FirstOrDefault();
+        }
+
+        public T GetTeacherById<T>(int id)
+        {
+            return this.teachersRepository.AllAsNoTracking()
+                .Where(x => x.Id == id)
+                .To<T>()
+                .FirstOrDefault();
         }
 
         public async Task UpdateStudentByUserIdAsync(EditStudentViewModel updatedUser)
