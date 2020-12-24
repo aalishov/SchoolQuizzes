@@ -2,6 +2,9 @@
 @{
     this.ViewData["Title"] = "Детайли";
 }
+@section Styles{
+    <link href="~/css/take.css" rel="stylesheet" />
+}
 <h1>@Model.QuizTitle</h1>
 <hr />
 <form method="post">
@@ -13,54 +16,60 @@
     <input type="hidden" asp-for="PageNumber" value="@Model.PageNumber" />
     <input type="hidden" asp-for="QuizQuestionsCount" value="@Model.QuizQuestionsCount" />
     <input type="hidden" asp-for="ElementsCount" value="@Model.ElementsCount" />
-
-    <div class="row">
-        <div class=" justify-content-lg-start mx-auto">
-            <p class="h2">@Model.QuestionValue</p>
-            <div class="item-rating list-group list-group-horizontal-sm">
-                <span class="star-fill list-group-item-success" data-rating="1"><i class="fas fa-star"></i></span>
-                <span class="star-fill list-group-item-success" data-rating="2"><i class="fas fa-star"></i></span>
-                <span class="star-fill list-group-item-success" data-rating="3"><i class="fas fa-star"></i></span>
-                <span class="star-fill list-group-item-success" data-rating="4"><i class="fas fa-star"></i></span>
-                <span class="star-fill list-group-item-success" data-rating="5"><i class="fas fa-star"></i></span>
-                <span>&#8614;</span>
-                <span><span id="averageRating">@Model.AverageRating.ToString("0.0")</span><span> / 5</span> </span>
+    <div class="containerT mx-auto">
+        <div class="question ml-sm-5 pl-sm-5 pt-2">
+            <div class="rating">
+                <input type="radio" name="rating" value="5" id="5">
+                <label for="5" data-rating="5">☆</label>
+                <input type="radio" name="rating" value="4" id="4">
+                <label for="4" data-rating="4">☆</label>
+                <input type="radio" name="rating" value="3" id="3">
+                <label for="3" data-rating="3">☆</label>
+                <input type="radio" name="rating" value="2" id="2">
+                <label for="2" data-rating="2">☆</label>
+                <input type="radio" name="rating" value="1" id="1">
+                <label for="1" data-rating="1">☆</label>
             </div>
-            @foreach (var answer in Model.Answers)
-            {
-                <p class="lead m-3">
-                    @{
-                        bool isCheked = Model.TakenAnswer == @answer.Id ? true : false;
-                    }
-                    @if (isCheked)
-                    {
-                        <input type="radio" value="@answer.Id" asp-for="UserAnswerId" checked>
-                    }
-                    else
-                    {
-                        <input type="radio" value="@answer.Id" asp-for="UserAnswerId">
-                    }
-                    @answer.Value
-                </p>
+            <div class="py-2 h4"><b>@Model.QuestionValue</b></div>
 
-            }
-            <input type="submit" class="btn btn-primary"  value="Маркирай отговор" />
+            <div class="ml-md-3 ml-sm-3 pl-md-5 pt-sm-0 pt-3" id="options">
+
+                @foreach (var answer in Model.Answers)
+                {
+
+                    <label class="options">
+                        @{
+                            bool isCheked = Model.TakenAnswer == @answer.Id ? true : false;
+                        }
+                        @if (isCheked)
+                        {
+                            <input type="radio" value="@answer.Id" asp-for="UserAnswerId" checked>
+                        }
+                        else
+                        {
+                            <input type="radio" value="@answer.Id" asp-for="UserAnswerId">
+                        }
+                        @answer.Value
+                        <span class="checkmark"></span>
+                    </label>
+
+                }
+                <input type="submit" class="btn btn-primary" value="Маркирай отговор" />
+            </div>
+        </div>
+        <label class="align-content-end">Рейтинг<span>&#8614;</span><span id="averageRating">@Model.AverageRating.ToString("0.0")</span><span> / 5</span> </label>
+        <partial name="_PagingPartial" model="@Model" />
+        <div class="row ">
+            <a class=" btn btn-danger mx-auto" asp-controller="TakesQuiz" asp-action="Finish" asp-route-id="@Model.Id">Завърши теста</a>
         </div>
     </div>
-
-    <hr />
-
-    <partial name="_PagingPartial" model="@Model" />
-
-    <div class="row ">
-        <a class=" btn btn-danger mx-auto" asp-controller="TakesQuiz" asp-action="Finish" asp-route-id="@Model.Id">Завърши теста</a>
-    </div>
+   
 </form>
 
 <form method="post" id="antiForgeryForm"></form>
 @section Scripts {
     <script>
-        $("span[data-rating]").each(function (el) {
+        $("label[data-rating]").each(function (el) {
             $(this).click(function () {
                 var value = parseInt($(this).attr("data-rating"));
                 var questionId = @Model.CurrentQuestionId;
