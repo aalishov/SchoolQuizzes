@@ -37,6 +37,13 @@
             await this.takeRepository.SaveChangesAsync();
         }
 
+        public async Task CreateTakеWithClassRoomQuizIdAsync(string userId, int quizId,int classRoomQuizId)
+        {
+            Take take = new Take() { QuizId = quizId, UserId = userId,ClassRoomQuizId=classRoomQuizId };
+            await this.takeRepository.AddAsync(take);
+            await this.takeRepository.SaveChangesAsync();
+        }
+
         public int GetCorrectAnswerCountByTakeId(int takeId)
         {
             int correctAnswers = 0;

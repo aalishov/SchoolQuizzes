@@ -19,16 +19,18 @@
         private readonly IStagesService stagesService;
         private readonly IUsersService usersService;
         private readonly IDifficultsService difficultsService;
+        private readonly ITakesService takesService;
         private readonly IQuizzesService quizzesService;
 
                 
-        public ClassRoomsController(IClassRoomsService roomsService, ICategoriesService categoriesService, IStagesService stagesService, IUsersService usersService, IDifficultsService difficultsService, IQuizzesService quizzesService)
+        public ClassRoomsController(IClassRoomsService roomsService, ICategoriesService categoriesService, IStagesService stagesService, IUsersService usersService, IDifficultsService difficultsService, ITakesService takesService,IQuizzesService quizzesService)
         {
             this.roomsService = roomsService;
             this.categoriesService = categoriesService;
             this.stagesService = stagesService;
             this.usersService = usersService;
             this.difficultsService = difficultsService;
+            this.takesService = takesService;
             this.quizzesService = quizzesService;
         }
 
@@ -73,6 +75,16 @@
             string userId = this.User.FindFirst(ClaimTypes.NameIdentifier).Value;
             DetailsClassRoomViewModel model = new DetailsClassRoomViewModel();
             model = this.roomsService.GetRoomById<DetailsClassRoomViewModel>(roomId);
+            return this.View(model);
+        }
+
+        public IActionResult ТакеDetails(int classRoomQuizId)
+        {
+            ClassRoomQuizDetails model = this.roomsService.GetQuizTakesDetails<ClassRoomQuizDetails>(classRoomQuizId);
+            foreach (var t in model.Takes)
+            {
+                t.Result = this.takesService.GetResult(t.Id);
+            }
             return this.View(model);
         }
 

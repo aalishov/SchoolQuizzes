@@ -22,7 +22,7 @@
                 {<text>Изпитване</text>}
             else
             { <text>Домашна работа</text>}</td>
-                <td><a asp-action="Start" asp-route-id="@item.QuizId">Започни този тест</a></td>
+                <td><a asp-action="Start" asp-route-id="@item.QuizId" asp-route-classRoomQuizId="@item.Id">Започни този тест</a></td>
             </tr>
         }
     </tbody>

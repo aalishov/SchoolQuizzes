@@ -61,6 +61,10 @@ namespace SchoolQuizzes.Data.Migrations
                     LockoutEnd = table.Column<DateTimeOffset>(nullable: true),
                     LockoutEnabled = table.Column<bool>(nullable: false),
                     AccessFailedCount = table.Column<int>(nullable: false),
+                    FirstName = table.Column<string>(nullable: true),
+                    LastName = table.Column<string>(nullable: true),
+                    DateOfBirth = table.Column<DateTime>(nullable: true),
+                    School = table.Column<string>(nullable: true),
                     CreatedOn = table.Column<DateTime>(nullable: false),
                     ModifiedOn = table.Column<DateTime>(nullable: true),
                     IsDeleted = table.Column<bool>(nullable: false),
@@ -553,8 +557,8 @@ namespace SchoolQuizzes.Data.Migrations
                     DeletedOn = table.Column<DateTime>(nullable: true),
                     UserId = table.Column<string>(nullable: false),
                     QuizId = table.Column<int>(nullable: false),
-                    IsFinished = table.Column<bool>(nullable: false),
-                    ClassRoomQuizId = table.Column<int>(nullable: true)
+                    ClassRoomQuizId = table.Column<int>(nullable: true),
+                    IsFinished = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
                 {

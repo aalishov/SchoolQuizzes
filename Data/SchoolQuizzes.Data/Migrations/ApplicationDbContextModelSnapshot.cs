@@ -1005,7 +1005,7 @@ namespace SchoolQuizzes.Data.Migrations
 
             modelBuilder.Entity("SchoolQuizzes.Data.Models.Take", b =>
                 {
-                    b.HasOne("SchoolQuizzes.Data.Models.ClassRoomQuiz", null)
+                    b.HasOne("SchoolQuizzes.Data.Models.ClassRoomQuiz", "ClassRoomQuiz")
                         .WithMany("Takes")
                         .HasForeignKey("ClassRoomQuizId");
 

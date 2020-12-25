@@ -10,6 +10,8 @@
     {
         public Task CreateTakeAsync(string userId, int quizId);
 
+        public Task CreateTakеWithClassRoomQuizIdAsync(string userId, int quizId, int classRoomQuizId);
+
         public TakeQuestionAnswerViewModel GetExamQuestion(string userId, int id, int questionNumber = 0);
 
         public ICollection<UserTakeViewModel> GetUserTakesByUserId(string userId);

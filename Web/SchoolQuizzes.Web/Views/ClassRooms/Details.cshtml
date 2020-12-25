@@ -55,7 +55,8 @@
             <tr>
                 <td>@item.Title</td>
                 <td>@if(item.IsExam){<text>Изпитване</text>}else{ <text>Домашна работа</text> }</td>
-                <td>@item.TakesTakedAnswersTakeUserIdCount/@Model.StudentsCount</td>
+                <td>@item.TakesCount/@Model.StudentsCount</td>
+                <td><a asp-action="ТакеDetails" asp-route-classRoomQuizId="@item.Id" class="">Резултат</a></td>
             </tr>
         }
     </tbody>

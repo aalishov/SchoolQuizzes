@@ -16,5 +16,7 @@
         public ICollection<T> GetRooms<T>(string userId);
 
         public int GetRoomStageId(int roomId);
+
+        public T GetQuizTakesDetails<T>(int classRoomQuizId);
     }
 }

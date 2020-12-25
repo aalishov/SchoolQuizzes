@@ -1,0 +1,30 @@
+﻿@model SchoolQuizzes.Web.ViewModels.ClassRooms.ClassRoomQuizDetails;
+@{
+    this.ViewData["Title"] = "Резултати от теста";
+}
+
+<p class="h1">@ViewData["Title"]</p>
+
+<p>@Model.Title</p> @if (Model.IsExam){<text>Изпитване</text>}else{ <text>Домашна работа</text>}
+
+<table class="table table-responsive-lg  table-hover table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>
+                Ученик
+            </th>
+            <th>
+                Точки
+            </th>
+
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Takes)
+        {
+            <tr>
+                <td>@item.UserUsername</td>
+                <td>@item.Result</td>
+            </tr>
+        }
+    </tbody>
+</table>

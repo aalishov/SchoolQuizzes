@@ -33,10 +33,10 @@
             return this.View(model);
         }
 
-        public async Task<IActionResult> Start(int id)
+        public async Task<IActionResult> Start(int id,int classRoomQuizId)
         {
             string userId = this.User.FindFirst(ClaimTypes.NameIdentifier).Value;
-            await this.takesService.CreateTakeAsync(userId, id);
+            await this.takesService.CreateTakеWithClassRoomQuizIdAsync(userId, id, classRoomQuizId);
             return this.RedirectToAction("Take", "TakesQuiz", new { id });
         }
     }

@@ -10,7 +10,7 @@ using SchoolQuizzes.Data;
 namespace SchoolQuizzes.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20201215223649_InitialMigration")]
+    [Migration("20201225204615_InitialMigration")]
     partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -212,6 +212,9 @@ namespace SchoolQuizzes.Data.Migrations
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
 
+                    b.Property<DateTime?>("DateOfBirth")
+                        .HasColumnType("datetime2");
+
                     b.Property<DateTime?>("DeletedOn")
                         .HasColumnType("datetime2");
 
@@ -222,8 +225,14 @@ namespace SchoolQuizzes.Data.Migrations
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("bit");
 
+                    b.Property<string>("FirstName")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
+
+                    b.Property<string>("LastName")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("bit");
@@ -250,6 +259,9 @@ namespace SchoolQuizzes.Data.Migrations
 
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("bit");
+
+                    b.Property<string>("School")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");
@@ -995,7 +1007,7 @@ namespace SchoolQuizzes.Data.Migrations
 
             modelBuilder.Entity("SchoolQuizzes.Data.Models.Take", b =>
                 {
-                    b.HasOne("SchoolQuizzes.Data.Models.ClassRoomQuiz", null)
+                    b.HasOne("SchoolQuizzes.Data.Models.ClassRoomQuiz", "ClassRoomQuiz")
                         .WithMany("Takes")
                         .HasForeignKey("ClassRoomQuizId");
 

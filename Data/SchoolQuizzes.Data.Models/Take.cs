@@ -24,6 +24,11 @@ namespace SchoolQuizzes.Data.Models
 
         public Quiz Quiz { get; set; }
 
+        [ForeignKey(nameof(ClassRoomQuiz))]
+        public int? ClassRoomQuizId { get; set; }
+
+        public ClassRoomQuiz ClassRoomQuiz { get; set; }
+
         public bool IsFinished { get; set; }
 
         public virtual ICollection<TakedAnswer> TakedAnswers { get; set; }

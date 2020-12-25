@@ -13,6 +13,6 @@
 
         public bool IsExam { get; set; }
 
-        public int TakesTakedAnswersTakeUserIdCount { get; set; }
+        public int TakesCount { get; set; }
     }
 }

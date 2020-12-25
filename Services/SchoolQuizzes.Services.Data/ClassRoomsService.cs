@@ -64,6 +64,15 @@
                 .Where(x => x.Id == id)
                 .To<T>()
                 .FirstOrDefault();
+
+        }
+
+        public T GetQuizTakesDetails<T>(int classRoomQuizId)
+        {
+            return this.classRoomQuizRepository.AllAsNoTracking()
+                  .Where(x => x.Id == classRoomQuizId)
+                  .To<T>()
+                  .FirstOrDefault();
         }
 
         public int GetRoomStageId(int roomId)
@@ -76,5 +85,7 @@
             await this.classRoomQuizRepository.AddAsync(new ClassRoomQuiz { Title = title, QuizId = quizId, ClassRoomId = classRoomId, IsExam = isExam });
             await this.classRoomQuizRepository.SaveChangesAsync();
         }
+
+
     }
 }
