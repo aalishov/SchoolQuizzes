@@ -68,6 +68,7 @@
             services.AddTransient<IClassRoomsService, ClassRoomsService>();
             services.AddTransient<IDifficultsService, DifficultsService>();
             services.AddTransient<IEmailSender, NullMessageSender>();
+            services.AddTransient<IExportService, ExportService>();
             services.AddTransient<IGetCountService, GetCountService>();
             services.AddTransient<ITakesService, TakesService>();
             services.AddTransient<IQuestionsService, QuestionsService>();

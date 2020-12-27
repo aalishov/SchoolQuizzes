@@ -1,5 +1,6 @@
 ﻿namespace SchoolQuizzes.Web.Controllers
 {
+    using System.IO;
     using System.Security.Claims;
     using System.Threading.Tasks;
 
@@ -16,13 +17,15 @@
         private readonly IAnswersService answersService;
         private readonly ICategoriesService categoriesService;
         private readonly IDifficultsService difficultsService;
+        private readonly IExportService exportService;
         private readonly IQuestionsService questionsService;
         private readonly IQuizzesService quizzesService;
 
-        public QuizzesController(IAnswersService answersService, ICategoriesService categoriesService, IDifficultsService difficultsService, IQuestionsService questionsService, IQuizzesService quizzesService)
+        public QuizzesController(IAnswersService answersService, ICategoriesService categoriesService, IDifficultsService difficultsService,IExportService exportService, IQuestionsService questionsService, IQuizzesService quizzesService)
         {
             this.answersService = answersService;
             this.difficultsService = difficultsService;
+            this.exportService = exportService;
             this.categoriesService = categoriesService;
             this.questionsService = questionsService;
             this.quizzesService = quizzesService;
@@ -84,5 +87,17 @@
 
             return this.View(model);
         }
+
+        public IActionResult ExportQuizQuestions(int id)
+        {
+            DetailsQuizViewModel model = this.quizzesService.GetQuizWithQuestionsAndAnswersById(id);
+
+            MemoryStream stream = this.exportService.ExportQuizQuestions(model);
+
+            //Download Word document in the browser
+            return this.File(stream, "application/msword", $"{model.Title}.docx");
+        }
+
+
     }
 }
