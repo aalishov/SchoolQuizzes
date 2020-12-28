@@ -1,4 +1,4 @@
-﻿namespace SchoolQuizzes.Web.Areas.Administration
+﻿namespace SchoolQuizzes.Web.Areas.Administration.Controllers
 {
     using System.Linq;
     using System.Threading.Tasks;
@@ -7,7 +7,6 @@
     using Microsoft.EntityFrameworkCore;
     using SchoolQuizzes.Data;
     using SchoolQuizzes.Data.Models;
-    using SchoolQuizzes.Web.Areas.Administration.Controllers;
 
     [Area("Administration")]
     public class StagesController : AdministrationController

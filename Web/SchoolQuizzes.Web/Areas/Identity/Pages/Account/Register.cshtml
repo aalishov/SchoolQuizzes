@@ -2,15 +2,15 @@
 @model RegisterModel
 @using SchoolQuizzes.Common;
 @{
-    ViewData["Title"] = "Register";
+    ViewData["Title"] = GlobalConstants.Register;
 }
 
 <h1>@ViewData["Title"]</h1>
 
-<div class="row">
-    <div class="col-md-4">
+<div class="row m-auto">
+    <div class="col-md-6 offset-md-3">
         <form asp-route-returnUrl="@Model.ReturnUrl" method="post">
-            <h4>Create a new account.</h4>
+            <h4>Създай нов акаунт</h4>
             <hr />
             <div asp-validation-summary="All" class="text-danger"></div>
             <div class="form-group">
@@ -55,10 +55,10 @@
                     <option value="@GlobalConstants.StudentRoleName">@GlobalConstants.StudentRoleName</option>
                 </select>
             </div>
-            <button type="submit" class="btn btn-primary">Register</button>
+            <button type="submit" class="btn btn-primary">@GlobalConstants.Register</button>
         </form>
     </div>
-    <div class="col-md-6 col-md-offset-2">
+    @*<div class="col-md-6 col-md-offset-2">
         <section>
             <h4>Use another service to register.</h4>
             <hr />
@@ -87,7 +87,7 @@
                 }
             }
         </section>
-    </div>
+    </div>*@
 </div>
 
 @section Scripts {

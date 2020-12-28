@@ -55,37 +55,41 @@
         {
             [Required]
             [StringLength(50,MinimumLength =3)]
-            [Display(Name = "FirstName")]
+            [Display(Name = "Име")]
             public string FirstName { get; set; }
 
             [Required]
             [StringLength(50, MinimumLength = 3)]
-            [Display(Name = "LastName")]
+            [Display(Name = "Фамилия")]
             public string LastName { get; set; }
 
             [Required]
             [StringLength(50, MinimumLength = 3)]
-            [Display(Name = "School")]
+            [Display(Name = "Училище")]
             public string School { get; set; }
 
+
+            [Required]
+            [Display(Name = "Дата на раждане")]
             public DateTime? DateOfBirth { get; set; }
 
             [Required]
             [EmailAddress]
-            [Display(Name = "Email")]
+            [Display(Name = "Имейл")]
             public string Email { get; set; }
 
             [Required]
             [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
             [DataType(DataType.Password)]
-            [Display(Name = "Password")]
+            [Display(Name = "Парола")]
             public string Password { get; set; }
 
             [DataType(DataType.Password)]
-            [Display(Name = "Confirm password")]
+            [Display(Name = "Потвърди паролата")]
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
             public string ConfirmPassword { get; set; }
 
+            [Display(Name = "Изберете роля")]
             public string Role { get; set; }
         }
 

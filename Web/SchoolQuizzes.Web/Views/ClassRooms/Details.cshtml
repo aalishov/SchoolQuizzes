@@ -22,17 +22,21 @@
                 Ученик
             </th>
             <th>
+                Имейл
+            </th>
+            <th>
                 Клас
             </th>
 
-    </thead>
+</thead>
     <tbody>
         @foreach (var item in Model.Students)
         {
-            <tr>
-                <td>@item.StudentApplicationUserUserName</td>
-                <td>@item.StudentStageName</td>
-            </tr>
+        <tr>
+            <td>@item.StudentApplicationUserFirstName @item.StudentApplicationUserLastName</td>
+            <td>@item.StudentApplicationUserUserName</td>
+            <td>@item.StudentStageName</td>
+        </tr>
         }
     </tbody>
 </table>
