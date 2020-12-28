@@ -67,7 +67,7 @@
             services.AddTransient<ICategoriesService, CategoriesService>();
             services.AddTransient<IClassRoomsService, ClassRoomsService>();
             services.AddTransient<IDifficultsService, DifficultsService>();
-            services.AddTransient<IEmailSender, NullMessageSender>();
+            services.AddTransient<IEmailSender>(x => new SendGridEmailSender(this.configuration["SendGrid:ApiKey"]));
             services.AddTransient<IExportService, ExportService>();
             services.AddTransient<IGetCountService, GetCountService>();
             services.AddTransient<ITakesService, TakesService>();

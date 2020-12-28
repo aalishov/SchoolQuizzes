@@ -6,6 +6,8 @@
 #Custom ignore file
 
 Web/SchoolQuizzes.Web/appsettings.Production.json
+Web/SchoolQuizzes.Web/appsettings.Development.json
+Web/SchoolQuizzes.Web/appsettings.json
 
 # User-specific files
 *.rsuser

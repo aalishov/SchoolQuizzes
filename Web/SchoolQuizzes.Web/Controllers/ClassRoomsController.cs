@@ -4,10 +4,12 @@
     using Microsoft.AspNetCore.Mvc;
     using SchoolQuizzes.Common;
     using SchoolQuizzes.Services.Data.Contracts;
+    using SchoolQuizzes.Services.Messaging;
     using SchoolQuizzes.Web.ViewModels.ClassRooms;
 
     using System.Collections.Generic;
     using System.Security.Claims;
+    using System.Text;
     using System.Threading.Tasks;
 
 
@@ -21,9 +23,9 @@
         private readonly IDifficultsService difficultsService;
         private readonly ITakesService takesService;
         private readonly IQuizzesService quizzesService;
+        private readonly IEmailSender emailSender;
 
-                
-        public ClassRoomsController(IClassRoomsService roomsService, ICategoriesService categoriesService, IStagesService stagesService, IUsersService usersService, IDifficultsService difficultsService, ITakesService takesService,IQuizzesService quizzesService)
+        public ClassRoomsController(IClassRoomsService roomsService, ICategoriesService categoriesService, IStagesService stagesService, IUsersService usersService, IDifficultsService difficultsService, ITakesService takesService, IQuizzesService quizzesService, IEmailSender emailSender)
         {
             this.roomsService = roomsService;
             this.categoriesService = categoriesService;
@@ -32,6 +34,7 @@
             this.difficultsService = difficultsService;
             this.takesService = takesService;
             this.quizzesService = quizzesService;
+            this.emailSender = emailSender;
         }
 
         public IActionResult Index()
@@ -128,6 +131,23 @@
             await this.roomsService.AssignClassRoomQuizAsync(model.Title, model.ClassRoomId, model.QuizId, model.IsExam);
 
             return this.RedirectToAction("Details", "ClassRooms", new { roomId = model.ClassRoomId });
+        }
+
+        public async Task<IActionResult> AssignQuizNotification(int classRoomId)
+        {
+            var emails = this.roomsService.GetStudentsEmail(classRoomId);
+            ClassRoomAssignQuizNotificationVM quiz = this.roomsService.GetClassRoomQuiz<ClassRoomAssignQuizNotificationVM>(classRoomId);
+
+
+            await this.emailSender.SendEmailAsync("schoolquizzes@abv.bg", "Alishov", "a.alishov@live.com", "DemoEmail", "<h1>Имате възложен тест: Demo send email</h1>");
+            foreach (var email in emails)
+            {
+                var html = new StringBuilder();
+                html.AppendLine($"<h1>Имате възложен тест: {quiz.Title}</h1>");
+                await this.emailSender.SendEmailAsync($"schoolquizzes@abv.bg", $"{quiz.ClassRoomTeacherApplicationUserLasttName}", $"{email}", quiz.Title, html.ToString());
+            }
+
+            return this.RedirectToAction(nameof(this.Index));
         }
     }
 }

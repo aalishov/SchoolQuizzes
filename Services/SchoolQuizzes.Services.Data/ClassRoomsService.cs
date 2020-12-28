@@ -64,7 +64,22 @@
                 .Where(x => x.Id == id)
                 .To<T>()
                 .FirstOrDefault();
+        }
 
+        public T GetClassRoomQuiz<T>(int classRoomId)
+        {
+            return this.classRoomQuizRepository.AllAsNoTracking()
+                .Where(x => x.ClassRoomId == classRoomId)
+                .To<T>()
+                .FirstOrDefault();
+        }
+
+        public ICollection<string> GetStudentsEmail(int classRoomId)
+        {
+            return this.roomStudentRepository.AllAsNoTracking()
+                .Where(x=>x.ClassRoomId==classRoomId)
+                .Select(x => x.Student.ApplicationUser.Email)
+                .ToList();
         }
 
         public T GetQuizTakesDetails<T>(int classRoomQuizId)

@@ -48,16 +48,24 @@
             <th>
                 Брой отговори
             </th>
+            <th colspan="2">Опции</th>
 </thead>
     <tbody>
         @foreach (var item in Model.ClassRoomQuizzes)
         {
-            <tr>
-                <td>@item.Title</td>
-                <td>@if(item.IsExam){<text>Изпитване</text>}else{ <text>Домашна работа</text> }</td>
-                <td>@item.TakesCount/@Model.StudentsCount</td>
-                <td><a asp-action="ТакеDetails" asp-route-classRoomQuizId="@item.Id" class="">Резултат</a></td>
-            </tr>
+        <tr>
+            <td>@item.Title</td>
+            <td>
+                @if (item.IsExam)
+                {<text>Изпитване</text>}
+            else
+            { <text>Домашна работа</text>}
+            </td>
+            <td>@item.TakesCount/@Model.StudentsCount</td>
+            <td><a asp-action="ТакеDetails" asp-route-classRoomQuizId="@item.Id" class="">Резултат</a></td>
+            <td><a asp-action="AssignQuizNotification" asp-route-classRoomId="@Model.Id" class="">Изпрати известие</a></td>
+            
+        </tr>
         }
     </tbody>
 </table>

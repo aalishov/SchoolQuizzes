@@ -7,9 +7,13 @@
     {
         public Task AddStudentToClassRoomAsync(int roomId, int studentId);
 
-        public Task AssignClassRoomQuizAsync(string title,int classRoomId, int quizId, bool isExam);
+        public Task AssignClassRoomQuizAsync(string title, int classRoomId, int quizId, bool isExam);
 
         public Task CreateClassRoomAsync(string userTeacherId, int stageId, int categoryId);
+
+        public T GetClassRoomQuiz<T>(int classRoomId);
+
+        public ICollection<string> GetStudentsEmail(int classRoomId);
 
         public T GetRoomById<T>(int id);
 
