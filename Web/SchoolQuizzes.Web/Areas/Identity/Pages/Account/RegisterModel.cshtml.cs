@@ -140,11 +140,11 @@
                     await this.emailSender.SendEmailAsync(this.Input.Email, "Confirm your email",
                         $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
 
-                    if (Input.Role == GlobalConstants.TeacherRoleName)
+                    if (this.Input.Role == GlobalConstants.TeacherRoleName)
                     {
                         await this.usersService.AddTeacher(user);
                     }
-                    else if (Input.Role == GlobalConstants.StudentRoleName)
+                    else if (this.Input.Role == GlobalConstants.StudentRoleName)
                     {
                         await this.usersService.AddStudent(user);
                     }

@@ -2,7 +2,7 @@
 {
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
-    using AutoMapper;
+
     using AutoMapper.Configuration.Annotations;
     using Microsoft.AspNetCore.Mvc.Rendering;
     using SchoolQuizzes.Data.Models;

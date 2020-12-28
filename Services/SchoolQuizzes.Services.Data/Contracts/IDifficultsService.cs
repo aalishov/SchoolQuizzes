@@ -1,6 +1,7 @@
 ﻿namespace SchoolQuizzes.Services.Data.Contracts
 {
     using Microsoft.AspNetCore.Mvc.Rendering;
+
     using System.Collections.Generic;
 
     public interface IDifficultsService

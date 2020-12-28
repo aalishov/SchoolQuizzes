@@ -1,6 +1,7 @@
 ﻿namespace SchoolQuizzes.Services.Data.Contracts
 {
     using SchoolQuizzes.Web.ViewModels.Administration.Dashboard;
+
     using System.Threading.Tasks;
 
     public interface IGetCountService

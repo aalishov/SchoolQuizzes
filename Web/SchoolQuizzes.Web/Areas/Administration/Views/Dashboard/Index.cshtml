@@ -4,8 +4,15 @@
 }
 
 <h1>@this.ViewData["Title"]</h1>
-
-
+<hr />
+<div class="btn-group" role="group" aria-label="...">
+    <a class="btn btn-primary" asp-area="Administration" asp-controller="Categories" asp-action="Index">Категори</a>
+    <a class="btn btn-primary" asp-area="Administration" asp-controller="Difficults" asp-action="Index">Нива</a>
+    <a class="btn btn-primary" asp-area="Administration" asp-controller="Stages" asp-action="Index">Класове</a>
+    <a class="btn btn-primary" asp-area="Administration" asp-controller="Questions" asp-action="Index">Въпроси</a>
+    <a class="btn btn-primary" asp-area="Administration" asp-controller="Quizs" asp-action="Index">Тестове</a>
+</div>
+<hr />
 <div class="text-center">
     <div class="col-md-4 offset-md-4">
         <ul class="list-group">

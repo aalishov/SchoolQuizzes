@@ -1,6 +1,7 @@
 ﻿namespace SchoolQuizzes.Web.ViewModels.ClassRooms
 {
     using Microsoft.AspNetCore.Mvc.Rendering;
+
     using System.ComponentModel.DataAnnotations;
 
     public class AssignClassRoomQuizViewModel

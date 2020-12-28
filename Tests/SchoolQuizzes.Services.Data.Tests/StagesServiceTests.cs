@@ -4,10 +4,10 @@
     using Moq;
     using SchoolQuizzes.Data.Common.Repositories;
     using SchoolQuizzes.Data.Models;
-    using System;
+
     using System.Collections.Generic;
     using System.Linq;
-    using System.Text;
+
     using Xunit;
 
     public class StagesServiceTests

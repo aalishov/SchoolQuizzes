@@ -11,28 +11,28 @@
     using SchoolQuizzes.Web.ViewModels.Administration.Categories;
 
     using SchoolQuizzes.Services.Mapping;
+    using SchoolQuizzes.Services.Data;
+    using SchoolQuizzes.Services.Data.Contracts;
 
     [Area("Administration")]
     public class CategoriesController : AdministrationController
     {
         private readonly IDeletableEntityRepository<Category> categories;
         private readonly IDeletableEntityRepository<ApplicationUser> users;
+        private readonly ICategoriesService categoriesService;
 
-        public CategoriesController(IDeletableEntityRepository<Category> categories, IDeletableEntityRepository<ApplicationUser> users)
+        public CategoriesController(IDeletableEntityRepository<Category> categories, IDeletableEntityRepository<ApplicationUser> users, ICategoriesService categoriesService)
         {
             this.categories = categories;
             this.users = users;
+            this.categoriesService = categoriesService;
         }
 
         // GET: Administration/Categories
-        public async Task<IActionResult> Index(int page=1)
+        public async Task<IActionResult> Index(int page = 1)
         {
             IndexCategoriesViewModel model = new IndexCategoriesViewModel();
-            model.Categories = await this.categories.AllWithDeleted()
-               .To<CategoryViewModel>()
-                .OrderByDescending(x => x.Id).Skip((page - 1) * model.ItemsPerPage)
-                .Take(model.ItemsPerPage)
-               .ToListAsync();
+            model.Categories = await this.categoriesService.GetAllForPagination<CategoryViewModel>(page, model.ItemsPerPage);
             model.ElementsCount = this.categories.AllWithDeleted().Count();
             model.PageNumber = page;
 
@@ -148,7 +148,7 @@
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             Category category = await this.categories.All().FirstOrDefaultAsync(x => x.Id == id);
-            categories.Delete(category);
+            this.categories.Delete(category);
             _ = await this.categories.SaveChangesAsync();
             return this.RedirectToAction(nameof(this.Index));
         }

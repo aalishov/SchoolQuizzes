@@ -1,8 +1,8 @@
 ﻿namespace SchoolQuizzes.Data.Models
 {
-    using AutoMapper;
     using SchoolQuizzes.Data.Common.Models;
     using SchoolQuizzes.Services.Mapping;
+
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations.Schema;
 

@@ -50,11 +50,11 @@
         {
             var listQuestionAnswer1 = new List<QuestionAnswer>()
             {
-                new QuestionAnswer() {AnswerId=1,QuestionId=1},
+                new QuestionAnswer() { AnswerId=1,QuestionId=1},
             };
             var listQuestionAnswer2 = new List<QuestionAnswer>()
             {
-                new QuestionAnswer() {AnswerId=2,QuestionId=1},
+                new QuestionAnswer() { AnswerId=2,QuestionId=1},
             };
             var list = new List<Answer>()
             {
@@ -66,8 +66,8 @@
             };
             var listQuestions = new List<Question>()
             {
-                new Question(){Id=1},
-                new Question(){Id=2},
+                new Question() { Id=1},
+                new Question() { Id=2},
             };
 
             var mockRepo = new Mock<IDeletableEntityRepository<Answer>>();
@@ -81,8 +81,8 @@
 
             var expected = new List<AnswerInTestModel>()
             {
-                new AnswerInTestModel(){ Id=1,Value="1"},
-                new AnswerInTestModel(){ Id=2,Value="2"},
+                new AnswerInTestModel() { Id=1,Value="1"},
+                new AnswerInTestModel() { Id=2,Value="2"},
             };
             AutoMapperConfig.RegisterMappings(typeof(AnswerInTestModel).GetTypeInfo().Assembly);
             var actual = service.GetQuestionAnswersById<AnswerInTestModel>(1);
@@ -97,15 +97,15 @@
         {
             var listQuestionAnswer1 = new List<QuestionAnswer>()
             {
-                new QuestionAnswer() {AnswerId=1,QuestionId=2},
+                new QuestionAnswer() { AnswerId=1,QuestionId=2},
             };
             var listQuestionAnswer2 = new List<QuestionAnswer>()
             {
-                new QuestionAnswer() {AnswerId=2,QuestionId=1},
+                new QuestionAnswer() { AnswerId=2,QuestionId=1},
             };
             var listQuestionAnswer3 = new List<QuestionAnswer>()
             {
-                new QuestionAnswer() {AnswerId=4,QuestionId=2},
+                new QuestionAnswer() { AnswerId=4,QuestionId=2},
             };
             var list = new List<Answer>()
             {
@@ -116,8 +116,8 @@
             };
             var listQuestions = new List<Question>()
             {
-                new Question(){Id=1},
-                new Question(){Id=2},
+                new Question() { Id=1},
+                new Question() { Id=2},
             };
 
             var mockRepo = new Mock<IDeletableEntityRepository<Answer>>();
@@ -131,8 +131,8 @@
 
             var expected = new List<AnswerViewModel>()
             {
-                new AnswerViewModel(){ Id=1,Value="1"},
-                new AnswerViewModel(){ Id=4,Value="4"},
+                new AnswerViewModel() { Id=1,Value="1"},
+                new AnswerViewModel() { Id=4,Value="4"},
             };
 
             var actual = service.GetQuestionAnswersForTakesById(2);

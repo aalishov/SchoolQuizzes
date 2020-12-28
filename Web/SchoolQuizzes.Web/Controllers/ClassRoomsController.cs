@@ -9,7 +9,6 @@
 
     using System.Collections.Generic;
     using System.Security.Claims;
-    using System.Text;
     using System.Threading.Tasks;
 
 
@@ -140,14 +139,14 @@
 
 
             await this.emailSender.SendEmailAsync("schoolquizzes@abv.bg", "Alishov", "a.alishov@live.com", "DemoEmail", "<h1>Имате възложен тест: Demo send email</h1>");
-            foreach (var email in emails)
-            {
-                var html = new StringBuilder();
-                html.AppendLine($"<h1>Имате възложен тест: {quiz.Title}</h1>");
-                await this.emailSender.SendEmailAsync($"schoolquizzes@abv.bg", $"{quiz.ClassRoomTeacherApplicationUserLasttName}", $"{email}", quiz.Title, html.ToString());
-            }
+            //foreach (var email in emails)
+            //{
+            //    var html = new StringBuilder();
+            //    html.AppendLine($"<h1>Имате възложен тест: {quiz.Title}</h1>");
+            //    await this.emailSender.SendEmailAsync($"schoolquizzes@abv.bg", $"{quiz.ClassRoomTeacherApplicationUserLasttName}", $"{email}", quiz.Title, html.ToString());
+            //}
 
-            return this.RedirectToAction(nameof(this.Index));
+            return this.RedirectToAction(nameof(this.Details), "ClassRooms", new { roomId = classRoomId });
         }
     }
 }

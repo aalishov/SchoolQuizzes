@@ -1,18 +1,17 @@
 ﻿namespace SchoolQuizzes.Services.Data.Tests
 {
-    using AutoMapper;
     using Microsoft.EntityFrameworkCore;
-    using Moq;
     using SchoolQuizzes.Data;
     using SchoolQuizzes.Data.Models;
     using SchoolQuizzes.Data.Repositories;
     using SchoolQuizzes.Services.Mapping;
     using SchoolQuizzes.Web.ViewModels;
+
     using System.Collections.Generic;
     using System.Linq;
     using System.Reflection;
-    using System.Text;
     using System.Threading.Tasks;
+
     using Xunit;
 
     [Collection("Serial")]
@@ -30,12 +29,12 @@
                 .UseInMemoryDatabase(databaseName: "TestAddTeachersDb").Options;
             using var dbContext = new ApplicationDbContext(options);
             dbContext.Database.EnsureDeleted();
-            using var repository = new EfDeletableEntityRepository<BaseTeacher>(dbContext);
+            using var repository = new EfDeletableEntityRepository<Teacher>(dbContext);
             var service = new UsersService(repository, null, null);
 
-            dbContext.Teachers.Add(new BaseTeacher() { Id = 1, ApplicationUserId = "one" });
-            dbContext.Teachers.Add(new BaseTeacher() { Id = 2, ApplicationUserId = "two" });
-            dbContext.Teachers.Add(new BaseTeacher() { Id = 3, ApplicationUserId = "three" });
+            dbContext.Teachers.Add(new Teacher() { Id = 1, ApplicationUserId = "one" });
+            dbContext.Teachers.Add(new Teacher() { Id = 2, ApplicationUserId = "two" });
+            dbContext.Teachers.Add(new Teacher() { Id = 3, ApplicationUserId = "three" });
             await dbContext.SaveChangesAsync();
 
             await service.AddTeacher(new ApplicationUser() { Id = "newUser" });
@@ -116,6 +115,13 @@
     }
 
     public class BaseStudent : IMapFrom<Student>
+    {
+        public int Id { get; set; }
+
+        public string ApplicationUserId { get; set; }
+    }
+
+    public class BaseTeacher : IMapFrom<Teacher>
     {
         public int Id { get; set; }
 

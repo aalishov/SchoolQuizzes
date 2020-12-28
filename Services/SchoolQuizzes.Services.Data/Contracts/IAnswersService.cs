@@ -1,6 +1,7 @@
 ﻿namespace SchoolQuizzes.Services.Data.Contracts
 {
     using System.Collections.Generic;
+
     using SchoolQuizzes.Web.ViewModels.Answers;
 
     public interface IAnswersService

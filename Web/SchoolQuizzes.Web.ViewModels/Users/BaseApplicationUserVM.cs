@@ -2,7 +2,7 @@
 {
     using SchoolQuizzes.Data.Models;
     using SchoolQuizzes.Services.Mapping;
-    using System;
+
     using System.ComponentModel.DataAnnotations;
 
     public class BaseApplicationUserVM : IMapFrom<ApplicationUser>, IMapTo<ApplicationUser>

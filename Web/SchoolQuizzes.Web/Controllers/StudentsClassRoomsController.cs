@@ -28,13 +28,22 @@
 
         public IActionResult Details(int roomId)
         {
+            if (roomId <= 0)
+            {
+                return this.NotFound();
+            }
+
             string userId = this.User.FindFirst(ClaimTypes.NameIdentifier).Value;
             DetailsUserClassRoomVM model = this.roomsService.GetRoomById<DetailsUserClassRoomVM>(roomId);
             return this.View(model);
         }
 
-        public async Task<IActionResult> Start(int id,int classRoomQuizId)
+        public async Task<IActionResult> Start(int id, int classRoomQuizId)
         {
+            if (id <= 0 || classRoomQuizId<=0)
+            {
+                return this.NotFound();
+            }
             string userId = this.User.FindFirst(ClaimTypes.NameIdentifier).Value;
             await this.takesService.CreateTakеWithClassRoomQuizIdAsync(userId, id, classRoomQuizId);
             return this.RedirectToAction("Take", "TakesQuiz", new { id });

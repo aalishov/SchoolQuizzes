@@ -53,17 +53,27 @@
 
         public IActionResult Index(int page = 1)
         {
+            if (page <= 0)
+            {
+                return this.NotFound();
+            }
+
             IndexQuizViewModel model = new IndexQuizViewModel();
 
             model.ElementsCount = this.quizzesService.GetQuizzesCount();
-            model.PageNumber = page;
-            model.Quizzes = this.quizzesService.GetQuizzes<DetailsQuizViewModel>(page, model.ItemsPerPage);
+            model.PageNumber = (int)page;
+            model.Quizzes = this.quizzesService.GetQuizzes<DetailsQuizViewModel>((int)page, model.ItemsPerPage);
 
             return this.View(model);
         }
 
         public IActionResult Details(int id)
         {
+            if (id <= 0)
+            {
+                return this.NotFound();
+            }
+
             DetailsQuizViewModel model = this.quizzesService.GetQuizWithQuestionsAndAnswersById(id);
 
             return this.View(model);
@@ -71,6 +81,11 @@
 
         public IActionResult ExportQuizQuestions(int id)
         {
+            if (id <= 0)
+            {
+                return this.NotFound();
+            }
+
             DetailsQuizViewModel model = this.quizzesService.GetQuizWithQuestionsAndAnswersById(id);
 
             MemoryStream stream = this.exportService.ExportQuizQuestions(model);

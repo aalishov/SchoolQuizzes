@@ -57,6 +57,11 @@
         [HttpGet]
         public IActionResult Take(int page = 1)
         {
+            if (page <= 0)
+            {
+                return this.NotFound();
+            }
+
             TakeQuestionAnswerViewModel model = this.takesService.GetExamQuestion(this.userManager.GetUserId(this.User), page);
             model.Action = "Take";
             return this.View(model);
@@ -78,6 +83,11 @@
         [HttpGet]
         public async Task<IActionResult> Finish(int id)
         {
+            if (id <= 0)
+            {
+                return this.NotFound();
+            }
+
             await this.takesService.FinishQuizAsync(id);
 
             FinishTakeViewModel model = new FinishTakeViewModel
@@ -98,6 +108,11 @@
 
         public IActionResult MyTakeDetails(int id)
         {
+            if (id <= 0)
+            {
+                return this.NotFound();
+            }
+
             UserTakeDetailViewModel model = this.takesService.GetTakeDetailsById(id);
             return this.View(model);
         }

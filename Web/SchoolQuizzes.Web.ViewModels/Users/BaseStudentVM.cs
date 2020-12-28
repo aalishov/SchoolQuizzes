@@ -5,6 +5,7 @@
     using Microsoft.AspNetCore.Mvc.Rendering;
     using SchoolQuizzes.Data.Models;
     using SchoolQuizzes.Services.Mapping;
+
     using System.ComponentModel.DataAnnotations;
 
     public class BaseStudentVM : IMapFrom<Student>, IMapTo<Student>

@@ -9,9 +9,12 @@
 
 
 <p class="h2">Ученици в класната стая - @Model.StudentsCount</p>
-
-<a asp-action="AddStudent" asp-route-roomId="@Model.Id" class="">Добави ученик</a>
-
+<hr />
+<div class="btn-group" role="group" aria-label="Basic example">
+    <a class="btn btn-primary " asp-action="AddStudent" asp-route-roomId="@Model.Id">Добави ученик</a>
+    <a class="btn btn-primary " asp-action="AssignClassRoomQuiz" asp-route-classRoomId="@Model.Id">Възложи тест</a>
+</div>
+<hr />
 <table class="table table-responsive-lg  table-hover table-bordered table-striped">
     <thead>
         <tr>
@@ -33,8 +36,8 @@
         }
     </tbody>
 </table>
+<hr />
 
-<a asp-action="AssignClassRoomQuiz" asp-route-classRoomId="@Model.Id" class="">Възложи тест</a>
 
 <table class="table table-responsive-lg  table-hover table-bordered table-striped">
     <thead>
@@ -48,24 +51,42 @@
             <th>
                 Брой отговори
             </th>
-            <th colspan="2">Опции</th>
-</thead>
+            <th>Опции</th>
+    </thead>
     <tbody>
         @foreach (var item in Model.ClassRoomQuizzes)
         {
-        <tr>
-            <td>@item.Title</td>
-            <td>
-                @if (item.IsExam)
-                {<text>Изпитване</text>}
-            else
-            { <text>Домашна работа</text>}
-            </td>
-            <td>@item.TakesCount/@Model.StudentsCount</td>
-            <td><a asp-action="ТакеDetails" asp-route-classRoomQuizId="@item.Id" class="">Резултат</a></td>
-            <td><a asp-action="AssignQuizNotification" asp-route-classRoomId="@Model.Id" class="">Изпрати известие</a></td>
-            
-        </tr>
+            <tr>
+                <td>@item.Title</td>
+                <td>
+                    @if (item.IsExam)
+                    {<text>Изпитване</text>}
+                else
+                { <text>Домашна работа</text>}
+                </td>
+                <td>@item.TakesCount/@Model.StudentsCount</td>
+                <td class="btn-group" role="group" aria-label="Basic example">
+                    <a asp-action="ТакеDetails" asp-route-classRoomQuizId="@item.Id" class="btn btn-info">Резултат</a>
+                    <form method="post" asp-action="AssignQuizNotification" id="sendForm" asp-route-classRoomId="@Model.Id">
+                    </form>
+                    <button class="btn btn-dark" data-toggle="modal" data-target="#sendModal">Изпрати известие</button>
+                </td>
+
+            </tr>
         }
     </tbody>
 </table>
+
+<div class="modal" tabindex="-1" role="dialog" id="sendModal">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <p>Наистина ли искате да изпратите това известие до всички ученици?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" onclick="sendForm.submit()">Да</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Не</button>
+            </div>
+        </div>
+    </div>
+</div>

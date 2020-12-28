@@ -4,6 +4,7 @@
     using Microsoft.Extensions.DependencyInjection;
     using SchoolQuizzes.Common;
     using SchoolQuizzes.Data.Models;
+
     using System;
     using System.Linq;
     using System.Threading.Tasks;

@@ -2,6 +2,7 @@
 {
     using SchoolQuizzes.Data.Models;
     using SchoolQuizzes.Services.Mapping;
+
     using System.ComponentModel.DataAnnotations;
 
     public class CreateAnswerViewModel : IMapTo<Answer>

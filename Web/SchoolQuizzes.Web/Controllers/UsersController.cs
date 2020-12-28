@@ -38,6 +38,11 @@
 
         public async Task<IActionResult> EditStudent(string userId)
         {
+            if (string.IsNullOrWhiteSpace(userId))
+            {
+                return this.NotFound();
+            }
+
             EditStudentViewModel model = new EditStudentViewModel();
             model.ApplicationUser = this.mapper.Map<ApplicationUser, BaseApplicationUserVM>(await this.userManager.GetUserAsync(this.User), model.ApplicationUser);
             model.Student = this.usersService.GetStudentByUserId<BaseStudentVM>(userId);
