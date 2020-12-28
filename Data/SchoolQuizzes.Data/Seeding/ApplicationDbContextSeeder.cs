@@ -28,7 +28,7 @@
                 new RolesSeeder(),
                 new UserSeeder(),
                 new StageSeeder(),
-                new TeachersAndStudentsSeeder(),
+                //new TeachersAndStudentsSeeder(),
                 new CategoriesSeeder(),
                 new DifficultLevelsSeeder(),
                 new QuestionsSeeder(),
