@@ -2,8 +2,6 @@
 
 @{
     this.ViewData["Title"] = "Добавяне на въпрос";
-    var categoriesItems = this.Model.CategoriesItems.Select(x => new SelectListItem(x.Value, x.Key));
-    var dificultsItems = this.Model.DifficultsItems.Select(x => new SelectListItem(x.Value, x.Key));
 }
 
 
@@ -22,13 +20,18 @@
     </div>
     <div class=" form-group">
         <label asp-for="CategoryId"></label>
-        <select asp-for="CategoryId" asp-items="categoriesItems" class="form-control"></select>
+        <select asp-for="CategoryId" asp-items="@Model.CategoriesItems" class="form-control"></select>
         <span asp-validation-for="CategoryId" class="text-danger"></span>
     </div>
     <div class=" form-group">
         <label asp-for="DifficultId"></label>
-        <select asp-for="DifficultId" asp-items="dificultsItems" class="form-control"></select>
+        <select asp-for="DifficultId" asp-items="@Model.DifficultsItems" class="form-control"></select>
         <span asp-validation-for="DifficultId" class="text-danger"></span>
+    </div>
+    <div class=" form-group">
+        <label asp-for="StageId"></label>
+        <select asp-for="StageId" asp-items="@Model.StagesItems" class="form-control"></select>
+        <span asp-validation-for="StageId" class="text-danger"></span>
     </div>
     <div id="AnswersContainer" class="form-group">
         <label asp-for="Answers"></label>

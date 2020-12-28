@@ -9,7 +9,7 @@
 
     public class QuestionsSeeder : ISeeder
     {
-        private const int QuestionsCount = 50;
+        private const int QuestionsCount = 400;
 
         public async Task SeedAsync(ApplicationDbContext dbContext, IServiceProvider serviceProvider)
         {
@@ -23,13 +23,9 @@
                 return;
             }
 
-            string addedByUserId = dbContext.Users.FirstOrDefault().Id;
-            int difficultLevelId = dbContext.DifficultLevels.FirstOrDefault(x => x.Name == "Лесно").Id;
-            int cattegoryId = dbContext.Categories.FirstOrDefault(x => x.Name == "Математика").Id;
-
+            Category category = dbContext.Categories.FirstOrDefault(x => x.Name == "Математика");
             List<Question> questions = new List<Question>();
             Random random = new Random();
-            Stage stage = dbContext.Stages.FirstOrDefault();
 
             for (int i = 0; i < QuestionsCount; i++)
             {
@@ -39,10 +35,10 @@
                 Question question = new Question()
                 {
                     Value = $"Колко е {randomNumber + i}+{i}?",
-                    AddedByUserId = addedByUserId,
-                    CategoryId = cattegoryId,
-                    DifficultId = difficultLevelId,
-                    Stage = stage,
+                    AddedByUser = dbContext.Users.OrderBy(x => Guid.NewGuid()).FirstOrDefault(),
+                    Category = category,
+                    Difficult = dbContext.DifficultLevels.OrderBy(x => Guid.NewGuid()).FirstOrDefault(),
+                    Stage = dbContext.Stages.OrderBy(x => Guid.NewGuid()).FirstOrDefault(),
                 };
                 for (int j = 0; j < 4; j++)
                 {

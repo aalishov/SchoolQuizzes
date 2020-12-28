@@ -8,34 +8,30 @@
     using Microsoft.AspNetCore.Mvc;
     using SchoolQuizzes.Common;
     using SchoolQuizzes.Services.Data.Contracts;
-    using SchoolQuizzes.Services.Data.ModelsDto;
     using SchoolQuizzes.Web.ViewModels.Quizzes;
 
     [Authorize(Roles = GlobalConstants.TeacherRoleName)]
     public class QuizzesController : BaseController
     {
-        private readonly IAnswersService answersService;
-        private readonly ICategoriesService categoriesService;
-        private readonly IDifficultsService difficultsService;
         private readonly IExportService exportService;
-        private readonly IQuestionsService questionsService;
         private readonly IQuizzesService quizzesService;
+        private readonly ISelectListsService selectListsService;
 
-        public QuizzesController(IAnswersService answersService, ICategoriesService categoriesService, IDifficultsService difficultsService,IExportService exportService, IQuestionsService questionsService, IQuizzesService quizzesService)
+        public QuizzesController(IExportService exportService, IQuizzesService quizzesService, ISelectListsService selectListsService)
         {
-            this.answersService = answersService;
-            this.difficultsService = difficultsService;
+
             this.exportService = exportService;
-            this.categoriesService = categoriesService;
-            this.questionsService = questionsService;
             this.quizzesService = quizzesService;
+            this.selectListsService = selectListsService;
         }
 
         public IActionResult Generate()
         {
             var model = new GenerateQuizViewModel();
-            model.CategoriesItems = this.categoriesService.GetAllAsKeyValuePairs();
-            model.DifficultsItems = this.difficultsService.GetAllAsKeyValuePairs();
+
+            model.CategoriesItems = this.selectListsService.GetAllCategoriesAsSelectList();
+            model.DifficultsItems = this.selectListsService.GetAllDifficultsAsSelectList();
+            model.StagesItems = this.selectListsService.GetAllStagesAsSelectList();
             return this.View(model);
         }
 
@@ -44,39 +40,24 @@
         {
             if (!this.ModelState.IsValid)
             {
-                inputModel.CategoriesItems = this.categoriesService.GetAllAsKeyValuePairs();
-                inputModel.DifficultsItems = this.difficultsService.GetAllAsKeyValuePairs();
+                inputModel.CategoriesItems = this.selectListsService.GetAllCategoriesAsSelectList();
+                inputModel.DifficultsItems = this.selectListsService.GetAllDifficultsAsSelectList();
+                inputModel.StagesItems = this.selectListsService.GetAllStagesAsSelectList();
                 return this.View(inputModel);
             }
+            inputModel.AddedByUserId = this.User.FindFirst(ClaimTypes.NameIdentifier).Value;
 
-            GenerateQuizDto quizDto = new GenerateQuizDto
-            {
-                Title = inputModel.Title,
-                DifficultId = inputModel.DifficultId,
-                CategoryId = inputModel.CategoryId,
-                Count = inputModel.Count,
-                UserId = this.User.FindFirst(ClaimTypes.NameIdentifier).Value,
-            };
-
-            await this.quizzesService.CreateAsync(quizDto);
+            await this.quizzesService.CreateAsync(inputModel);
             return this.Redirect("/Quizzes/Index");
         }
 
-        public IActionResult Index()
+        public IActionResult Index(int page = 1)
         {
-            var quizzes = this.quizzesService.GetQuizzes();
-
             IndexQuizViewModel model = new IndexQuizViewModel();
-            foreach (var q in quizzes)
-            {
-                model.Quizzes.Add(new DetailsQuizViewModel()
-                {
-                    Id = q.Id,
-                    Title = q.Title,
-                    DifficultName = this.difficultsService.GetDifficultNameById(q.DifficultId),
-                    CategoryName = this.categoriesService.GetCategoryNameById(q.CategoryId),
-                });
-            }
+
+            model.ElementsCount = this.quizzesService.GetQuizzesCount();
+            model.PageNumber = page;
+            model.Quizzes = this.quizzesService.GetQuizzes<DetailsQuizViewModel>(page, model.ItemsPerPage);
 
             return this.View(model);
         }

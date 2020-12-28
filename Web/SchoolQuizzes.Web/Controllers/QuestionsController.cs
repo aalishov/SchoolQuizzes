@@ -13,17 +13,15 @@
     [Authorize(Roles = GlobalConstants.TeacherRoleName)]
     public class QuestionsController : BaseController
     {
-        private readonly ICategoriesService categoriesService;
-        private readonly IDifficultsService difficultsService;
+        private readonly ISelectListsService listsService;
         private readonly IQuestionsService questionsService;
         private readonly UserManager<ApplicationUser> userManager;
 
-        public QuestionsController(ICategoriesService categoriesService, IDifficultsService difficultsService, IQuestionsService questionsService, UserManager<ApplicationUser> userManager)
+        public QuestionsController(ISelectListsService listsService, IQuestionsService questionsService, UserManager<ApplicationUser> userManager)
         {
-            this.categoriesService = categoriesService;
             this.questionsService = questionsService;
             this.userManager = userManager;
-            this.difficultsService = difficultsService;
+            this.listsService = listsService;
         }
 
         [HttpGet]
@@ -31,8 +29,9 @@
         {
             CreateQuestionViewModel model = new CreateQuestionViewModel
             {
-                CategoriesItems = this.categoriesService.GetAllAsKeyValuePairs(),
-                DifficultsItems = this.difficultsService.GetAllAsKeyValuePairs(),
+                CategoriesItems = this.listsService.GetAllCategoriesAsSelectList(),
+                DifficultsItems = this.listsService.GetAllDifficultsAsSelectList(),
+                StagesItems=this.listsService.GetAllStagesAsSelectList(),
             };
             return this.View(model);
         }
@@ -42,8 +41,9 @@
         {
             if (!this.ModelState.IsValid)
             {
-                inputModel.CategoriesItems = this.categoriesService.GetAllAsKeyValuePairs();
-                inputModel.DifficultsItems = this.difficultsService.GetAllAsKeyValuePairs();
+                inputModel.CategoriesItems = this.listsService.GetAllCategoriesAsSelectList();
+                inputModel.DifficultsItems = this.listsService.GetAllDifficultsAsSelectList();
+                inputModel.StagesItems = this.listsService.GetAllStagesAsSelectList();
                 return this.View(inputModel);
             }
 

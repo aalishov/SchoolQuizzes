@@ -4,7 +4,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
-
+    using AutoMapper;
     using SchoolQuizzes.Data.Common.Repositories;
     using SchoolQuizzes.Data.Models;
     using SchoolQuizzes.Services.Data.Contracts;
@@ -15,11 +15,13 @@
     {
         private readonly IDeletableEntityRepository<Question> questionsRepository;
         private readonly IDeletableEntityRepository<Answer> answerRepository;
+        private readonly IMapper mapper;
 
         public QuestionsService(IDeletableEntityRepository<Question> questionsRepository, IDeletableEntityRepository<Answer> answerRepository)
         {
             this.questionsRepository = questionsRepository;
             this.answerRepository = answerRepository;
+            this.mapper = AutoMapperConfig.MapperInstance;
         }
 
         public async Task CreateAsync(CreateQuestionViewModel input)
@@ -29,6 +31,7 @@
                 Value = input.QuestionValue,
                 DifficultId = input.DifficultId,
                 CategoryId = input.CategoryId,
+                StageId = input.StageId,
                 Description = input.Description,
                 AddedByUserId = input.UserId,
             };
@@ -69,24 +72,13 @@
                 .ToList();
         }
 
-        public ICollection<Question> GetRandomQuestionsForQuiz(int categoryId, int difficultId, int count)
+        public ICollection<Question> GetRandomQuestionsForQuiz(int categoryId, int difficultId, int stageId, int count)
         {
-            ICollection<Question> questions = new List<Question>();
-            List<int> questionsId = this.questionsRepository.AllAsNoTracking()
-                .Where(x => x.CategoryId == categoryId && x.DifficultId == difficultId)
-                .Select(x => x.Id)
-                 .ToList();
-
-            for (int i = 0; i < count; i++)
-            {
-                Random random = new Random();
-                int randIndex = random.Next(0, questionsId.Count - 1);
-                int questionIndex = questionsId[randIndex];
-                questionsId.RemoveAt(randIndex);
-                questions.Add(this.questionsRepository.AllAsNoTracking().FirstOrDefault(x => x.Id == questionIndex));
-            }
-
-            return questions;
+            return this.questionsRepository.AllAsNoTracking()
+                .OrderBy(x => Guid.NewGuid())
+                .Where(x => x.CategoryId == categoryId && x.DifficultId == difficultId && x.StageId == stageId)
+                .Take(count)
+                .ToList();
         }
 
         public string GetQuestionValueById(int questionId)

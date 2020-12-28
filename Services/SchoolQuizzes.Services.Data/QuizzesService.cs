@@ -3,11 +3,11 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
+    using AutoMapper;
     using Microsoft.AspNetCore.Mvc.Rendering;
     using SchoolQuizzes.Data.Common.Repositories;
     using SchoolQuizzes.Data.Models;
     using SchoolQuizzes.Services.Data.Contracts;
-    using SchoolQuizzes.Services.Data.ModelsDto;
     using SchoolQuizzes.Services.Mapping;
     using SchoolQuizzes.Web.ViewModels.Answers;
     using SchoolQuizzes.Web.ViewModels.Questions;
@@ -15,29 +15,30 @@
 
     public class QuizzesService : IQuizzesService
     {
+
         private readonly IDeletableEntityRepository<Quiz> quizisRepository;
         private readonly IAnswersService answersService;
         private readonly IQuestionsService questionsService;
+        private readonly IMapper mapper;
 
         public QuizzesService(IDeletableEntityRepository<Quiz> quizisRepository, IAnswersService answersService, IQuestionsService questionsServicer)
         {
             this.quizisRepository = quizisRepository;
             this.answersService = answersService;
             this.questionsService = questionsServicer;
+            this.mapper = AutoMapperConfig.MapperInstance;
         }
 
-        public async Task CreateAsync(GenerateQuizDto generateDto)
+        public async Task CreateAsync(GenerateQuizViewModel inputModel)
         {
-            Quiz quiz = new Quiz
-            {
-                Title = generateDto.Title,
-                CategoryId = generateDto.CategoryId,
-                DifficultId = generateDto.DifficultId,
-                AddedByUserId = generateDto.UserId,
-            };
-            generateDto.Questions = this.questionsService.GetRandomQuestionsForQuiz(generateDto.CategoryId, generateDto.DifficultId, generateDto.Count);
 
-            foreach (var question in generateDto.Questions)
+
+            Quiz quiz = new Quiz();
+            this.mapper.Map<GenerateQuizViewModel, Quiz>(inputModel, quiz);
+
+            inputModel.Questions = this.questionsService.GetRandomQuestionsForQuiz(inputModel.CategoryId, inputModel.DifficultId, inputModel.StageId, inputModel.Count);
+
+            foreach (var question in inputModel.Questions)
             {
                 quiz.Questions.Add(new QuizQuestion { QuestionId = question.Id });
             }
@@ -56,9 +57,12 @@
             return this.quizisRepository.AllAsNoTracking().FirstOrDefault(x => x.Id == id);
         }
 
-        public ICollection<Quiz> GetQuizzes()
+        public ICollection<T> GetQuizzes<T>(int page, int itemsPerPage)
         {
-            return this.quizisRepository.All().ToList();
+            return this.quizisRepository.AllAsNoTracking()
+                .OrderByDescending(x => x.Id)
+                .Skip((page - 1) * itemsPerPage)
+                .Take(itemsPerPage).To<T>().ToList();
         }
 
         public DetailsQuizViewModel GetQuizWithQuestionsAndAnswersById(int id)
@@ -103,6 +107,11 @@
             {
                 return new SelectList(this.quizisRepository.AllAsNoTracking().Where(x => x.CategoryId == categoryId), "Id", "Title");
             }
+        }
+
+        public int GetQuizzesCount()
+        {
+            return this.quizisRepository.AllAsNoTracking().Count();
         }
     }
 }

@@ -74,6 +74,7 @@
             services.AddTransient<IQuestionsService, QuestionsService>();
             services.AddTransient<IQuizzesService, QuizzesService>();
             services.AddTransient<IRatingsService, RatingsService>();
+            services.AddTransient<ISelectListsService, SelectListsService>();
             services.AddTransient<IStagesService, StagesService>();
             services.AddTransient<IUsersService, UsersService>();
         }

@@ -1,4 +1,4 @@
-﻿ @model SchoolQuizzes.Web.ViewModels.Quizzes.IndexQuizViewModel;
+﻿@model SchoolQuizzes.Web.ViewModels.Quizzes.IndexQuizViewModel;
 @{
     this.ViewData["Title"] = "Списък с тестове";
 }
@@ -23,3 +23,4 @@
         }
     </tbody>
 </table>
+<partial name="_PagingPartial" model="@Model" />

@@ -6,9 +6,11 @@
     {
         public PagingViewModel()
         {
-            ItemsPerPage =5;
-            Action = "Index";
+            this.ItemsPerPage = 5;
+            this.Action = "Index";
+            this.PageNumber = 1;
         }
+
         public int PageNumber { get; set; }
 
         public bool HasPreviousPage => this.PageNumber > 1;

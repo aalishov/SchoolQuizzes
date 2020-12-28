@@ -1,8 +1,10 @@
 ﻿namespace SchoolQuizzes.Web.ViewModels.Answers
 {
+    using SchoolQuizzes.Data.Models;
+    using SchoolQuizzes.Services.Mapping;
     using System.ComponentModel.DataAnnotations;
 
-    public class CreateAnswerViewModel
+    public class CreateAnswerViewModel : IMapTo<Answer>
     {
         [Required]
         [MinLength(1)]
