@@ -8,6 +8,7 @@
 Web/SchoolQuizzes.Web/appsettings.Production.json
 Web/SchoolQuizzes.Web/appsettings.Development.json
 Web/SchoolQuizzes.Web/appsettings.json
+Data/SchoolQuizzes.Data/appsettings.json
 
 # User-specific files
 *.rsuser

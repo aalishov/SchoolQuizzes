@@ -5,6 +5,7 @@
     using System.Threading.Tasks;
 
     using Microsoft.AspNetCore.Identity;
+    using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using SchoolQuizzes.Common;
     using SchoolQuizzes.Data.Models;
@@ -21,18 +22,19 @@
             }
 
             var roleManager = serviceProvider.GetRequiredService<RoleManager<ApplicationRole>>();
+            var configuration = serviceProvider.GetRequiredService<IConfiguration>();
             var userManager = serviceProvider.GetRequiredService<UserManager<ApplicationUser>>();
-            await SeedUserAsync(dbContext, userManager, roleManager, "Admin", "Admin", "admin@abv.bg", "admin@abv.bg", "123456", GlobalConstants.AdministratorRoleName);
-            await SeedUserAsync(dbContext, userManager, roleManager, "Alish", "Alishov", "aalishov@live.com", "aalishov@live.com", "123456", GlobalConstants.AdministratorRoleName);
+            await SeedUserAsync(dbContext, userManager, roleManager, "Admin", "Admin", "admin@abv.bg", "admin@abv.bg", configuration["Password:AdminPassword"], GlobalConstants.AdministratorRoleName);
+            await SeedUserAsync(dbContext, userManager, roleManager, "Alish", "Alishov", "aalishov@live.com", "aalishov@live.com", configuration["Password:AdminPassword"], GlobalConstants.AdministratorRoleName);
 
             for (int i = 0; i < 25; i++)
             {
-                await SeedUserAsync(dbContext, userManager, roleManager, $"TName{i}", $"TLastName{i}", $"teacher{i}@live.com", $"teacher{i}@live.com", "123456", GlobalConstants.TeacherRoleName);
+                await SeedUserAsync(dbContext, userManager, roleManager, $"TName{i}", $"TLastName{i}", $"teacher{i}@live.com", $"teacher{i}@live.com", configuration["Password:DefaultPassword"], GlobalConstants.TeacherRoleName);
             }
 
             for (int i = 0; i < 250; i++)
             {
-                await SeedUserAsync(dbContext, userManager, roleManager, $"SName{i}", $"SLastName{i}", $"student{i}@live.com", $"student{i}@live.com", "123456", GlobalConstants.StudentRoleName);
+                await SeedUserAsync(dbContext, userManager, roleManager, $"SName{i}", $"SLastName{i}", $"student{i}@live.com", $"student{i}@live.com", configuration["Password:DefaultPassword"], GlobalConstants.StudentRoleName);
             }
         }
 
