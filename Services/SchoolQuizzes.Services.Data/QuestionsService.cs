@@ -56,11 +56,28 @@
             await this.questionsRepository.SaveChangesAsync();
         }
 
+        public async Task DeleteAsync(int id)
+        {
+
+            var question = this.questionsRepository.All().FirstOrDefault(x => x.Id == id);
+            this.questionsRepository.Delete(question);
+            await this.questionsRepository.SaveChangesAsync();
+        }
+
         public ICollection<T> GetQuestionsByQuizId<T>(int quizId)
         {
             return this.questionsRepository
                 .AllAsNoTracking()
                 .Where(x => x.Quizzes.Any(q => q.QuizId == quizId))
+                .To<T>()
+                .ToList();
+        }
+
+        public ICollection<T> GetQuestionsUserId<T>(string userId)
+        {
+            return this.questionsRepository
+                .AllAsNoTracking()
+                .Where(x => x.AddedByUserId == userId)
                 .To<T>()
                 .ToList();
         }

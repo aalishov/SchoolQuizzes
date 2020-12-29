@@ -1,5 +1,6 @@
 ﻿namespace SchoolQuizzes.Web.Controllers
 {
+    using System.Collections.Generic;
     using System.Threading.Tasks;
 
     using Microsoft.AspNetCore.Authorization;
@@ -25,13 +26,20 @@
         }
 
         [HttpGet]
+        public IActionResult Index()
+        {
+            ICollection<IndexQuestionViewModel> model = this.questionsService.GetQuestionsUserId<IndexQuestionViewModel>(this.userManager.GetUserId(this.User));
+            return this.View(model);
+        }
+
+        [HttpGet]
         public IActionResult Create()
         {
             CreateQuestionViewModel model = new CreateQuestionViewModel
             {
                 CategoriesItems = this.listsService.GetAllCategoriesAsSelectList(),
                 DifficultsItems = this.listsService.GetAllDifficultsAsSelectList(),
-                StagesItems=this.listsService.GetAllStagesAsSelectList(),
+                StagesItems = this.listsService.GetAllStagesAsSelectList(),
             };
             return this.View(model);
         }
@@ -51,7 +59,14 @@
 
             await this.questionsService.CreateAsync(inputModel);
 
-            return this.Redirect("/");
+            return this.RedirectToAction(nameof(this.Index));
+        }
+
+        public async Task<IActionResult> Delete(int id)
+        {
+            await this.questionsService.DeleteAsync(id);
+            return this.RedirectToAction(nameof(this.Index));
         }
     }
+
 }

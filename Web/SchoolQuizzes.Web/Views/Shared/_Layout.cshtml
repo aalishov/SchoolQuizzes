@@ -34,9 +34,8 @@
                                     Въпроси
                                 </a>
                                 <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                                    <a class="dropdown-item" asp-area="" asp-controller="Questions" asp-action="Create">Създаване</a>
-                                    <a class="dropdown-item" asp-area="" asp-controller="" asp-action="">-</a>
-                                    <a class="dropdown-item" asp-area="" asp-controller="" asp-action="">*-</a>
+                                    <a class="dropdown-item" asp-area="" asp-controller="Questions" asp-action="Index">Въпроси</a>
+                                    <a class="dropdown-item" asp-area="" asp-controller="Questions" asp-action="Create">Добавяне</a>
                                 </div>
                             </li>
                             <li class="nav-item dropdown">
@@ -49,7 +48,7 @@
                                 <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                                     <a class="dropdown-item" asp-area="" asp-controller="Quizzes" asp-action="Generate">Създаване</a>
                                     <a class="dropdown-item" asp-area="" asp-controller="Quizzes" asp-action="Index">Списък с тестове</a>
-                                    <a class="dropdown-item" asp-area="" asp-controller="" asp-action="">Въпроси и отговори</a>
+                                    @*<a class="dropdown-item" asp-area="" asp-controller="" asp-action="">Въпроси и отговори</a>*@
                                 </div>
                             </li>
                         }

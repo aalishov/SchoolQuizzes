@@ -1,0 +1,28 @@
+﻿@model ICollection<SchoolQuizzes.Web.ViewModels.Questions.IndexQuestionViewModel>
+@{
+    this.ViewData["Title"] = "Въпроси";
+}
+<div class="jumbotron">
+    <h1 class="h-100">@this.ViewData["Title"]</h1>
+    <a class="btn btn-primary" asp-action="Create" >Добави нов въпрос</a>
+    @foreach (var q in Model)
+    {
+        <div class="container p-3 my-3 bg-dark text-white">
+            <ul>
+                <li>
+                    @q.Value
+                    <ul>
+                        @foreach (var a in q.Answers)
+                        {
+                            <li>@a.AnswerValue</li>
+                        }
+                    </ul>
+
+                </li>
+            </ul>
+            <a class="btn btn-danger" asp-action="Delete" asp-route-id="@q.Id"><i class="fas fa-trash-alt"></i></a>
+        </div>
+    }
+</div>
+
+

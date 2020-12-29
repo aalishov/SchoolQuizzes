@@ -9,7 +9,7 @@
 
     public class QuestionsSeeder : ISeeder
     {
-        private const int QuestionsCount = 400;
+        private const int QuestionsCount = 500;
 
         public async Task SeedAsync(ApplicationDbContext dbContext, IServiceProvider serviceProvider)
         {
@@ -35,7 +35,7 @@
                 Question question = new Question()
                 {
                     Value = $"Колко е {randomNumber + i}+{i}?",
-                    AddedByUser = dbContext.Users.OrderBy(x => Guid.NewGuid()).FirstOrDefault(),
+                    AddedByUser = dbContext.Teachers.OrderBy(x => Guid.NewGuid()).FirstOrDefault().ApplicationUser,
                     Category = category,
                     Difficult = dbContext.DifficultLevels.OrderBy(x => Guid.NewGuid()).FirstOrDefault(),
                     Stage = dbContext.Stages.OrderBy(x => Guid.NewGuid()).FirstOrDefault(),
