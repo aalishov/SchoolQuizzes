@@ -88,9 +88,15 @@
                 <p>Наистина ли искате да изпратите това известие до всички ученици?</p>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-danger" onclick="sendForm.submit()">Да</button>
+                <button type="button" class="btn btn-danger" onclick="myFunction()">Да</button>
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Не</button>
             </div>
         </div>
     </div>
 </div>
+
+<script>
+    function myFunction() {
+        document.getElementById("sendForm").submit();
+    }
+</script>
