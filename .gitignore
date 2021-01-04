@@ -4,11 +4,7 @@
 ## Get latest from https://github.com/github/gitignore/blob/master/VisualStudio.gitignore
 
 #Custom ignore file
-
-Web/SchoolQuizzes.Web/appsettings.Production.json
-Web/SchoolQuizzes.Web/appsettings.Development.json
-Web/SchoolQuizzes.Web/appsettings.json
-Data/SchoolQuizzes.Data/appsettings.json
+/Web/SchoolQuizzes.Web/appsettings.Production.json
 
 # User-specific files
 *.rsuser
